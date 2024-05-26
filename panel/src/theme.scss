@@ -2,13 +2,15 @@
 
 @include mat.core();
 
-$theme: mat.define-theme((
- color: (
-    theme-type: light,
-    primary: mat.$azure-palette,
-    tertiary: mat.$orange-palette,
-  ),
-));
+$theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$orange-palette,
+    ),
+  )
+);
 
 @mixin color-tokens($app-theme) {
   .primary {
@@ -117,7 +119,10 @@ $theme: mat.define-theme((
     background-color: mat.get-theme-color($app-theme, surface-container-high);
   }
   .surface-container-highest {
-    background-color: mat.get-theme-color($app-theme, surface-container-highest);
+    background-color: mat.get-theme-color(
+      $app-theme,
+      surface-container-highest
+    );
   }
   .on-surface {
     color: mat.get-theme-color($app-theme, on-surface);
@@ -157,4 +162,3 @@ html {
     @include mat.button-color($theme, $color-variant: tertiary);
   }
 }
-
