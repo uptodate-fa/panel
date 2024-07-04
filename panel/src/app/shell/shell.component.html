@@ -2,8 +2,45 @@
   <mat-toolbar-row id="primary-toolbar" class="form-theme">
     <img src="logo.png" id="logo" />
     <h2>{{ 'app' | translate }}</h2>
-    <button mat-button>Welcome</button>
-    <button mat-flat-button class="tertiary">Welcome</button>
+    <button mat-stroked-button>
+      <i class="fa-solid fa-user"></i>
+      Mahdi Ketabdar
+    </button>
   </mat-toolbar-row>
-  <mat-toolbar-row class="primary" id="secondary-toolbar"> </mat-toolbar-row>
+  <mat-toolbar-row class="primary-background" id="secondary-toolbar">
+    <button mat-flat-button [matMenuTriggerFor]="contentsMenu">
+      Contents
+      <i class="fa-regular fa-angle-down"></i>
+    </button>
+    <a mat-flat-button>
+      Calculators
+    </a>
+    <a mat-flat-button>
+      Drug Interactions
+    </a>
+    <a mat-flat-button>
+      UpToDate Pathways
+    </a>
+    <mat-menu #contentsMenu="matMenu">
+      <button mat-menu-item>
+        What's New
+      </button>
+      <button mat-menu-item>
+        Practice Changing UpDates
+      </button>
+      <button mat-menu-item>
+        Drug Information
+      </button>
+      <button mat-menu-item>
+        Patient Education
+      </button>
+      <button mat-menu-item>
+        Topics by Specialty
+      </button>
+      <button mat-menu-item>
+        Authors and Editors
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
 </mat-toolbar>
+<router-outlet></router-outlet>

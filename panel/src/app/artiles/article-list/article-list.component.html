@@ -1,0 +1,27 @@
+<nav
+  mat-tab-nav-bar
+  backgroundColor="accent"
+  [tabPanel]="tabPanel"
+  mat-stretch-tabs="false"
+  mat-align-tabs="start"
+>
+  <a mat-tab-link active> All </a>
+  <a mat-tab-link> Adult </a>
+  <a mat-tab-link> Pediatric </a>
+  <a mat-tab-link> Patient </a>
+</nav>
+<mat-tab-nav-panel #tabPanel>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="primary-text"> Overview of water-soluble vitamins </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        … associated with the intake of raw egg whites (which impair biotin
+        absorption). The characterization of biotin as a vitamin was based on
+        the discovery that biotin deficiency causes a clinical syndrome, which
+        is mediated …
+      </p>
+    </mat-card-content>
+  </mat-card>
+</mat-tab-nav-panel>

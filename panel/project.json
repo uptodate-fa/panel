@@ -22,7 +22,14 @@
             "input": "panel/public"
           }
         ],
-        "styles": ["panel/src/theme.scss", "panel/src/styles.scss"],
+        "styles": [
+          "panel/src/theme.scss",
+          "panel/src/styles.scss",
+          "panel/public/fonts/fontawesome/scss/fontawesome.scss",
+          "panel/public/fonts/fontawesome/scss/regular.scss",
+          "panel/public/fonts/fontawesome/scss/brands.scss",
+          "panel/public/fonts/fontawesome/scss/solid.scss"
+        ],
         "scripts": []
       },
       "configurations": {

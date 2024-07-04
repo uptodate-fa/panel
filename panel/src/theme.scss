@@ -7,14 +7,17 @@ $theme: mat.define-theme(
     color: (
       theme-type: light,
       primary: mat.$azure-palette,
-      tertiary: mat.$orange-palette,
+      tertiary: mat.$green-palette,
     ),
   )
 );
 
 @mixin color-tokens($app-theme) {
-  .primary {
+  .primary-background {
     background-color: mat.get-theme-color($app-theme, primary);
+  }
+  .primary-text {
+    color: mat.get-theme-color($app-theme, primary);
   }
   .on-primary {
     color: mat.get-theme-color($app-theme, on-primary);
@@ -37,7 +40,7 @@ $theme: mat.define-theme(
   .on-primary-fixed-variant {
     color: mat.get-theme-color($app-theme, on-primary-fixed-variant);
   }
-  .secondary {
+  .secondary-background {
     background-color: mat.get-theme-color($app-theme, secondary);
   }
   .on-secondary {
@@ -61,7 +64,7 @@ $theme: mat.define-theme(
   .on-secondary-fixed-variant {
     color: mat.get-theme-color($app-theme, on-secondary-fixed-variant);
   }
-  .tertiary {
+  .tertiary-background {
     background-color: mat.get-theme-color($app-theme, tertiary);
   }
   .on-tertiary {
@@ -155,10 +158,15 @@ $theme: mat.define-theme(
 
 html {
   @include mat.all-component-themes($theme);
+  @include mat.strong-focus-indicators-theme($theme);
 
   @include color-tokens($theme);
 
   .mdc-button.tertiary {
     @include mat.button-color($theme, $color-variant: tertiary);
+  }
+
+  .mat-mdc-tab-nav-bar.tertiary {
+    @include mat.tabs-color($theme, $color-variant: tertiary);
   }
 }
