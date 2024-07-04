@@ -2,12 +2,81 @@
 
 @include mat.core();
 
+:root,
+:host {
+  --sys-background: #f7f9ff;
+  --sys-on-background: #181c20;
+  --sys-surface: #f7f9ff;
+  --sys-surface-dim: #d8dae0;
+  --sys-surface-bright: #f7f9ff;
+  --sys-surface-container-lowest: #ffffff;
+  --sys-surface-container-low: #f1f3f9;
+  --sys-surface-container: #eceef3;
+  --sys-surface-container-high: #e6e8ee;
+  --sys-surface-container-highest: #e0e2e8;
+  --sys-on-surface: #181c20;
+  --sys-surface-variant: #dfe3eb;
+  --sys-on-surface-variant: #42474e;
+  --sys-inverse-surface: #2d3135;
+  --sys-inverse-on-surface: #eff1f6;
+  --sys-outline: #73777f;
+  --sys-outline-variant: #c2c7cf;
+  --sys-shadow: #000000;
+  --sys-scrim: #000000;
+  --sys-surface-tint: #32628d;
+  --sys-primary: #007ac3;
+  --sys-on-primary: #ffffff;
+  --sys-primary-container: #cfe5ff;
+  --sys-on-primary-container: #001d34;
+  --sys-inverse-primary: #9dcbfc;
+  --sys-secondary: #31628d;
+  --sys-on-secondary: #ffffff;
+  --sys-secondary-container: #cfe5ff;
+  --sys-on-secondary-container: #001d34;
+  --sys-tertiary: #85bc20;
+  --sys-on-tertiary: #ffffff;
+  --sys-tertiary-container: #d0eda0;
+  --sys-on-tertiary-container: #121f00;
+  --sys-error: #904a43;
+  --sys-on-error: #ffffff;
+  --sys-error-container: #ffdad5;
+  --sys-on-error-container: #3b0907;
+  --sys-neutral: #74777c;
+  --sys-neutral-variant: #73777f;
+  --sys-primary-fixed: #cfe5ff;
+  --sys-primary-fixed-dim: #9dcbfc;
+  --sys-on-primary-fixed: #001d34;
+  --sys-on-primary-fixed-variant: #134a74;
+  --sys-secondary-fixed: #cfe5ff;
+  --sys-secondary-fixed-dim: #9ccbfb;
+  --sys-on-secondary-fixed: #001d34;
+  --sys-on-secondary-fixed-variant: #124a73;
+  --sys-tertiary-fixed: #d0eda0;
+  --sys-tertiary-fixed-dim: #b5d087;
+  --sys-on-tertiary-fixed: #121f00;
+  --sys-on-tertiary-fixed-variant: #384d13;
+  --sys-inverse-secondary: #9ccbfb;
+  --sys-inverse-tertiary: #b5d087;
+  --sys-inverse-error: #ffb4ab;
+  --sys-error-fixed: #ffdad5;
+  --sys-error-fixed-dim: #ffb4ab;
+  --sys-on-error-fixed: #3b0907;
+  --sys-on-error-fixed-variant: #73342d;
+}
+
 $theme: mat.define-theme(
   (
     color: (
       theme-type: light,
       primary: mat.$azure-palette,
-      tertiary: mat.$green-palette,
+      tertiary: mat.$blue-palette,
+      use-system-variables: true,
+    ),
+    typography: (
+      use-system-variables: true,
+    ),
+    density: (
+      scale: 0,
     ),
   )
 );
@@ -161,12 +230,4 @@ html {
   @include mat.strong-focus-indicators-theme($theme);
 
   @include color-tokens($theme);
-
-  .mdc-button.tertiary {
-    @include mat.button-color($theme, $color-variant: tertiary);
-  }
-
-  .mat-mdc-tab-nav-bar.tertiary {
-    @include mat.tabs-color($theme, $color-variant: tertiary);
-  }
 }
