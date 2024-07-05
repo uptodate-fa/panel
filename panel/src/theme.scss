@@ -4,7 +4,7 @@
 
 :root,
 :host {
-  --sys-background: #f7f9ff;
+  --sys-background: #f5f5f5;
   --sys-on-background: #181c20;
   --sys-surface: #f7f9ff;
   --sys-surface-dim: #d8dae0;
@@ -68,15 +68,13 @@ $theme: mat.define-theme(
   (
     color: (
       theme-type: light,
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
       use-system-variables: true,
     ),
     typography: (
       use-system-variables: true,
     ),
     density: (
-      scale: 0,
+      scale: -1,
     ),
   )
 );
@@ -227,7 +225,7 @@ $theme: mat.define-theme(
 
 html {
   @include mat.all-component-themes($theme);
-  @include mat.strong-focus-indicators-theme($theme);
-
+  @include mat.system-level-colors($theme); // 👈 Added
+  @include mat.system-level-typography($theme); // 👈 Added
   @include color-tokens($theme);
 }

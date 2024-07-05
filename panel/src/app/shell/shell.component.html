@@ -1,7 +1,8 @@
 <mat-toolbar>
   <mat-toolbar-row id="primary-toolbar" class="form-theme">
-    <img src="logo.png" id="logo" />
-    <h2>{{ 'app' | translate }}</h2>
+    <img routerLink="/" id="logo" src="icons/wheel-icon.svg" id="logo" />
+    <img routerLink="/" id="typo" src="icons/typo-logo.svg">
+    <h2></h2>
     <button mat-stroked-button>
       <i class="fa-solid fa-user"></i>
       Mahdi Ketabdar
@@ -22,24 +23,24 @@
       UpToDate Pathways
     </a>
     <mat-menu #contentsMenu="matMenu">
-      <button mat-menu-item>
+      <a mat-menu-item routerLink="/articles">
         What's New
-      </button>
-      <button mat-menu-item>
+      </a>
+      <a mat-menu-item routerLink="/articles">
         Practice Changing UpDates
-      </button>
-      <button mat-menu-item>
+      </a>
+      <a mat-menu-item routerLink="/articles">
         Drug Information
-      </button>
-      <button mat-menu-item>
+      </a>
+      <a mat-menu-item routerLink="/articles">
         Patient Education
-      </button>
-      <button mat-menu-item>
+      </a>
+      <a mat-menu-item routerLink="/articles">
         Topics by Specialty
-      </button>
-      <button mat-menu-item>
+      </a>
+      <a mat-menu-item routerLink="/articles">
         Authors and Editors
-      </button>
+      </a>
     </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>

@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 64px 24px;
+  max-width: 720px;
+  margin: auto;
+}
+
+#logo {
+  width: 256px;
+}
+
+#search-field {
+  width: 100%;
+}
+
+#search-button {
+  box-shadow: none;
+  height: 50px;
+  width: 50px;
+  border-radius: 4px;
+}
+
+#description {
+  font-size: 12px;
+}

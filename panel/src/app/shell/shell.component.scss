@@ -2,9 +2,15 @@
   gap: 16px;
 
   #logo {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
+    cursor: pointer;
+  }
+
+  #typo {
+    height: 24px;
+    cursor: pointer;
   }
 
   h2 {
@@ -13,5 +19,5 @@
 }
 
 #secondary-toolbar {
-  height: 56px;
+  height: 48px;
 }
