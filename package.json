@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev:panel": "nx run panel:serve"
+    "dev:panel": "nx run panel:serve",
+    "build:panel": "nx run panel:build --skip-nx-cache"
   },
   "private": true,
   "dependencies": {
