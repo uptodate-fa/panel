@@ -84,20 +84,36 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": ".editorconfig",
-        "hash": "5443105041930014821"
+        "file": ".eslintignore",
+        "hash": "7663861978715868291"
       },
       {
         "file": ".prettierrc",
         "hash": "16267754514737964994"
       },
       {
-        "file": "README.md",
-        "hash": "16686366475456187759"
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
       },
       {
-        "file": ".eslintrc.json",
-        "hash": "18315524891129148814"
+        "file": ".prettierignore",
+        "hash": "3395189204293871444"
+      },
+      {
+        "file": ".yarn/releases/yarn-1.22.21.cjs",
+        "hash": "3429181662140821364"
+      },
+      {
+        "file": "jest.config.ts",
+        "hash": "3494843969422251966"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "16936441711144470533"
+      },
+      {
+        "file": "docker/panel/Dockerfile",
+        "hash": "12790525427113804643"
       },
       {
         "file": ".gitignore",
@@ -108,64 +124,48 @@
         "hash": "9430166341120122740"
       },
       {
+        "file": ".eslintrc.json",
+        "hash": "18315524891129148814"
+      },
+      {
         "file": "migrations.json",
         "hash": "510430331186576391"
-      },
-      {
-        "file": "docker/panel/Dockerfile",
-        "hash": "12790525427113804643"
-      },
-      {
-        "file": "yarn.lock",
-        "hash": "9942139622315110602"
-      },
-      {
-        "file": "tsconfig.base.json",
-        "hash": "16936441711144470533"
-      },
-      {
-        "file": ".yarn/releases/yarn-1.22.21.cjs",
-        "hash": "3429181662140821364"
-      },
-      {
-        "file": "docker/backend/Dockerfile",
-        "hash": "16193809191269818178"
-      },
-      {
-        "file": "package.json",
-        "hash": "8071910906939523063"
-      },
-      {
-        "file": "nx.json",
-        "hash": "14252122630736009059"
-      },
-      {
-        "file": ".yarnrc",
-        "hash": "2548578144436229140"
-      },
-      {
-        "file": "docker/backend/.dockerignore",
-        "hash": "15014081474480541145"
-      },
-      {
-        "file": ".vscode/extensions.json",
-        "hash": "4934098906304722861"
       },
       {
         "file": "nginx.conf",
         "hash": "18034604143563460715"
       },
       {
-        "file": ".eslintignore",
-        "hash": "7663861978715868291"
+        "file": "yarn.lock",
+        "hash": "9942139622315110602"
       },
       {
-        "file": "jest.config.ts",
-        "hash": "3494843969422251966"
+        "file": ".yarnrc",
+        "hash": "2548578144436229140"
       },
       {
-        "file": ".prettierignore",
-        "hash": "3395189204293871444"
+        "file": "package.json",
+        "hash": "8071910906939523063"
+      },
+      {
+        "file": "docker/backend/.dockerignore",
+        "hash": "15014081474480541145"
+      },
+      {
+        "file": "nx.json",
+        "hash": "14252122630736009059"
+      },
+      {
+        "file": "README.md",
+        "hash": "16686366475456187759"
+      },
+      {
+        "file": "docker/backend/Dockerfile",
+        "hash": "16193809191269818178"
+      },
+      {
+        "file": ".vscode/extensions.json",
+        "hash": "4934098906304722861"
       }
     ],
     "projectFileMap": {
@@ -606,23 +606,38 @@
         },
         {
           "file": "backend/src/app/app.controller.spec.ts",
-          "hash": "9499997688052526633"
+          "hash": "9499997688052526633",
+          "deps": [
+            "npm:@nestjs/testing"
+          ]
         },
         {
           "file": "backend/src/app/app.controller.ts",
-          "hash": "9005150069945785676"
+          "hash": "9005150069945785676",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
         },
         {
           "file": "backend/src/app/app.module.ts",
-          "hash": "3163250445227373966"
+          "hash": "8549603426778602781",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
         },
         {
           "file": "backend/src/app/app.service.spec.ts",
-          "hash": "8587461140686713758"
+          "hash": "8587461140686713758",
+          "deps": [
+            "npm:@nestjs/testing"
+          ]
         },
         {
           "file": "backend/src/app/app.service.ts",
-          "hash": "9967902337593410053"
+          "hash": "9967902337593410053",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
         },
         {
           "file": "backend/src/assets/.gitkeep",
@@ -630,7 +645,11 @@
         },
         {
           "file": "backend/src/main.ts",
-          "hash": "11205222914964382693"
+          "hash": "11205222914964382693",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/core"
+          ]
         },
         {
           "file": "backend/tsconfig.app.json",
@@ -649,6 +668,27 @@
           "hash": "6894082794571774823",
           "deps": [
             "npm:@nx/webpack"
+          ]
+        },
+        {
+          "file": "backend/src/app/proxy/proxy.module.ts",
+          "hash": "4940333772012648836",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "backend/src/app/proxy/proxy.service.ts",
+          "hash": "14376326088673104319",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "backend/src/app/proxy/proxy.service.spec.ts",
+          "hash": "9774947787042210274",
+          "deps": [
+            "npm:@nestjs/testing"
           ]
         }
       ]

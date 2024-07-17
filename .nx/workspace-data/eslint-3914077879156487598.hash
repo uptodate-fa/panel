@@ -170,5 +170,91 @@
   },
   "17184168856521422022": {},
   "3640361154773222223": {},
-  "17967725657576641003": {}
+  "17967725657576641003": {},
+  "2124776307106766442": {
+    "backend": {
+      "targets": {
+        "eslint:lint": {
+          "command": "eslint .",
+          "cache": true,
+          "options": {
+            "cwd": "backend"
+          },
+          "inputs": [
+            "default",
+            "^default",
+            "{workspaceRoot}/.eslintrc.json",
+            "{projectRoot}/.eslintrc.json",
+            "{workspaceRoot}/tools/eslint-rules/**/*",
+            {
+              "externalDependencies": [
+                "eslint"
+              ]
+            }
+          ],
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "metadata": {
+            "technologies": [
+              "eslint"
+            ],
+            "description": "Runs ESLint on project",
+            "help": {
+              "command": "yarn eslint --help",
+              "example": {
+                "options": {
+                  "max-warnings": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "2892472580240463902": {},
+  "898791078422982454": {
+    "backend": {
+      "targets": {
+        "eslint:lint": {
+          "command": "eslint .",
+          "cache": true,
+          "options": {
+            "cwd": "backend"
+          },
+          "inputs": [
+            "default",
+            "^default",
+            "{workspaceRoot}/.eslintrc.json",
+            "{projectRoot}/.eslintrc.json",
+            "{workspaceRoot}/tools/eslint-rules/**/*",
+            {
+              "externalDependencies": [
+                "eslint"
+              ]
+            }
+          ],
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "metadata": {
+            "technologies": [
+              "eslint"
+            ],
+            "description": "Runs ESLint on project",
+            "help": {
+              "command": "yarn eslint --help",
+              "example": {
+                "options": {
+                  "max-warnings": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "283347308068819231": {}
 }

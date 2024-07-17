@@ -13323,6 +13323,21 @@
     "backend": [
       {
         "source": "backend",
+        "target": "npm:@nestjs/testing",
+        "type": "static"
+      },
+      {
+        "source": "backend",
+        "target": "npm:@nestjs/common",
+        "type": "static"
+      },
+      {
+        "source": "backend",
+        "target": "npm:@nestjs/core",
+        "type": "static"
+      },
+      {
+        "source": "backend",
         "target": "npm:@nx/webpack",
         "type": "static"
       }
