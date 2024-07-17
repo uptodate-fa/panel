@@ -1,0 +1,522 @@
+{
+  "version": "6.0",
+  "nxVersion": "19.4.0",
+  "deps": {
+    "@angular/animations": "~18.0.0",
+    "@angular/cdk": "^18.0.0",
+    "@angular/common": "~18.0.0",
+    "@angular/compiler": "~18.0.0",
+    "@angular/core": "~18.0.0",
+    "@angular/forms": "~18.0.0",
+    "@angular/material": "^18.0.0",
+    "@angular/platform-browser": "~18.0.0",
+    "@angular/platform-browser-dynamic": "~18.0.0",
+    "@angular/router": "~18.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.3",
+    "@angular-devkit/build-angular": "~18.0.0",
+    "@angular-devkit/core": "~18.0.0",
+    "@angular-devkit/schematics": "~18.0.0",
+    "@angular-eslint/eslint-plugin": "18.1.0",
+    "@angular-eslint/eslint-plugin-template": "18.1.0",
+    "@angular-eslint/template-parser": "18.1.0",
+    "@angular/cli": "~18.0.0",
+    "@angular/compiler-cli": "~18.0.0",
+    "@angular/language-service": "~18.0.0",
+    "@nestjs/schematics": "^10.0.1",
+    "@ngx-translate/core": "^15.0.0",
+    "@ngx-translate/http-loader": "^8.0.0",
+    "@nx/angular": "19.4.0",
+    "@nx/eslint": "19.4.0",
+    "@nx/eslint-plugin": "19.4.0",
+    "@nx/jest": "19.4.0",
+    "@nx/js": "19.4.0",
+    "@nx/nest": "19.1.0",
+    "@nx/workspace": "19.4.0",
+    "@schematics/angular": "~18.0.0",
+    "@swc-node/register": "1.9.2",
+    "@swc/core": "1.5.7",
+    "@swc/helpers": "0.5.11",
+    "@types/jest": "^29.4.0",
+    "@types/node": "18.16.9",
+    "@typescript-eslint/eslint-plugin": "^7.3.0",
+    "@typescript-eslint/parser": "^7.3.0",
+    "eslint": "~8.57.0",
+    "eslint-config-prettier": "^9.0.0",
+    "jest": "^29.4.1",
+    "jest-environment-jsdom": "^29.4.1",
+    "jest-preset-angular": "~14.1.0",
+    "nx": "19.4.0",
+    "prettier": "^2.6.2",
+    "ts-jest": "^29.1.0",
+    "ts-node": "10.9.1",
+    "typescript": "~5.4.2"
+  },
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "nonProjectFiles": [
+      {
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
+      },
+      {
+        "file": ".eslintignore",
+        "hash": "7663861978715868291"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "18315524891129148814"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "8491837053101957257"
+      },
+      {
+        "file": ".prettierignore",
+        "hash": "3395189204293871444"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "16267754514737964994"
+      },
+      {
+        "file": ".vscode/extensions.json",
+        "hash": "4934098906304722861"
+      },
+      {
+        "file": ".yarn/releases/yarn-1.22.21.cjs",
+        "hash": "3429181662140821364"
+      },
+      {
+        "file": ".yarnrc",
+        "hash": "2548578144436229140"
+      },
+      {
+        "file": "README.md",
+        "hash": "16686366475456187759"
+      },
+      {
+        "file": "docker/backend/.dockerignore",
+        "hash": "15014081474480541145"
+      },
+      {
+        "file": "docker/backend/Dockerfile",
+        "hash": "16193809191269818178"
+      },
+      {
+        "file": "docker/panel/Dockerfile",
+        "hash": "12790525427113804643"
+      },
+      {
+        "file": "jest.config.ts",
+        "hash": "3494843969422251966"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "9430166341120122740"
+      },
+      {
+        "file": "migrations.json",
+        "hash": "510430331186576391"
+      },
+      {
+        "file": "nginx.conf",
+        "hash": "18034604143563460715"
+      },
+      {
+        "file": "nx.json",
+        "hash": "8442054336255802072"
+      },
+      {
+        "file": "package.json",
+        "hash": "17196907239615040716"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "16936441711144470533"
+      },
+      {
+        "file": "yarn.lock",
+        "hash": "4625327901002790925"
+      }
+    ],
+    "projectFileMap": {
+      "panel": [
+        {
+          "file": "panel/.eslintrc.json",
+          "hash": "2256703210621316538"
+        },
+        {
+          "file": "panel/jest.config.ts",
+          "hash": "1224837234754261226"
+        },
+        {
+          "file": "panel/project.json",
+          "hash": "17819195052905536586"
+        },
+        {
+          "file": "panel/public/favicon.ico",
+          "hash": "9303420814833116677"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_animated.scss",
+          "hash": "2031460712957031059"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_bordered-pulled.scss",
+          "hash": "16899082921197817324"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_core.scss",
+          "hash": "2477223272290468629"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_duotone-icons.scss",
+          "hash": "5585201033728275419"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_fixed-width.scss",
+          "hash": "9051647157713040678"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_functions.scss",
+          "hash": "7473167214789014623"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_icons.scss",
+          "hash": "1889365139983410712"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_list.scss",
+          "hash": "8636063080294129871"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_mixins.scss",
+          "hash": "7086404265339486503"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_rotated-flipped.scss",
+          "hash": "10185577678487730945"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_screen-reader.scss",
+          "hash": "17891259165109009409"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_shims.scss",
+          "hash": "2585565788684026002"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_sizing.scss",
+          "hash": "5556573014294056668"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_stacked.scss",
+          "hash": "3668057922547864293"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/_variables.scss",
+          "hash": "4329755499073551391"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/brands.scss",
+          "hash": "2749224870918115579"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/duotone.scss",
+          "hash": "9491753037981264612"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/fontawesome.scss",
+          "hash": "6997348930398960334"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/light.scss",
+          "hash": "13870696201198282275"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/regular.scss",
+          "hash": "2730564113007076146"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/solid.scss",
+          "hash": "14998222982365273691"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/thin.scss",
+          "hash": "7016936730578862022"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/scss/v4-shims.scss",
+          "hash": "4068452881833332960"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/webfonts/fa-brands-400.ttf",
+          "hash": "13599679721757991015"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/webfonts/fa-brands-400.woff2",
+          "hash": "3374761197552753691"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/webfonts/fa-duotone-900.ttf",
+          "hash": "13860187943279576229"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/webfonts/fa-duotone-900.woff2",
+          "hash": "945890899125439381"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/webfonts/fa-light-300.ttf",
+          "hash": "396715479103311179"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/webfonts/fa-light-300.woff2",
+          "hash": "5365944203904651009"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/webfonts/fa-regular-400.ttf",
+          "hash": "15436229608191111494"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/webfonts/fa-regular-400.woff2",
+          "hash": "3613327721172904589"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/webfonts/fa-solid-900.ttf",
+          "hash": "11997205539334218224"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/webfonts/fa-solid-900.woff2",
+          "hash": "6184742860423775472"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/webfonts/fa-thin-100.ttf",
+          "hash": "3834186847377437032"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/webfonts/fa-thin-100.woff2",
+          "hash": "296130174598158487"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/webfonts/fa-v4compatibility.ttf",
+          "hash": "12890223800820195824"
+        },
+        {
+          "file": "panel/public/fonts/fontawesome/webfonts/fa-v4compatibility.woff2",
+          "hash": "965846061032872763"
+        },
+        {
+          "file": "panel/public/i18n/en.json",
+          "hash": "15398006973788685264"
+        },
+        {
+          "file": "panel/public/icons/typo-logo.svg",
+          "hash": "9140999257184634476"
+        },
+        {
+          "file": "panel/public/icons/wheel-icon.svg",
+          "hash": "16749023214115574631"
+        },
+        {
+          "file": "panel/public/logo.png",
+          "hash": "1789986371053120075"
+        },
+        {
+          "file": "panel/src/app/app.component.html",
+          "hash": "17816966185630879015"
+        },
+        {
+          "file": "panel/src/app/app.component.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "panel/src/app/app.component.spec.ts",
+          "hash": "9026704286842735392",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "panel/src/app/app.component.ts",
+          "hash": "13695512727107274615",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "panel/src/app/app.config.ts",
+          "hash": "14461842872308218222",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router",
+            "npm:@angular/platform-browser",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "panel/src/app/app.routes.ts",
+          "hash": "17379051342647522658",
+          "deps": [
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "panel/src/app/artiles/article-list/article-list.component.html",
+          "hash": "85645380388080389"
+        },
+        {
+          "file": "panel/src/app/artiles/article-list/article-list.component.scss",
+          "hash": "17983385753895176537"
+        },
+        {
+          "file": "panel/src/app/artiles/article-list/article-list.component.spec.ts",
+          "hash": "10626650886973567914",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "panel/src/app/artiles/article-list/article-list.component.ts",
+          "hash": "3016002546131633026",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/material"
+          ]
+        },
+        {
+          "file": "panel/src/app/artiles/articles.routes.ts",
+          "hash": "359381039342745318",
+          "deps": [
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "panel/src/app/providers/translate-module.provider.ts",
+          "hash": "13477615368004840031",
+          "deps": [
+            "npm:@angular/common",
+            "npm:@angular/core",
+            "npm:@ngx-translate/core",
+            "npm:@ngx-translate/http-loader"
+          ]
+        },
+        {
+          "file": "panel/src/app/search/search.component.html",
+          "hash": "2109493679765993815"
+        },
+        {
+          "file": "panel/src/app/search/search.component.scss",
+          "hash": "10664776897230320307"
+        },
+        {
+          "file": "panel/src/app/search/search.component.spec.ts",
+          "hash": "14599051770788516422",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "panel/src/app/search/search.component.ts",
+          "hash": "5257458861909178730",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/material"
+          ]
+        },
+        {
+          "file": "panel/src/app/shared/index.ts",
+          "hash": "4130861273857380898"
+        },
+        {
+          "file": "panel/src/app/shared/modules/index.ts",
+          "hash": "3102363969299413004",
+          "deps": [
+            "npm:@ngx-translate/core"
+          ]
+        },
+        {
+          "file": "panel/src/app/shared/modules/material-angular.ts",
+          "hash": "9480275286070676709",
+          "deps": [
+            "npm:@angular/material"
+          ]
+        },
+        {
+          "file": "panel/src/app/shell/shell.component.html",
+          "hash": "13668499383359231388"
+        },
+        {
+          "file": "panel/src/app/shell/shell.component.scss",
+          "hash": "4430780186677329909"
+        },
+        {
+          "file": "panel/src/app/shell/shell.component.spec.ts",
+          "hash": "18306506087926757149",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "panel/src/app/shell/shell.component.ts",
+          "hash": "16370037885011206297",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/material",
+            "npm:@ngx-translate/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "panel/src/index.html",
+          "hash": "11533992597706580779"
+        },
+        {
+          "file": "panel/src/main.ts",
+          "hash": "16635586463787978962",
+          "deps": [
+            "npm:@angular/platform-browser"
+          ]
+        },
+        {
+          "file": "panel/src/styles.scss",
+          "hash": "18086711227600675340"
+        },
+        {
+          "file": "panel/src/test-setup.ts",
+          "hash": "12935735732682149507",
+          "deps": [
+            "npm:jest-preset-angular"
+          ]
+        },
+        {
+          "file": "panel/src/theme.scss",
+          "hash": "953274668514140543"
+        },
+        {
+          "file": "panel/tsconfig.app.json",
+          "hash": "13344354189090010831"
+        },
+        {
+          "file": "panel/tsconfig.editor.json",
+          "hash": "1055794200401717100"
+        },
+        {
+          "file": "panel/tsconfig.json",
+          "hash": "14495188763378728454"
+        },
+        {
+          "file": "panel/tsconfig.spec.json",
+          "hash": "2129196202529263968"
+        }
+      ]
+    }
+  }
+}

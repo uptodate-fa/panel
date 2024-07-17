@@ -1,0 +1,12 @@
+[NX Daemon Server] - 2024-07-17T12:18:31.427Z - Started listening on: /var/folders/88/nh7vxf113z59vhn715mxddyx12p0zg/T/b6e3911ba99a3de1d38c/d.sock
+[NX Daemon Server] - 2024-07-17T12:18:31.430Z - [WATCHER]: Subscribed to changes within: /Users/mahdi.ketabdar/Developer/uptodate/uptodate (native)
+[NX Daemon Server] - 2024-07-17T12:18:31.433Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2024-07-17T12:18:31.434Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2024-07-17T12:18:31.434Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2024-07-17T12:18:31.435Z - [REQUEST]: Responding to the client. handleGlob
+[NX Daemon Server] - 2024-07-17T12:18:31.435Z - Done responding to the client handleGlob
+[NX Daemon Server] - 2024-07-17T12:18:31.435Z - Handled GLOB. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2024-07-17T12:18:31.721Z - [REQUEST]: Responding to the client. handleNxWorkspaceFiles
+[NX Daemon Server] - 2024-07-17T12:18:31.721Z - Done responding to the client handleNxWorkspaceFiles
+[NX Daemon Server] - 2024-07-17T12:18:31.721Z - Handled GET_NX_WORKSPACE_FILES. Handling time: 1. Response time: 0.
+[NX Daemon Server] - 2024-07-17T12:18:34.340Z - Closed a connection. Number of open connections: 0
