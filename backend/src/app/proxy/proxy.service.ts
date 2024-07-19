@@ -21,7 +21,7 @@ export class ProxyService {
   async search(query: string, limit = 10): Promise<SearchResult[]> {
     const response = await this.http
       .get<any>(
-        `https://www.uptodate.com/services/app/contents/search/2/json?term=${query}&max=${limit}`,
+        `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}`,
         {}
       )
       .toPromise();

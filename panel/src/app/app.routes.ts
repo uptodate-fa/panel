@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
 import { ShellComponent } from './shell/shell.component';
 import { articlesRoutes } from './artiles/articles.routes';
-import { SearchComponent } from './search/search.component';
+import { searchRoutes } from './search/search.routes';
 
 export const appRoutes: Route[] = [
   {
@@ -9,7 +9,7 @@ export const appRoutes: Route[] = [
     component: ShellComponent,
     children: [
       { path: 'articles', children: articlesRoutes },
-      { path: 'search', component: SearchComponent },
+      { path: 'search', children: searchRoutes },
       { path: '', redirectTo: 'search', pathMatch: 'full' },
     ],
   },

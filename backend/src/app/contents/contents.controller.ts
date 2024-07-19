@@ -13,6 +13,7 @@ export class ContentsController {
 
   @Get('search/:query')
   search(@Param('query') query: string) {
+    console.log(query)
     return this.proxy.search(query);
   }
 }

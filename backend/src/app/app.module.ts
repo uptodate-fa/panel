@@ -6,9 +6,16 @@ import { ProxyModule } from './proxy/proxy.module';
 import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';
 import { ContentsModule } from './contents/contents.module';
+import { CoreModule } from './core/core.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), ProxyModule, HttpModule, ContentsModule],
+  imports: [
+    ConfigModule.forRoot(),
+    ProxyModule,
+    HttpModule,
+    ContentsModule,
+    CoreModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

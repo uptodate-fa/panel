@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { AxiosHeaders } from 'axios';
+import { RedisService } from '../core/redis.service';
 const USERNAME = process.env['UPTODATE_USERNAME'];
 const PASSWORD = process.env['UPTODATE_PASSWORD'];
 
@@ -9,7 +10,7 @@ export class AuthService {
   private _sessionId: string;
   private _sessionPromise: Promise<string>;
 
-  constructor(private http: HttpService) {
+  constructor(private http: HttpService, private redis: RedisService) {
     // this.login();
   }
 

@@ -1,0 +1,35 @@
+<nav
+  mat-tab-nav-bar
+  backgroundColor="accent"
+  [tabPanel]="tabPanel"
+  mat-stretch-tabs="false"
+  mat-align-tabs="start"
+>
+  <a mat-tab-link active> All </a>
+  <a mat-tab-link> Adult </a>
+  <a mat-tab-link> Pediatric </a>
+  <a mat-tab-link> Patient </a>
+</nav>
+<mat-tab-nav-panel #tabPanel>
+  <div id="article-list">
+    @for (result of results() | async; track $index) {
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title class="primary-text">
+          {{ result.title }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p [innerHTML]="result.description"></p>
+        @for (link of result.results; track $index) {
+        <div>
+          <a mat-button [routerLink]="link.url">
+            {{ link.title }}
+          </a>
+        </div>
+        }
+      </mat-card-content>
+    </mat-card>
+    }
+  </div>
+</mat-tab-nav-panel>
