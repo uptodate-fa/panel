@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.menno.pro',
+  apiUrl: 'https://uptodate-api.darkube.app/api',
 };
