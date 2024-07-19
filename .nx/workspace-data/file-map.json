@@ -13,9 +13,10 @@
     "@angular/platform-browser-dynamic": "~18.0.0",
     "@angular/router": "~18.0.0",
     "@nestjs/common": "^10.0.2",
+    "@nestjs/config": "^3.2.3",
     "@nestjs/core": "^10.0.2",
     "@nestjs/platform-express": "^10.0.2",
-    "axios": "^1.6.0",
+    "axios": "^1.7.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -29,6 +30,7 @@
     "@angular/cli": "~18.0.0",
     "@angular/compiler-cli": "~18.0.0",
     "@angular/language-service": "~18.0.0",
+    "@nestjs/axios": "^3.0.2",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
     "@ngx-translate/core": "^15.0.0",
@@ -64,7 +66,11 @@
     "typescript": "~5.4.2",
     "webpack-cli": "^5.1.4"
   },
-  "pathMappings": {},
+  "pathMappings": {
+    "@uptodate/types": [
+      "types/src/index.ts"
+    ]
+  },
   "nxJsonPlugins": [
     {
       "name": "@nx/webpack/plugin",
@@ -84,12 +90,40 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": ".eslintignore",
-        "hash": "7663861978715868291"
+        "file": "nx.json",
+        "hash": "9844627601104592195"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "2177315501927802347"
+      },
+      {
+        "file": ".yarn/releases/yarn-1.22.21.cjs",
+        "hash": "3429181662140821364"
       },
       {
         "file": ".prettierrc",
         "hash": "16267754514737964994"
+      },
+      {
+        "file": "nginx.conf",
+        "hash": "18034604143563460715"
+      },
+      {
+        "file": "yarn.lock",
+        "hash": "15834259431740010958"
+      },
+      {
+        "file": "docker/backend/.dockerignore",
+        "hash": "15014081474480541145"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "18315524891129148814"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "9130565521406651859"
       },
       {
         "file": ".editorconfig",
@@ -100,72 +134,48 @@
         "hash": "3395189204293871444"
       },
       {
-        "file": ".yarn/releases/yarn-1.22.21.cjs",
-        "hash": "3429181662140821364"
-      },
-      {
-        "file": "jest.config.ts",
-        "hash": "3494843969422251966"
-      },
-      {
-        "file": "tsconfig.base.json",
-        "hash": "16936441711144470533"
-      },
-      {
         "file": "docker/panel/Dockerfile",
         "hash": "12790525427113804643"
-      },
-      {
-        "file": ".gitignore",
-        "hash": "8491837053101957257"
-      },
-      {
-        "file": "jest.preset.js",
-        "hash": "9430166341120122740"
-      },
-      {
-        "file": ".eslintrc.json",
-        "hash": "18315524891129148814"
-      },
-      {
-        "file": "migrations.json",
-        "hash": "510430331186576391"
-      },
-      {
-        "file": "nginx.conf",
-        "hash": "18034604143563460715"
-      },
-      {
-        "file": "yarn.lock",
-        "hash": "9942139622315110602"
       },
       {
         "file": ".yarnrc",
         "hash": "2548578144436229140"
       },
       {
-        "file": "package.json",
-        "hash": "8071910906939523063"
-      },
-      {
-        "file": "docker/backend/.dockerignore",
-        "hash": "15014081474480541145"
-      },
-      {
-        "file": "nx.json",
-        "hash": "14252122630736009059"
-      },
-      {
-        "file": "README.md",
-        "hash": "16686366475456187759"
+        "file": ".vscode/settings.json",
+        "hash": "18404006204671499380"
       },
       {
         "file": "docker/backend/Dockerfile",
         "hash": "16193809191269818178"
       },
       {
+        "file": "package.json",
+        "hash": "15059783027600296118"
+      },
+      {
         "file": ".vscode/extensions.json",
         "hash": "4934098906304722861"
+      },
+      {
+        "file": ".eslintignore",
+        "hash": "7663861978715868291"
+      },
+      {
+        "file": "README.md",
+        "hash": "16686366475456187759"
+      },
+      {
+        "file": "migrations.json",
+        "hash": "510430331186576391"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "9430166341120122740"
+      },
+      {
+        "file": "jest.config.ts",
+        "hash": "3494843969422251966"
       }
     ],
     "projectFileMap": {
@@ -593,6 +603,10 @@
       ],
       "backend": [
         {
+          "file": "backend/.env",
+          "hash": "2671868904067283304"
+        },
+        {
           "file": "backend/.eslintrc.json",
           "hash": "11808533155536463924"
         },
@@ -620,9 +634,11 @@
         },
         {
           "file": "backend/src/app/app.module.ts",
-          "hash": "8549603426778602781",
+          "hash": "1243905815772070502",
           "deps": [
-            "npm:@nestjs/common"
+            "npm:@nestjs/common",
+            "npm:@nestjs/axios",
+            "npm:@nestjs/config"
           ]
         },
         {
@@ -637,6 +653,39 @@
           "hash": "9967902337593410053",
           "deps": [
             "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "backend/src/app/proxy/auth.service.ts",
+          "hash": "12402095219471520776",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/axios",
+            "npm:axios"
+          ]
+        },
+        {
+          "file": "backend/src/app/proxy/proxy.module.ts",
+          "hash": "9837801798341504010",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/axios"
+          ]
+        },
+        {
+          "file": "backend/src/app/proxy/proxy.service.spec.ts",
+          "hash": "9774947787042210274",
+          "deps": [
+            "npm:@nestjs/testing"
+          ]
+        },
+        {
+          "file": "backend/src/app/proxy/proxy.service.ts",
+          "hash": "14358686139207829989",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/axios",
+            "types"
           ]
         },
         {
@@ -671,25 +720,72 @@
           ]
         },
         {
-          "file": "backend/src/app/proxy/proxy.module.ts",
-          "hash": "4940333772012648836",
+          "file": "backend/src/app/contents/contents.module.ts",
+          "hash": "5061486809634289243",
           "deps": [
-            "npm:@nestjs/common"
+            "npm:@nestjs/common",
+            "npm:@nestjs/axios"
           ]
         },
         {
-          "file": "backend/src/app/proxy/proxy.service.ts",
-          "hash": "14376326088673104319",
-          "deps": [
-            "npm:@nestjs/common"
-          ]
-        },
-        {
-          "file": "backend/src/app/proxy/proxy.service.spec.ts",
-          "hash": "9774947787042210274",
+          "file": "backend/src/app/contents/contents.controller.spec.ts",
+          "hash": "16793336542080730147",
           "deps": [
             "npm:@nestjs/testing"
           ]
+        },
+        {
+          "file": "backend/src/app/contents/contents.controller.ts",
+          "hash": "12059831440945214851",
+          "deps": [
+            "npm:@nestjs/axios",
+            "npm:@nestjs/common"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "file": "types/.eslintrc.json",
+          "hash": "13365499647183331872"
+        },
+        {
+          "file": "types/README.md",
+          "hash": "590437621609819338"
+        },
+        {
+          "file": "types/package.json",
+          "hash": "7192542790100221700",
+          "deps": [
+            "npm:tslib"
+          ]
+        },
+        {
+          "file": "types/project.json",
+          "hash": "10088551245440734736"
+        },
+        {
+          "file": "types/src/index.ts",
+          "hash": "14428353282588746736"
+        },
+        {
+          "file": "types/tsconfig.json",
+          "hash": "14391392062619267752"
+        },
+        {
+          "file": "types/tsconfig.lib.json",
+          "hash": "12638394678519115349"
+        },
+        {
+          "file": "types/src/lib/content.ts",
+          "hash": "11991523537349231780"
+        },
+        {
+          "file": "types/src/lib/index.ts",
+          "hash": "12831486593952610145"
+        },
+        {
+          "file": "types/src/lib/search-result.ts",
+          "hash": "3069218435058603440"
         }
       ]
     }

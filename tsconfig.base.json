@@ -13,8 +13,11 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "strictPropertyInitialization": false,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@uptodate/types": ["types/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

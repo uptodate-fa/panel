@@ -424,6 +424,87 @@
         "tags": [],
         "implicitDependencies": []
       }
+    },
+    "types": {
+      "name": "types",
+      "type": "lib",
+      "data": {
+        "root": "types",
+        "name": "types",
+        "tags": [
+          "npm:private"
+        ],
+        "metadata": {
+          "targetGroups": {}
+        },
+        "targets": {
+          "eslint:lint": {
+            "cache": true,
+            "options": {
+              "cwd": "types",
+              "command": "eslint ."
+            },
+            "inputs": [
+              "default",
+              "^default",
+              "{workspaceRoot}/.eslintrc.json",
+              "{projectRoot}/.eslintrc.json",
+              "{workspaceRoot}/tools/eslint-rules/**/*",
+              {
+                "externalDependencies": [
+                  "eslint"
+                ]
+              }
+            ],
+            "outputs": [
+              "{options.outputFile}"
+            ],
+            "metadata": {
+              "technologies": [
+                "eslint"
+              ],
+              "description": "Runs ESLint on project",
+              "help": {
+                "command": "yarn eslint --help",
+                "example": {
+                  "options": {
+                    "max-warnings": 0
+                  }
+                }
+              }
+            },
+            "executor": "nx:run-commands",
+            "configurations": {}
+          },
+          "build": {
+            "executor": "@nx/js:tsc",
+            "cache": true,
+            "dependsOn": [
+              "^build"
+            ],
+            "inputs": [
+              "production",
+              "^production"
+            ],
+            "outputs": [
+              "{options.outputPath}"
+            ],
+            "options": {
+              "outputPath": "dist/types",
+              "main": "types/src/index.ts",
+              "tsConfig": "types/tsconfig.lib.json",
+              "assets": [
+                "types/*.md"
+              ]
+            },
+            "configurations": {}
+          }
+        },
+        "$schema": "../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "types/src",
+        "projectType": "library",
+        "implicitDependencies": []
+      }
     }
   },
   "externalNodes": {
@@ -3388,6 +3469,15 @@
         "hash": "sha512-O+6Gs8UeDbyFpbSh2CPEz/UOrrdWPTBYNblZK5CxxLisYt4kGX3Sc+czffFonyjiGSq3jWLwJS/CCJc7tBr4sQ=="
       }
     },
+    "npm:@nestjs/axios": {
+      "type": "npm",
+      "name": "npm:@nestjs/axios",
+      "data": {
+        "version": "3.0.2",
+        "packageName": "@nestjs/axios",
+        "hash": "sha512-Z6GuOUdNQjP7FX+OuV2Ybyamse+/e0BFdTWBX5JxpBDKA+YkdLynDgG6HTF04zy6e9zPa19UX0WA2VDoehwhXQ=="
+      }
+    },
     "npm:@nestjs/common": {
       "type": "npm",
       "name": "npm:@nestjs/common",
@@ -3395,6 +3485,15 @@
         "version": "10.3.10",
         "packageName": "@nestjs/common",
         "hash": "sha512-H8k0jZtxk1IdtErGDmxFRy0PfcOAUg41Prrqpx76DQusGGJjsaovs1zjXVD1rZWaVYchfT1uczJ6L4Kio10VNg=="
+      }
+    },
+    "npm:@nestjs/config": {
+      "type": "npm",
+      "name": "npm:@nestjs/config",
+      "data": {
+        "version": "3.2.3",
+        "packageName": "@nestjs/config",
+        "hash": "sha512-p6yv/CvoBewJ72mBq4NXgOAi2rSQNWx3a+IMJLVKS2uiwFCOQQuiIatGwq6MRjXV3Jr+B41iUO8FIf4xBrZ4/w=="
       }
     },
     "npm:@nestjs/core": {
@@ -6802,6 +6901,15 @@
     "npm:dotenv-expand": {
       "type": "npm",
       "name": "npm:dotenv-expand",
+      "data": {
+        "version": "10.0.0",
+        "packageName": "dotenv-expand",
+        "hash": "sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A=="
+      }
+    },
+    "npm:dotenv-expand@11.0.6": {
+      "type": "npm",
+      "name": "npm:dotenv-expand@11.0.6",
       "data": {
         "version": "11.0.6",
         "packageName": "dotenv-expand",
@@ -13333,6 +13441,26 @@
       },
       {
         "source": "backend",
+        "target": "npm:@nestjs/axios",
+        "type": "static"
+      },
+      {
+        "source": "backend",
+        "target": "npm:@nestjs/config",
+        "type": "static"
+      },
+      {
+        "source": "backend",
+        "target": "npm:axios",
+        "type": "static"
+      },
+      {
+        "source": "backend",
+        "target": "types",
+        "type": "static"
+      },
+      {
+        "source": "backend",
         "target": "npm:@nestjs/core",
         "type": "static"
       },
@@ -13381,6 +13509,13 @@
       {
         "source": "panel",
         "target": "npm:jest-preset-angular",
+        "type": "static"
+      }
+    ],
+    "types": [
+      {
+        "source": "types",
+        "target": "npm:tslib",
         "type": "static"
       }
     ],
@@ -19961,6 +20096,23 @@
         "type": "static"
       }
     ],
+    "npm:@nestjs/config": [
+      {
+        "source": "npm:@nestjs/config",
+        "target": "npm:dotenv",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nestjs/config",
+        "target": "npm:dotenv-expand",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nestjs/config",
+        "target": "npm:lodash",
+        "type": "static"
+      }
+    ],
     "npm:@nestjs/core": [
       {
         "source": "npm:@nestjs/core",
@@ -23931,9 +24083,9 @@
         "type": "static"
       }
     ],
-    "npm:dotenv-expand": [
+    "npm:dotenv-expand@11.0.6": [
       {
-        "source": "npm:dotenv-expand",
+        "source": "npm:dotenv-expand@11.0.6",
         "target": "npm:dotenv",
         "type": "static"
       }
@@ -28429,7 +28581,7 @@
       },
       {
         "source": "npm:nx",
-        "target": "npm:dotenv-expand",
+        "target": "npm:dotenv-expand@11.0.6",
         "type": "static"
       },
       {

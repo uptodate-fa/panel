@@ -2961,6 +2961,15 @@
         "hash": "sha512-O+6Gs8UeDbyFpbSh2CPEz/UOrrdWPTBYNblZK5CxxLisYt4kGX3Sc+czffFonyjiGSq3jWLwJS/CCJc7tBr4sQ=="
       }
     },
+    "npm:@nestjs/axios": {
+      "type": "npm",
+      "name": "npm:@nestjs/axios",
+      "data": {
+        "version": "3.0.2",
+        "packageName": "@nestjs/axios",
+        "hash": "sha512-Z6GuOUdNQjP7FX+OuV2Ybyamse+/e0BFdTWBX5JxpBDKA+YkdLynDgG6HTF04zy6e9zPa19UX0WA2VDoehwhXQ=="
+      }
+    },
     "npm:@nestjs/common": {
       "type": "npm",
       "name": "npm:@nestjs/common",
@@ -2968,6 +2977,15 @@
         "version": "10.3.10",
         "packageName": "@nestjs/common",
         "hash": "sha512-H8k0jZtxk1IdtErGDmxFRy0PfcOAUg41Prrqpx76DQusGGJjsaovs1zjXVD1rZWaVYchfT1uczJ6L4Kio10VNg=="
+      }
+    },
+    "npm:@nestjs/config": {
+      "type": "npm",
+      "name": "npm:@nestjs/config",
+      "data": {
+        "version": "3.2.3",
+        "packageName": "@nestjs/config",
+        "hash": "sha512-p6yv/CvoBewJ72mBq4NXgOAi2rSQNWx3a+IMJLVKS2uiwFCOQQuiIatGwq6MRjXV3Jr+B41iUO8FIf4xBrZ4/w=="
       }
     },
     "npm:@nestjs/core": {
@@ -6375,6 +6393,15 @@
     "npm:dotenv-expand": {
       "type": "npm",
       "name": "npm:dotenv-expand",
+      "data": {
+        "version": "10.0.0",
+        "packageName": "dotenv-expand",
+        "hash": "sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A=="
+      }
+    },
+    "npm:dotenv-expand@11.0.6": {
+      "type": "npm",
+      "name": "npm:dotenv-expand@11.0.6",
       "data": {
         "version": "11.0.6",
         "packageName": "dotenv-expand",
@@ -20667,6 +20694,21 @@
       "type": "static"
     },
     {
+      "source": "npm:@nestjs/config",
+      "target": "npm:dotenv",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nestjs/config",
+      "target": "npm:dotenv-expand",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nestjs/config",
+      "target": "npm:lodash",
+      "type": "static"
+    },
+    {
       "source": "npm:@nestjs/core",
       "target": "npm:uid",
       "type": "static"
@@ -23252,6 +23294,21 @@
       "type": "static"
     },
     {
+      "source": "npm:axios",
+      "target": "npm:follow-redirects",
+      "type": "static"
+    },
+    {
+      "source": "npm:axios",
+      "target": "npm:form-data",
+      "type": "static"
+    },
+    {
+      "source": "npm:axios",
+      "target": "npm:proxy-from-env",
+      "type": "static"
+    },
+    {
       "source": "npm:axobject-query",
       "target": "npm:dequal",
       "type": "static"
@@ -25077,7 +25134,7 @@
       "type": "static"
     },
     {
-      "source": "npm:dotenv-expand",
+      "source": "npm:dotenv-expand@11.0.6",
       "target": "npm:dotenv",
       "type": "static"
     },
@@ -30348,7 +30405,7 @@
     },
     {
       "source": "npm:nx",
-      "target": "npm:dotenv-expand",
+      "target": "npm:dotenv-expand@11.0.6",
       "type": "static"
     },
     {
