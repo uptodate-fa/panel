@@ -1,5 +1,8 @@
+@if (content()) {
 <main fxLayout="row">
-  <nav fxFlex="300px" [innerHTML]="content()?.outlineHtml"></nav>
+  <nav fxFlex="360px" class="nav-body" [innerHTML]="content()?.outlineHtml">
+    
+  </nav>
   <mat-divider [vertical]="true" />
   <article fxFlex class="content-body" id="topicContainer" fxFlex>
     @if (content()) {
@@ -11,3 +14,6 @@
     }
   </article>
 </main>
+} @else {
+<mat-spinner [diameter]="32" />
+}

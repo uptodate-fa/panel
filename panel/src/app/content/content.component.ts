@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Content } from '@uptodate/types';
 import { HttpClient } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SHARED } from '../shared';
 
 @Component({
   selector: 'app-content',
   standalone: true,
-  imports: [CommonModule, SHARED],
+  imports: [CommonModule, SHARED, MatProgressSpinnerModule],
   templateUrl: './content.component.html',
   styleUrl: './content.component.scss',
 })

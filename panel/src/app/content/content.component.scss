@@ -1,8 +1,35 @@
 article {
   padding: 32px;
 }
-nav {
-  padding: 8px;
+
+mat-spinner {
+  margin: 64px auto;
+}
+
+::ng-deep nav.nav-body {
+  top: 0;
+  position: sticky;
+  max-height: 100vh;
+  overflow-y: auto;
+
+  a {
+    color: var(--sys-outline);
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding-inline-start: 16px;
+
+    li {
+      padding: 8px 0;
+    }
+  }
+
+  // & ul {
+  //   border-top: 1px solid var(--sys-outline-variant);
+  // }
 }
 
 ::ng-deep .content-body {

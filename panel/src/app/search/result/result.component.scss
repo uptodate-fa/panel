@@ -7,4 +7,8 @@ mat-tab-nav-panel {
   flex-direction: column;
   max-width: 720px;
   gap: 12px;
+
+  & > mat-card {
+    cursor: pointer;
+  }
 }
