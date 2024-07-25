@@ -1,7 +1,7 @@
 <mat-toolbar>
   <mat-toolbar-row id="primary-toolbar" class="form-theme">
     <img routerLink="/" id="logo" src="icons/wheel-icon.svg" id="logo" />
-    <img routerLink="/" id="typo" src="icons/typo-logo.svg">
+    <img routerLink="/" id="typo" src="icons/typo-logo.svg" />
     <h2></h2>
     <button mat-stroked-button>
       <i class="fa-solid fa-user"></i>
@@ -13,34 +13,16 @@
       Contents
       <i class="fa-regular fa-angle-down"></i>
     </button>
-    <a mat-flat-button>
-      Calculators
-    </a>
-    <a mat-flat-button>
-      Drug Interactions
-    </a>
-    <a mat-flat-button>
-      UpToDate Pathways
-    </a>
+    <a mat-flat-button routerLink="/calculators"> Calculators </a>
+    <a mat-flat-button> Drug Interactions </a>
+    <a mat-flat-button> UpToDate Pathways </a>
     <mat-menu #contentsMenu="matMenu">
-      <a mat-menu-item routerLink="/articles">
-        What's New
-      </a>
-      <a mat-menu-item routerLink="/articles">
-        Practice Changing UpDates
-      </a>
-      <a mat-menu-item routerLink="/articles">
-        Drug Information
-      </a>
-      <a mat-menu-item routerLink="/articles">
-        Patient Education
-      </a>
-      <a mat-menu-item routerLink="/articles">
-        Topics by Specialty
-      </a>
-      <a mat-menu-item routerLink="/articles">
-        Authors and Editors
-      </a>
+      <a mat-menu-item routerLink="/articles"> What's New </a>
+      <a mat-menu-item routerLink="/articles"> Practice Changing UpDates </a>
+      <a mat-menu-item routerLink="/articles"> Drug Information </a>
+      <a mat-menu-item routerLink="/articles"> Patient Education </a>
+      <a mat-menu-item routerLink="/articles"> Topics by Specialty </a>
+      <a mat-menu-item routerLink="/articles"> Authors and Editors </a>
     </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>
