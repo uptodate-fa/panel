@@ -1,16 +1,16 @@
-FROM node:18.18.2-alpine As development
+FROM node:20.14.0-alpine As development
 
 WORKDIR /usr/src/app
 
 COPY package.json .
 
-RUN yarn --ignore-engines
+RUN yarn
 
 COPY . .
 
 RUN yarn build:backend
 
-FROM node:18.18.2-alpine As production
+FROM node:20.14.0-alpine As production
 
 WORKDIR /backend
 
