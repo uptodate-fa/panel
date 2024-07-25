@@ -1,0 +1,46 @@
+article {
+  padding: 32px;
+}
+nav {
+  padding: 8px;
+}
+
+::ng-deep .content-body {
+  .headingAnchor {
+    padding-top: 32px;
+    border-top: 1px solid #ddd;
+    margin-top: 32px;
+  }
+
+  .h1 {
+    font-size: 18px;
+    font-weight: 700;
+
+    & + .headingEndMark {
+      display: none;
+    }
+  }
+
+  p {
+    font-weight: 300;
+    line-height: 24px;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--sys-primary);
+  }
+
+  .authorSectionElem {
+    background-color: var(--sys-primary-container) !important;
+    font-size: 12px;
+  }
+
+  .bulletIndent1 {
+    margin-inline-start: 24px;
+  }
+
+  .glyph {
+    margin-inline-end: 16px;
+  }
+}

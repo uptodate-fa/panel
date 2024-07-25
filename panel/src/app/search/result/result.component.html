@@ -13,7 +13,7 @@
 <mat-tab-nav-panel #tabPanel>
   <div id="article-list">
     @for (result of results() | async; track $index) {
-    <mat-card>
+    <mat-card [routerLink]="result.url">
       <mat-card-header>
         <mat-card-title class="primary-text">
           {{ result.title }}

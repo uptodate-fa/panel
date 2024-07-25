@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   get session() {
-    return 'AA769E46B675AEEE1C16C3413AA3EF3C.0605';
+    return '960115FA6D01464E9BED1E79AD991693.1105';
     if (this._sessionId) return this._sessionId;
     else if (!this._sessionPromise)
       this._sessionPromise = new Promise((resolve) => {
@@ -49,7 +49,7 @@ export class AuthService {
   async headers(): Promise<AxiosHeaders> {
     const sessionId = await this.session;
     const headers = new AxiosHeaders();
-    headers.set('Cookie', `JSESSIONID=sdcdsf${sessionId}`);
+    headers.set('Cookie', `JSESSIONID=${sessionId}`);
     return headers;
   }
 }

@@ -1,0 +1,13 @@
+<main fxLayout="row">
+  <nav fxFlex="300px" [innerHTML]="content()?.outlineHtml"></nav>
+  <mat-divider [vertical]="true" />
+  <article fxFlex class="content-body" id="topicContainer" fxFlex>
+    @if (content()) {
+    <div
+      id="topicContent"
+      class="utdArticleSection"
+      [innerHTML]="content()?.bodyHtml"
+    ></div>
+    }
+  </article>
+</main>

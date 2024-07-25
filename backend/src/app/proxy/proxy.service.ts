@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { HttpService } from '@nestjs/axios';
-import { SearchResult } from '@uptodate/types';
+import { Content, SearchResult } from '@uptodate/types';
 
 @Injectable()
 export class ProxyService {
@@ -46,5 +46,23 @@ export class ProxyService {
       );
     }
     return [];
+  }
+  async content(id: string) {
+    const response = await this.http
+      .get<any>(
+        `https://www.uptodate.com/services/app/contents/topic/${id}/json`,
+        {
+          headers: await this.auth.headers(),
+        }
+      )
+      .toPromise();
+
+    const data = response?.data?.data;
+    return {
+      bodyHtml: data?.bodyHtml,
+      id: data?.topicInfo?.id,
+      outlineHtml: data?.outlineHtml,
+      title: data?.topicInfo?.title,
+    } as Content;
   }
 }
