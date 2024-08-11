@@ -17,7 +17,7 @@ class ApiInterceptor implements HttpInterceptor {
     }
     if (!ignore) {
       req = req.clone({
-        url: `${environment.apiUrl}/${req.url}`,
+        url: `${environment.apiUrl}${req.url}`,
       });
 
       const user = sessionStorage.getItem('panelLoginUser') || localStorage.getItem('panelLoginUser');
