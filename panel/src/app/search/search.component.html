@@ -11,7 +11,7 @@
     />
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option
-        *ngFor="let option of items()"
+        *ngFor="let option of searchQuery.data()"
         [value]="option"
         routerLink="result"
         [queryParams]="{ query: option }"
@@ -24,12 +24,12 @@
       mat-icon-button
       matSuffix
       id="search-button"
-      [disabled]="!items()"
+      [disabled]="!searchQuery.data() && searchQuery.isLoading()"
       class="primary-background on-tertiary"
     >
-      @if (items()) {
+      @if (!searchQuery.isLoading()) {
       <i class="fa-regular fa-search fa-sm"></i>
-      } @else {
+      } @else  {
       <i class="fa-regular fa-circle-notch fa-spin"></i>
       }
     </button>
