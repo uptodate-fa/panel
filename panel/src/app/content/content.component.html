@@ -1,15 +1,17 @@
 @if (content()) {
 <main fxLayout="row">
-  <nav fxFlex="360px" class="nav-body" [innerHTML]="content()?.outlineHtml">
-    
-  </nav>
+  <nav
+    fxFlex="360px"
+    class="nav-body"
+    [innerHTML]="content()?.outlineHtml"
+  ></nav>
   <mat-divider [vertical]="true" />
   <article fxFlex class="content-body" id="topicContainer" fxFlex>
     @if (content()) {
     <div
       id="topicContent"
       class="utdArticleSection"
-      [innerHTML]="content()?.bodyHtml"
+      [innerHTML]="bodyHTML()"
     ></div>
     }
   </article>
