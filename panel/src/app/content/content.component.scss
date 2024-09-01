@@ -1,5 +1,7 @@
 article {
   padding: 32px;
+  //background add
+  background-color: var(--sys-on-primary);
 }
 
 mat-spinner {
@@ -11,6 +13,16 @@ mat-spinner {
   position: sticky;
   max-height: 100vh;
   overflow-y: auto;
+  //background add
+  background-color: var(--sys-on-primary);
+  
+  h2 {
+    font-size: 20px;
+    line-height: 8px;
+    padding: 0 16px;
+    border-bottom: none;
+    color: var(--sys-on-surface-variant);
+  }
 
   a {
     color: var(--sys-outline);
@@ -20,17 +32,51 @@ mat-spinner {
 
   ul {
     list-style-type: none;
-    padding-inline-start: 16px;
+    padding-inline-start: 0px;
 
     li {
-      padding: 8px 0;
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--sys-outline-variant);
+      display: block;
     }
   }
+
+
+a:hover{
+  color: var(--sys-primary);
+ }
+
+  //remove li border
+  ul li>ul li {
+    border: none;
+    
+  }
+
+  section {
+    border-bottom: 1px solid var(--sys-outline-variant);
+    h2 {
+      font-size: 20px;
+      line-height: 8px;
+      padding: 0 16px;
+      border-bottom: none;
+      color: var(--sys-on-surface-variant);
+    }
+    ul {
+      li {
+        border: none;
+      }
+    }
+  }
+  
+  
 
   // & ul {
   //   border-top: 1px solid var(--sys-outline-variant);
   // }
 }
+
+
+ //content style
 
 ::ng-deep .content-body {
   .headingAnchor {
@@ -39,6 +85,8 @@ mat-spinner {
     margin-top: 32px;
   }
 
+ 
+  
   .h1 {
     font-size: 18px;
     font-weight: 700;
@@ -49,7 +97,7 @@ mat-spinner {
   }
 
   p {
-    font-weight: 300;
+    font-weight: 400; //change from 300 to 400
     line-height: 24px;
   }
 
@@ -58,10 +106,138 @@ mat-spinner {
     color: var(--sys-primary);
   }
 
+  
+//link border add
+  a:hover {
+    text-decoration: none;
+    border-bottom: 1px solid;
+    transition: border-bottom-color 0.25s ease-in-out;
+  }
+
   .authorSectionElem {
     background-color: var(--sys-primary-container) !important;
     font-size: 12px;
+    //style add
+    display: flex;
+    position: relative;
+    align-items: center;
   }
+
+  //when not sign in
+  .authorSectionElem {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    .authorsElementsLeft {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding: 16px;
+    }
+  }
+  dl {
+      display: grid;
+      grid-gap: 4px 16px;
+      grid-template-columns: max-content;
+      font-size: 14px;
+      width: 50%;
+      margin-top: -2px;
+    }
+    dt {
+      padding-right: 5px;
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-variant: all-small-caps;
+      letter-spacing: 2px;
+      color: #232323;
+    }
+    dd {
+      margin: 0;
+      grid-column-start: 2;
+    }
+
+    .literatureReviewDate {
+      line-height: 20px;
+      border-top: 1px solid var(--sys-outline-variant);
+      padding-top: 8px;
+    }
+
+    
+    //login-signin banner
+
+  .subscribeMessage {
+    // text-align: center !important;
+    border: 1px solid var(--sys-outline) !important;
+    border-radius: 0 !important;
+    margin: 20px 0 !important;
+    background: var(--sys-surface-container-lowest) !important;
+    padding: 0 !important;
+    font-size: 16px;
+    filter: none !important;
+    p {
+      font-weight: 450;
+      padding: 32px 32px 0 32px;
+      line-height: 24px;
+    }
+    ul {
+      text-decoration: none;
+      text-align: start;
+      padding: 0 48px 24px 48px;
+      li {
+        text-decoration: none;
+        list-style-type: none;
+        line-height: 24px;
+        
+      }
+    }
+  }
+
+
+
+  //when signin**********
+  // .authorsElementsLeft {
+  //   display: flex;
+  //   width: 100%;
+  //   padding: 16px;
+  // }
+
+  // dl {
+  //   display: grid;
+  //   grid-gap: 4px 16px;
+  //   grid-template-columns: max-content;
+  //   font-size: 14px;
+  //   width: 50%;
+  //   margin-top: -2px;
+  // }
+  // dt {
+  //   padding-right: 5px;
+  //   font-size: 14px;
+  //   line-height: 18px;
+  //   font-weight: 600;
+  //   text-transform: uppercase;
+  //   font-variant: all-small-caps;
+  //   letter-spacing: 2px;
+  //   color: #232323;
+  // }
+  // dd {
+  //   margin: 0;
+  //   grid-column-start: 2;
+  // }
+  
+
+  // .authorsElementsLeft > div {
+  //   width: 50%;
+  //   font-size: 14px;
+  //   line-height: 20px;
+  // }
+
+  .headingAnchor {
+    
+  }
+
+
 
   .bulletIndent1 {
     margin-inline-start: 24px;
@@ -70,4 +246,24 @@ mat-spinner {
   .glyph {
     margin-inline-end: 16px;
   }
+
+  //more style
+  .topicTitle {
+    font-weight: 500;
+    display: block;
+    font-size: x-large;
+    text-align: center;
+    padding-bottom: 24px;
+  }
+
+  .disclaimer {
+    margin: 16px 0 8px;
+    padding: 6px;
+    line-height: 24px;
+    color: var(--sys-on-surface-variant);
+    border: 1px solid var(--sys-shadow);
+    background-color: var(--sys-surface-variant);
+  }
+
+  
 }
