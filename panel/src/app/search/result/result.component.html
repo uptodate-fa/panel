@@ -11,8 +11,11 @@
   <a mat-tab-link> Patient </a>
 </nav>
 <mat-tab-nav-panel #tabPanel>
+  @if (resultQuery.isLoading()) {
+  <mat-spinner [diameter]="36" />
+  } @else {
   <div id="article-list">
-    @for (result of results() | async; track $index) {
+    @for (result of resultQuery.data(); track result.title) {
     <mat-card [routerLink]="result.url">
       <mat-card-header>
         <mat-card-title class="primary-text">
@@ -32,4 +35,5 @@
     </mat-card>
     }
   </div>
+  }
 </mat-tab-nav-panel>

@@ -22,7 +22,9 @@ export class ProxyService {
     const response = await this.http
       .get<any>(
         `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}`,
-        {}
+        {
+          headers: await this.auth.headers(),
+        }
       )
       .toPromise();
 

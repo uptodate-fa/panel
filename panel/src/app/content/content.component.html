@@ -1,13 +1,15 @@
-@if (content()) {
+@if (contentQuery.isLoading()) {
+<mat-spinner [diameter]="32" />
+}@else {
 <main fxLayout="row">
   <nav
     fxFlex="360px"
     class="nav-body"
-    [innerHTML]="content()?.outlineHtml"
+    [innerHTML]="contentQuery.data()?.outlineHtml"
   ></nav>
   <mat-divider [vertical]="true" />
   <article fxFlex class="content-body" id="topicContainer" fxFlex>
-    @if (content()) {
+    @if (contentQuery.data()) {
     <div
       id="topicContent"
       class="utdArticleSection"
@@ -16,6 +18,4 @@
     }
   </article>
 </main>
-} @else {
-<mat-spinner [diameter]="32" />
 }

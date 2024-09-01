@@ -33,6 +33,7 @@ export class SearchComponent {
         this.http.get<string[]>(`/api/contents/presearch/${this.searchTerm()}`)
       ),
     enabled: !!this.searchTerm(),
+    staleTime: Infinity,
   }));
 
   constructor(private http: HttpClient) {
