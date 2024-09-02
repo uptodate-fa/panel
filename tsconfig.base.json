@@ -16,7 +16,8 @@
     "strictPropertyInitialization": false,
     "baseUrl": ".",
     "paths": {
-      "@uptodate/types": ["types/src/index.ts"]
+      "@uptodate/types": ["types/src/index.ts"],
+      "@uptodate/utils": ["utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
