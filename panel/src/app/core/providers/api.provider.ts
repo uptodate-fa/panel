@@ -24,11 +24,10 @@ class ApiInterceptor implements HttpInterceptor {
         url: `${environment.apiUrl}${req.url}`,
       });
 
-      const user =
+      const token =
         sessionStorage.getItem(JWT_KEY) || localStorage.getItem(JWT_KEY);
 
-      if (user) {
-        const token = JSON.parse(user).token;
+      if (token) {
         if (token) {
           req = req.clone({
             setHeaders: {

@@ -32,8 +32,8 @@ export class SearchComponent {
       lastValueFrom(
         this.http.get<string[]>(`/api/contents/presearch/${this.searchTerm()}`)
       ),
-    // enabled: !!this.searchTerm(),
-    // staleTime: Infinity,
+    enabled: !!this.searchTerm(),
+    staleTime: Infinity,
   }));
 
   constructor(private http: HttpClient) {
