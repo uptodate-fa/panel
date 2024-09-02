@@ -1,0 +1,25 @@
+<form (ngSubmit)="sendToken(phoneInput.value, $event)">
+  <mat-card class="surface-background">
+    <mat-card-content fxLayout="column" fxLayoutGap="16">
+      <h2>Sign in</h2>
+      <b>Mobile phone</b>
+      <p>enter your mobile phone number to receive otp code. </p>
+      <mat-form-field>
+        <mat-label>phone</mat-label>
+        <input
+          #phoneInput
+          matInput
+          type="tel"
+          placeholder="09121234567"
+          [readonly]="loading()"
+          minlength="11"
+          maxlength="11"
+        />
+      </mat-form-field>
+
+      <button id="action" type="submit" [disabled]="loading()" mat-flat-button>
+        continue
+      </button>
+    </mat-card-content>
+  </mat-card>
+</form>

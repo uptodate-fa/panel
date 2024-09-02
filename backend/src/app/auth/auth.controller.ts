@@ -44,7 +44,7 @@ export class AuthController {
   @Public()
   @Get('login/:mobile/:token')
   async loginWithToken(@Param() params) {
-    return this.auth.loginAppWithToken(
+    return this.auth.loginWithToken(
       PersianNumberService.toEnglish(params.mobile),
       PersianNumberService.toEnglish(params.token)
     );

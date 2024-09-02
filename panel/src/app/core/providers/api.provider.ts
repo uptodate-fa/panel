@@ -1,12 +1,16 @@
-import { HTTP_INTERCEPTORS, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+} from '@angular/common/http';
 import { Injectable, Provider } from '@angular/core';
 import { environment } from '../../../environments/environment';
+const JWT_KEY = 'jwtToken';
 const IGNORE_CASES = [new RegExp('^https?:\\/\\/?'), new RegExp('/i18n/')];
 
 @Injectable()
 class ApiInterceptor implements HttpInterceptor {
-  constructor() {}
-
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     let ignore = false;
     for (const cases of IGNORE_CASES) {
@@ -20,15 +24,18 @@ class ApiInterceptor implements HttpInterceptor {
         url: `${environment.apiUrl}${req.url}`,
       });
 
-      const user = sessionStorage.getItem('panelLoginUser') || localStorage.getItem('panelLoginUser');
+      const user =
+        sessionStorage.getItem(JWT_KEY) || localStorage.getItem(JWT_KEY);
 
       if (user) {
         const token = JSON.parse(user).token;
-        req = req.clone({
-          setHeaders: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        if (token) {
+          req = req.clone({
+            setHeaders: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        }
       }
     }
 

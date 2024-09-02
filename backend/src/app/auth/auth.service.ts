@@ -41,9 +41,9 @@ export class AuthService {
   async sendToken(phone: string, validateTime = 70000) {
     const token = Math.floor(Math.random() * 8000 + 1000).toString();
     await this.lookup(phone, process.env.KAVENEGAR_OTP, token);
-    this.mobilePhoneTokens[phone] = token;
+    this.mobilePhoneTokens.set(phone, token);
     setTimeout(() => {
-      delete this.mobilePhoneTokens[phone];
+      this.mobilePhoneTokens.delete(phone);
     }, validateTime);
   }
 
@@ -56,11 +56,12 @@ export class AuthService {
     );
   }
 
-  async loginAppWithToken(phone: string, token: string): Promise<string> {
+  async loginWithToken(phone: string, token: string): Promise<string> {
     if (
-      this.mobilePhoneTokens[phone] === PersianNumberService.toEnglish(token)
+      this.mobilePhoneTokens.get(phone) ===
+      PersianNumberService.toEnglish(token)
     ) {
-      delete this.mobilePhoneTokens[phone];
+      this.mobilePhoneTokens.delete(phone);
       const user = await this.userModel.findOne({ phone }).exec();
       if (user) {
         return this.login(user);

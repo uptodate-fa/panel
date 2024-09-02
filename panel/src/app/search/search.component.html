@@ -21,16 +21,16 @@
     </mat-autocomplete>
 
     <button
-      mat-icon-button
+      mat-fab
       matSuffix
       id="search-button"
       [disabled]="!searchQuery.data() && searchQuery.isLoading()"
-      class="primary-background on-tertiary"
+      class="primary-background on-primary-text"
     >
       @if (!searchQuery.isLoading()) {
-      <i class="fa-regular fa-search fa-sm"></i>
-      } @else  {
-      <i class="fa-regular fa-circle-notch fa-spin"></i>
+      <i class="fa-regular fa-search fa-lg"></i>
+      } @else {
+      <i class="fa-regular fa-circle-notch fa-lg fa-spin"></i>
       }
     </button>
   </mat-form-field>
