@@ -1,5 +1,8 @@
 {
-  "app": "UpTpDate",
+  "title": "UpTpDate",
+  "app": {
+    "back": "back"
+  },
   "search": {
     "label": "Search UpToDate"
   }

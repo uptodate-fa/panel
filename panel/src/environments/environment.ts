@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://uptodate-api.darkube.app',
+  // apiUrl: 'https://uptodate-api.darkube.app',
+  apiUrl: 'http://localhost:3000',
 };
 
 /*

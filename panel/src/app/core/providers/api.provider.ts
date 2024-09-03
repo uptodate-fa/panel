@@ -3,14 +3,18 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
+  HttpStatusCode,
 } from '@angular/common/http';
-import { Injectable, Provider } from '@angular/core';
+import { inject, Injectable, Provider } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 const JWT_KEY = 'jwtToken';
 const IGNORE_CASES = [new RegExp('^https?:\\/\\/?'), new RegExp('/i18n/')];
 
 @Injectable()
 class ApiInterceptor implements HttpInterceptor {
+  router = inject(Router);
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     let ignore = false;
     for (const cases of IGNORE_CASES) {
@@ -38,7 +42,16 @@ class ApiInterceptor implements HttpInterceptor {
       }
     }
 
-    return next.handle(req);
+    return next.handle(req).pipe(
+      catchError((err) => {
+        if (err.status === HttpStatusCode.Unauthorized) {
+          sessionStorage.removeItem(JWT_KEY);
+          localStorage.removeItem(JWT_KEY);
+          this.router.navigateByUrl('/login');
+        }
+        return throwError(err);
+      })
+    );
   }
 }
 

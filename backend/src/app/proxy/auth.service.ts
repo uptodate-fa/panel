@@ -14,6 +14,11 @@ export class AuthService {
     // this.login();
   }
 
+  async checkLogin(response?: any) {
+    console.log(response.assetList);
+    if (response?.assetList && !response.assetList.find(x => !!x.data.user)) await this.login();
+  }
+
   private async login() {
     const body = `userName=${USERNAME}&password=${PASSWORD}`;
     // console.log(body);

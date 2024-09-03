@@ -13,15 +13,17 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SHARED } from '../shared';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-content',
   standalone: true,
-  imports: [CommonModule, SHARED, MatProgressSpinnerModule],
+  imports: [CommonModule, SHARED, MatProgressSpinnerModule, MatToolbarModule],
   templateUrl: './content.component.html',
   styleUrl: './content.component.scss',
 })
 export class ContentComponent {
+  title: string;
   id = signal('');
   contentQuery = injectQuery(() => ({
     queryKey: ['content', this.id()],
@@ -38,9 +40,33 @@ export class ContentComponent {
       div.innerHTML = body;
 
       const allInnerDivs = div.querySelectorAll('div');
-      console.log(allInnerDivs);
-
       allInnerDivs.forEach((element) => {
+        if (element.id === 'topicTitle') {
+          element.remove();
+          this.title = element.innerText;
+        }
+        if (element.id) {
+          element.classList.add(element.id);
+        }
+      });
+
+      return div.innerHTML;
+    }
+
+    return body;
+  });
+
+  outlineHtml = computed(() => {
+    const body = this.contentQuery.data()?.outlineHtml;
+    if (body) {
+      const div = document.createElement('div');
+      div.innerHTML = body;
+
+      const allInnerDivs = div.querySelectorAll('div');
+      allInnerDivs.forEach((element) => {
+        if (element.id === 'topicTitle') {
+          element.remove();
+        }
         if (element.id) {
           element.classList.add(element.id);
         }

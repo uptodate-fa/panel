@@ -14,6 +14,7 @@ export class ProxyService {
         {}
       )
       .toPromise();
+    await this.auth.checkLogin(response?.data);
 
     return response?.data?.data?.searchTerms;
   }
@@ -27,7 +28,7 @@ export class ProxyService {
         }
       )
       .toPromise();
-
+    await this.auth.checkLogin(response?.data);
     const data = response?.data?.data;
 
     if (data) {
@@ -58,6 +59,7 @@ export class ProxyService {
         }
       )
       .toPromise();
+    await this.auth.checkLogin(response?.data);
 
     const data = response?.data?.data;
     return {

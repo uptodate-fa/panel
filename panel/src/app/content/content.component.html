@@ -1,11 +1,17 @@
 @if (contentQuery.isLoading()) {
 <mat-spinner [diameter]="32" />
 }@else {
+<mat-toolbar>
+  <button mat-icon-button goBack>
+    <i class="fa-regular fa-angle-left"></i>
+  </button>
+  <h1>{{ title }}</h1>
+</mat-toolbar>
 <main fxLayout="row">
   <nav
     fxFlex="360px"
     class="nav-body"
-    [innerHTML]="contentQuery.data()?.outlineHtml"
+    [innerHTML]="outlineHtml() | safeHtml"
   ></nav>
   <mat-divider [vertical]="true" />
   <article fxFlex class="content-body" id="topicContainer" fxFlex>
@@ -13,7 +19,7 @@
     <div
       id="topicContent"
       class="utdArticleSection"
-      [innerHTML]="bodyHTML()"
+      [innerHTML]="bodyHTML() | safeHtml"
     ></div>
     }
   </article>
