@@ -1,12 +1,13 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SHARED } from '../shared';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime } from 'rxjs';
+import { debounceTime, lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { injectQuery } from '@tanstack/angular-query-experimental';
 
 @Component({
   selector: 'app-search',
@@ -24,23 +25,22 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SearchComponent {
   searchControl = new FormControl();
-  items = signal<string[] | null>([]);
+  searchTerm = signal('');
+  searchQuery = injectQuery(() => ({
+    queryKey: ['presearch', this.searchTerm()],
+    queryFn: () =>
+      lastValueFrom(
+        this.http.get<string[]>(`/api/contents/presearch/${this.searchTerm()}`)
+      ),
+    enabled: !!this.searchTerm(),
+    staleTime: Infinity,
+  }));
 
   constructor(private http: HttpClient) {
     this.searchControl.valueChanges
       .pipe(debounceTime(400))
       .subscribe(async (query) => {
-        if (query.length > 2) {
-          this.items.set(null);
-          const items = await this.presearch(query).toPromise();
-          this.items.set(items || []);
-        } else {
-          this.items.set([]);
-        }
+        this.searchTerm.set(query);
       });
-  }
-
-  presearch(val: string) {
-    return this.http.get<string[]>(`/api/contents/presearch/${val}`);
   }
 }
