@@ -15,8 +15,8 @@ export class AuthService {
   }
 
   async checkLogin(response?: any) {
-    console.log(response.assetList);
-    if (response?.assetList && !response.assetList.find(x => !!x.data.user)) await this.login();
+    if (response?.assetList && !response.assetList.find((x) => !!x.data.user))
+      await this.login();
   }
 
   private async login() {

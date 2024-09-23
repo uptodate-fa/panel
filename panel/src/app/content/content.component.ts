@@ -28,7 +28,7 @@ export class ContentComponent {
   contentQuery = injectQuery(() => ({
     queryKey: ['content', this.id()],
     queryFn: () =>
-      lastValueFrom(this.http.get<Content>(`/api/contents/${this.id()}`)),
+      lastValueFrom(this.http.get<Content>(`/api/contents/translate/${this.id()}`)),
     enabled: !!this.id(),
     staleTime: Infinity,
   }));
