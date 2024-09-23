@@ -4,13 +4,18 @@ import { searchRoutes } from './search/search.routes';
 import { ContentComponent } from './content/content.component';
 import { CalculatorsComponent } from './calculators/calculators.component';
 import { authGuard } from './core/guards/auth.guard';
+import { InteractionsComponent } from './interactions/interactions.component';
 
 export const appRoutes: Route[] = [
   {
     path: '',
     component: ShellComponent,
     children: [
-      { path: 'login', loadChildren: () => import('./auth/auth.routes').then((m) => m.authRoutes) },
+      {
+        path: 'login',
+        loadChildren: () =>
+          import('./auth/auth.routes').then((m) => m.authRoutes),
+      },
       {
         path: '',
         canActivate: [authGuard],
@@ -19,6 +24,7 @@ export const appRoutes: Route[] = [
           { path: '', redirectTo: 'search', pathMatch: 'full' },
           { path: 'contents/:id', component: ContentComponent },
           { path: 'calculators', component: CalculatorsComponent },
+          { path: 'interactions', component: InteractionsComponent },
         ],
       },
     ],

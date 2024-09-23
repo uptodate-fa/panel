@@ -46,4 +46,8 @@ $light-theme: mat.define-theme(
 html,
 body {
   @include setTheme($light-theme);
+
+  .mat-mdc-card {
+    background-color: white;
+  }
 }

@@ -26,13 +26,18 @@ export class ContentsController {
     return this.proxy.content(id);
   }
 
+  @Get('outline/:id')
+  getOutlineById(@Param('id') id: string) {
+    return this.proxy.outline(id);
+  }
+
   @Get('translate/:id')
   async getByIdTranslated(@Param('id') id: string) {
     const content = await this.proxy.content(id);
     if (content) {
-      // const translated = await this.openai.getResponse(content.bodyHtml);
-      // console.log(translated);
-      // content.bodyHtml = translated;
+      const translated = await this.openai.getResponse(content.bodyHtml);
+      console.log(translated);
+      content.bodyHtml = translated;
       return content;
     }
   }

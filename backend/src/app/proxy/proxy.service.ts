@@ -35,6 +35,7 @@ export class ProxyService {
       return data.searchResults.map(
         (item) =>
           ({
+            id: item.id,
             title: item.title,
             url: item.url,
             description: item.snippet,
@@ -50,6 +51,7 @@ export class ProxyService {
     }
     return [];
   }
+
   async content(id: string) {
     const response = await this.http
       .get<any>(
@@ -67,6 +69,25 @@ export class ProxyService {
       id: data?.topicInfo?.id,
       outlineHtml: data?.outlineHtml,
       title: data?.topicInfo?.title,
+    } as Content;
+  }
+
+  async outline(id: string) {
+    const response = await this.http
+      .get<any>(
+        `https://www.uptodate.com/services/app/outline/topic/${id}/en-US/json`,
+        {
+          headers: await this.auth.headers(),
+        }
+      )
+      .toPromise();
+    await this.auth.checkLogin(response?.data);
+
+    const data = response?.data?.data;
+    return {
+      id: data?.topicId,
+      outlineHtml: data?.outlineHtml,
+      title: data?.topicTitle,
     } as Content;
   }
 }
