@@ -28,7 +28,7 @@ export class ThemeService {
 
   private get schema() {
     const lightSchema = this.theme.schemes.light.toJSON();
-    lightSchema.background = argbFromHex('#FFFFFF');
+    lightSchema.background = argbFromHex('#F6F6F6');
     lightSchema.onBackground = argbFromHex('#232323');
     lightSchema.primary = argbFromHex(PRIMARY);
     lightSchema.onPrimary = argbFromHex('#FFFFFF');
