@@ -1,0 +1,17 @@
+mat-card {
+  position: relative;
+  overflow: hidden;
+
+  #actions {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba($color: #000000, $alpha: 0.05);
+  }
+}
+
+::ng-deep #actions #outline-content {
+  max-height: 400px;
+  overflow-y: auto;
+}

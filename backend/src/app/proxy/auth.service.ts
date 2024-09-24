@@ -10,18 +10,27 @@ export class AuthService {
   private _sessionId: string;
   private _sessionPromise: Promise<string>;
 
-  constructor(private http: HttpService, private redis: RedisService) {
-    // this.login();
+  constructor(
+    private http: HttpService,
+    private redis: RedisService,
+  ) {
+    this.redis.sessionId.then((key) => {
+      if (key && !this._sessionPromise) {
+        this._sessionId = key;
+      }
+    });
   }
 
-  async checkLogin(response?: any) {
-    if (response?.assetList && !response.assetList.find((x) => !!x.data.user))
+  async checkLogin(key: string, response?: any) {
+    if (response?.assetList && !response.assetList.find((x) => !!x.data.user || !!x.data.userInfo)) {
+      console.log(key, 'need login');
       await this.login();
+    }
   }
 
   private async login() {
     const body = `userName=${USERNAME}&password=${PASSWORD}`;
-    // console.log(body);
+    console.log('start login');
     const response = await this.http
       .post('https://www.uptodate.com/services/app/login/json', body, {
         headers: {
@@ -36,6 +45,7 @@ export class AuthService {
       if (sessionCookie) {
         const sessionId = sessionCookie.split('=')[1].split(';')[0];
         this._sessionId = sessionId;
+        this.redis.setSessionId(sessionId);
       }
     }
   }

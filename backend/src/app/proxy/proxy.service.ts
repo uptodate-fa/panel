@@ -5,16 +5,19 @@ import { Content, SearchResult } from '@uptodate/types';
 
 @Injectable()
 export class ProxyService {
-  constructor(private auth: AuthService, private http: HttpService) {}
+  constructor(
+    private auth: AuthService,
+    private http: HttpService,
+  ) {}
 
   async preSearch(query: string, limit = 10): Promise<string[]> {
     const response = await this.http
       .get<any>(
         `https://www.uptodate.com/services/app/contents/search/autocomplete/json?term=${query}&limit=${limit}`,
-        {}
+        {},
       )
       .toPromise();
-    await this.auth.checkLogin(response?.data);
+    await this.auth.checkLogin('presearch', response?.data);
 
     return response?.data?.data?.searchTerms;
   }
@@ -25,10 +28,10 @@ export class ProxyService {
         `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}`,
         {
           headers: await this.auth.headers(),
-        }
+        },
       )
       .toPromise();
-    await this.auth.checkLogin(response?.data);
+    await this.auth.checkLogin('search', response?.data);
     const data = response?.data?.data;
 
     if (data) {
@@ -44,9 +47,9 @@ export class ProxyService {
                 ({
                   title: sub.title,
                   url: sub.url,
-                } as SearchResult)
+                }) as SearchResult,
             ),
-          } as SearchResult)
+          }) as SearchResult,
       );
     }
     return [];
@@ -58,10 +61,10 @@ export class ProxyService {
         `https://www.uptodate.com/services/app/contents/topic/${id}/json`,
         {
           headers: await this.auth.headers(),
-        }
+        },
       )
       .toPromise();
-    await this.auth.checkLogin(response?.data);
+    await this.auth.checkLogin('content', response?.data);
 
     const data = response?.data?.data;
     return {
@@ -78,10 +81,10 @@ export class ProxyService {
         `https://www.uptodate.com/services/app/outline/topic/${id}/en-US/json`,
         {
           headers: await this.auth.headers(),
-        }
+        },
       )
       .toPromise();
-    await this.auth.checkLogin(response?.data);
+    await this.auth.checkLogin('content', response?.data);
 
     const data = response?.data?.data;
     return {

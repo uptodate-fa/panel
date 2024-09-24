@@ -6,18 +6,19 @@ import { injectQuery } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-search-result-card',
   standalone: true,
-  imports: [CommonModule, SHARED, MatCardModule],
+  imports: [CommonModule, SHARED, MatCardModule, MatMenuModule],
   templateUrl: './search-result-card.component.html',
   styleUrl: './search-result-card.component.scss',
 })
 export class SearchResultCardComponent {
   private http = inject(HttpClient);
 
-  @Input({required: true}) result: SearchResult;
+  @Input() result: SearchResult;
   isMouseOver = signal(false);
   
   outlineQuery = injectQuery(() => ({
@@ -31,8 +32,4 @@ export class SearchResultCardComponent {
     enabled: this.isMouseOver(),
     staleTime: Infinity,
   }));
-
-  onMouseOver(ev: MouseEvent) {
-    console.log(ev);
-  }
 }

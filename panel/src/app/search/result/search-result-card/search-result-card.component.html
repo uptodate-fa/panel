@@ -1,19 +1,34 @@
 <mat-card
-      [routerLink]="result.url"
-    >
-      <mat-card-header>
-        <mat-card-title class="primary-text">
-          {{ result.title }}
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p [innerHTML]="result.description"></p>
-        @for (link of result.results; track $index) {
-        <div>
-          <a mat-button [routerLink]="link.url">
-            {{ link.title }}
-          </a>
-        </div>
-        }
-      </mat-card-content>
-    </mat-card>
+  [routerLink]="result.url"
+  (mouseenter)="isMouseOver.set(true)"
+  (mouseleave)="isMouseOver.set(false)"
+>
+  <mat-card-header>
+    <mat-card-title class="primary-text">
+      {{ result.title }}
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p [innerHTML]="result.description"></p>
+    @for (link of result.results; track $index) {
+      <div>
+        <a mat-button [routerLink]="link.url">
+          {{ link.title }}
+        </a>
+      </div>
+    }
+  </mat-card-content>
+  @if (outlineQuery.data()) {
+    <div fxLayout="column" fxLayoutAlign="center center" id="actions">
+      <button mat-icon-button [mat-menu-trigger-for]="menu" stopPropagation>
+        <i class="fa-solid fa-list"></i>
+      </button>
+      <mat-menu #menu="matMenu">
+        <div
+          id="outline-content"
+          [innerHTML]="outlineQuery.data()?.outlineHtml | safeHtml"
+        ></div>
+      </mat-menu>
+    </div>
+  }
+</mat-card>

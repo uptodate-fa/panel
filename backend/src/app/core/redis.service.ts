@@ -10,7 +10,8 @@ export class RedisService {
   private readonly redisClient: Redis;
 
   constructor() {
-    this.redisClient = new Redis(process.env.REDIS_URI);
+    if (process.env.REDIS_URI)
+      this.redisClient = new Redis(process.env.REDIS_URI);
   }
 
   get client() {
