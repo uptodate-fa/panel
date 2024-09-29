@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { HttpService } from '@nestjs/axios';
-import { Content, SearchResult } from '@uptodate/types';
+import { Content, Drug, SearchResult } from '@uptodate/types';
 
 @Injectable()
 export class ProxyService {
@@ -92,5 +92,20 @@ export class ProxyService {
       outlineHtml: data?.outlineHtml,
       title: data?.topicTitle,
     } as Content;
+  }
+
+  async searchDrug(query: string) {
+    const response = await this.http
+      .get<any>(
+        `https://www.uptodate.com/services/app/drug/interaction/search/autocomplete/json?term=${query}&page=1&pageSize=10`,
+        {
+          headers: await this.auth.headers(),
+        },
+      )
+      .toPromise();
+    await this.auth.checkLogin('content', response?.data);
+
+    const data = response?.data?.data;
+    return data.drugs as Drug[];
   }
 }

@@ -9,6 +9,7 @@ import { debounceTime, lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { DrugInteractionsService } from '../drug-interactions.service';
+import { Drug } from '@uptodate/types';
 
 @Component({
   selector: 'app-selector',
@@ -35,7 +36,7 @@ export class SelectorComponent {
     queryKey: ['presearch', this.searchTerm()],
     queryFn: () =>
       lastValueFrom(
-        this.http.get<string[]>(`/api/contents/presearch/${this.searchTerm()}`),
+        this.http.get<Drug[]>(`/api/drug-interactions/search/${this.searchTerm()}`),
       ),
     enabled: !!this.searchTerm(),
     staleTime: Infinity,
@@ -49,7 +50,8 @@ export class SelectorComponent {
       });
   }
 
-  onSelectItem(item: string) {
+  onSelectItem(item: Drug) {
     this.interactionsService.addItem(item);
+    this.searchControl.setValue('');
   }
 }

@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { SchemasModule } from './schemas/schemas.module';
+import { DrugInteractionsModule } from './drug-interactions/drug-interactions.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { SchemasModule } from './schemas/schemas.module';
     HttpModule,
     ContentsModule,
     CoreModule,
+    DrugInteractionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

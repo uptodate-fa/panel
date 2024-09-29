@@ -2,15 +2,15 @@
   <mat-drawer mode="side" opened>
     <app-selector />
     <mat-list>
-      @for (item of interactionsService.items(); track $index) {
+      @for (drug of interactionsService.items(); track $index) {
         <mat-list-item>
           <span matListItemTitle>
-            {{ item }}
+            {{ drug.name }}
           </span>
           <button
             mat-icon-button
             matListItemMeta
-            (click)="interactionsService.removeItem(item)"
+            (click)="interactionsService.removeItem(drug)"
           >
             <i class="fa-regular fa-xmark-circle fa-lg"></i>
           </button>

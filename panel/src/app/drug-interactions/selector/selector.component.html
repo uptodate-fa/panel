@@ -10,9 +10,9 @@
       #auto="matAutocomplete"
       (optionSelected)="onSelectItem($event.option.value)"
     >
-      @for (option of searchQuery.data(); track option) {
-        <mat-option [value]="option">
-          {{ option }}
+      @for (drug of searchQuery.data(); track drug.id) {
+        <mat-option [value]="drug">
+          {{ drug.name }}
         </mat-option>
       }
     </mat-autocomplete>
