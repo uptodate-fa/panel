@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   async checkLogin(key: string, response?: any) {
-    return;
+    if (process.env.SESSION_ID) return;
     if (
       response?.assetList &&
       !response.assetList.find((x) => !!x.data.user || !!x.data.userInfo)
@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   get session() {
-    return 'C0A93074ECB10C0039EF894B82F1C5C0.0605';
+    if (process.env.SESSION_ID) return process.env.SESSION_ID;
     if (this._sessionId) return this._sessionId;
     else if (!this._sessionPromise)
       this._sessionPromise = new Promise((resolve) => {
