@@ -4,3 +4,12 @@ export class Drug {
   globalId?: string;
   duplicateDrugPresent?: boolean;
 }
+
+export class DrugInteraction {
+  message?: string;
+  result: {
+    items: Drug[];
+    riskRating: string;
+    url: string;
+  }[];
+}

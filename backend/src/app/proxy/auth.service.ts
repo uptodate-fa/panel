@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   get session() {
-    return '66C6DAB81436973A99E1619AD6C6C5B6.1105';
+    return 'C0A93074ECB10C0039EF894B82F1C5C0.0605';
     if (this._sessionId) return this._sessionId;
     else if (!this._sessionPromise)
       this._sessionPromise = new Promise((resolve) => {

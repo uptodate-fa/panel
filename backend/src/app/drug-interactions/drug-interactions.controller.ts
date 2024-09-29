@@ -9,4 +9,9 @@ export class DrugInteractionsController {
   preSearch(@Param('query') query: string) {
     return this.proxy.searchDrug(query);
   }
+
+  @Get('interactions/:ids')
+  interactions(@Param('ids') ids: string) {
+    return this.proxy.drugInteractions(ids.split(','));
+  }
 }

@@ -6,6 +6,7 @@ import { SHARED } from '../shared';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { DrugInteractionsService } from './drug-interactions.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-drug-interactions',
@@ -17,6 +18,7 @@ import { DrugInteractionsService } from './drug-interactions.service';
     ResultComponent,
     MatSidenavModule,
     MatListModule,
+    MatToolbarModule,
   ],
   templateUrl: './drug-interactions.component.html',
   styleUrl: './drug-interactions.component.scss',
