@@ -1,1 +1,36 @@
-<p>selector works!</p>
+<div class="container" fxLayout="column">
+  <mat-form-field appearance="outline" id="search-field">
+    <input
+      type="text"
+      matInput
+      [formControl]="searchControl"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="onSelectItem($event.option.value)"
+    >
+      @for (option of searchQuery.data(); track option) {
+        <mat-option [value]="option">
+          {{ option }}
+        </mat-option>
+      }
+    </mat-autocomplete>
+
+    <i matPrefix class="fa-regular fa-search fa-lg search-icon"></i>
+
+    <button
+      mat-flat-button
+      matSuffix
+      id="search-button"
+      [disabled]="!searchQuery.data() && searchQuery.isLoading()"
+      class="primary-background on-primary-text"
+    >
+      @if (!searchQuery.isLoading()) {
+        Add
+      } @else {
+        <i class="fa-regular fa-circle-notch fa-lg fa-spin"></i>
+      }
+    </button>
+  </mat-form-field>
+</div>

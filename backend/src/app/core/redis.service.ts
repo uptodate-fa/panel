@@ -19,7 +19,7 @@ export class RedisService {
   }
 
   get sessionId() {
-    return this.client.get(RedisKey.SessionId);
+    return this.client?.get(RedisKey.SessionId);
   }
 
   setSessionId(value: string) {

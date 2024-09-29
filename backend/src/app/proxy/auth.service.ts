@@ -14,7 +14,7 @@ export class AuthService {
     private http: HttpService,
     private redis: RedisService,
   ) {
-    this.redis.sessionId.then((key) => {
+    this.redis.sessionId?.then((key) => {
       if (key && !this._sessionPromise) {
         this._sessionId = key;
       }
@@ -22,7 +22,11 @@ export class AuthService {
   }
 
   async checkLogin(key: string, response?: any) {
-    if (response?.assetList && !response.assetList.find((x) => !!x.data.user || !!x.data.userInfo)) {
+    return;
+    if (
+      response?.assetList &&
+      !response.assetList.find((x) => !!x.data.user || !!x.data.userInfo)
+    ) {
       console.log(key, 'need login');
       await this.login();
     }
@@ -61,6 +65,7 @@ export class AuthService {
   }
 
   async headers(): Promise<AxiosHeaders> {
+    return;
     const sessionId = await this.session;
     const headers = new AxiosHeaders();
     headers.set('Cookie', `JSESSIONID=${sessionId}`);
