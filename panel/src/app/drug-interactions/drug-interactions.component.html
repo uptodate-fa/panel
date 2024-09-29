@@ -3,7 +3,18 @@
     <app-selector />
     <mat-list>
       @for (item of interactionsService.items(); track $index) {
-        <mat-list-item>{{ item }}</mat-list-item>
+        <mat-list-item>
+          <span matListItemTitle>
+            {{ item }}
+          </span>
+          <button
+            mat-icon-button
+            matListItemMeta
+            (click)="interactionsService.removeItem(item)"
+          >
+            <i class="fa-regular fa-xmark-circle fa-lg"></i>
+          </button>
+        </mat-list-item>
       }
     </mat-list>
   </mat-drawer>

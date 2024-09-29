@@ -13,4 +13,13 @@ export class DrugInteractionsService {
     if (this.items().includes(item)) return;
     this.items.update((prev) => [...prev, item]);
   }
+
+  removeItem(item: string) {
+    const index = this.items().indexOf(item);
+    if (index > -1) {
+      const copy = [...this.items()];
+      copy.splice(index, 1);
+      this.items.set(copy);
+    }
+  }
 }
