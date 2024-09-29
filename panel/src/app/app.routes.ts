@@ -4,7 +4,7 @@ import { searchRoutes } from './search/search.routes';
 import { ContentComponent } from './content/content.component';
 import { CalculatorsComponent } from './calculators/calculators.component';
 import { authGuard } from './core/guards/auth.guard';
-import { InteractionsComponent } from './interactions/interactions.component';
+import { DrugInteractionsComponent } from './drug-interactions/drug-interactions.component';
 
 export const appRoutes: Route[] = [
   {
@@ -24,7 +24,7 @@ export const appRoutes: Route[] = [
           { path: '', redirectTo: 'search', pathMatch: 'full' },
           { path: 'contents/:id', component: ContentComponent },
           { path: 'calculators', component: CalculatorsComponent },
-          { path: 'interactions', component: InteractionsComponent },
+          { path: 'interactions', component: DrugInteractionsComponent },
         ],
       },
     ],
