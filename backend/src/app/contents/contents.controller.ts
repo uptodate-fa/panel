@@ -35,10 +35,15 @@ export class ContentsController {
   async getByIdTranslated(@Param('id') id: string) {
     const content = await this.proxy.content(id);
     if (content) {
-      const translated = await this.openai.getResponse(content.bodyHtml);
-      console.log(translated);
-      content.bodyHtml = translated;
-      return content;
+      console.log('start translate')
+      try {
+        const translated = await this.openai.getResponse(content.bodyHtml);
+        console.log('translate done')
+        content.bodyHtml = translated;
+        return content;
+      } catch (error) {
+        console.log('translate error', error);
+      }
     }
   }
 }

@@ -1,27 +1,60 @@
 @if (contentQuery.isLoading()) {
-<mat-spinner [diameter]="32" />
-}@else {
-<mat-toolbar>
-  <button mat-icon-button goBack>
-    <i class="fa-regular fa-angle-left"></i>
-  </button>
-  <h1>{{ title }}</h1>
-</mat-toolbar>
-<main fxLayout="row">
-  <nav
-    fxFlex="360px"
-    class="nav-body"
-    [innerHTML]="outlineHtml() | safeHtml"
-  ></nav>
-  <mat-divider [vertical]="true" />
-  <article fxFlex class="content-body" id="topicContainer" fxFlex>
-    @if (contentQuery.data()) {
-    <div
-      id="topicContent"
-      class="utdArticleSection"
-      [innerHTML]="bodyHTML() | safeHtml"
-    ></div>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="16px"
+    style="padding: 24px"
+  >
+    <mat-spinner [diameter]="32" />
+    @if (translate()) {
+      <label>it will take a minute to translate...</label>
     }
-  </article>
-</main>
+  </div>
+} @else {
+  <mat-toolbar fxLayout="row" fxLayoutGap="8px">
+    <button mat-icon-button goBack>
+      <i class="fa-regular fa-angle-left"></i>
+    </button>
+    <h1 fxFlex>{{ title }}</h1>
+    @if (!translate()) {
+      <button
+        mat-flat-button
+        class="tertiary-button"
+        (click)="translate.set(true)"
+      >
+        <i class="fa-solid fa-sparkles"></i>
+        AI translation
+      </button>
+    } @else {
+      <button
+        mat-stroked-button
+        (click)="translate.set(false)"
+      >
+        view original
+      </button>
+    }
+  </mat-toolbar>
+  <main fxLayout="row">
+    <nav
+      fxFlex="360px"
+      class="nav-body"
+      [innerHTML]="outlineHtml() | safeHtml"
+    ></nav>
+    <mat-divider [vertical]="true" />
+    <article
+      fxFlex
+      class="content-body"
+      id="topicContainer"
+      fxFlex
+      [class.fa]="translate()"
+    >
+      @if (contentQuery.data()) {
+        <div
+          id="topicContent"
+          class="utdArticleSection"
+          [innerHTML]="bodyHTML() | safeHtml"
+        ></div>
+      }
+    </article>
+  </main>
 }

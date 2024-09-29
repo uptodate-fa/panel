@@ -2,10 +2,11 @@ article {
   padding: 32px;
   //background add
   background-color: var(--sys-on-primary);
-}
 
-mat-spinner {
-  margin: 64px auto;
+  &.fa {
+    font-family: Vazirmatn;
+    direction: rtl;
+  }
 }
 
 h1 {

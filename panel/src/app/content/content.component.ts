@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  computed,
-  signal,
-  ViewChild,
-} from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Content } from '@uptodate/types';
@@ -25,10 +19,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 export class ContentComponent {
   title: string;
   id = signal('');
+  translate = signal(false);
   contentQuery = injectQuery(() => ({
-    queryKey: ['content', this.id()],
+    queryKey: ['content', this.id(), this.translate()],
     queryFn: () =>
-      lastValueFrom(this.http.get<Content>(`/api/contents/${this.id()}`)),
+      lastValueFrom(
+        this.http.get<Content>(
+          this.translate()
+            ? `/api/contents/translate/${this.id()}`
+            : `/api/contents/${this.id()}`,
+        ),
+      ),
     enabled: !!this.id(),
     staleTime: Infinity,
   }));
@@ -78,7 +79,10 @@ export class ContentComponent {
     return body;
   });
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+  ) {
     this.route.params.subscribe((params) => {
       const id = params['id'];
       if (id) this.id.set(id);

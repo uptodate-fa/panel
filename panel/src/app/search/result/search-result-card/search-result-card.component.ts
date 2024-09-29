@@ -29,7 +29,7 @@ export class SearchResultCardComponent {
           `/api/contents/outline/${this.result.id}`
         )
       ),
-    enabled: this.isMouseOver(),
+    enabled: this.isMouseOver() && !!this.result.id,
     staleTime: Infinity,
   }));
 }
