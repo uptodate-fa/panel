@@ -7,6 +7,11 @@
     <img routerLink="/" id="typo" src="icons/typo-logo.svg" />
     <h2></h2>
     @if (auth.isProfileComplete) {
+      @if (!auth.user?.subscription) {
+        <button mat-flat-button (click)="openProfile()" class="error-button">
+          No Subscription
+        </button>
+      }
       <button mat-stroked-button (click)="openProfile()">
         <i class="fa-solid fa-user"></i>
         {{ auth.user?.firstName }}

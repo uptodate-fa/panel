@@ -1,5 +1,5 @@
 import { User, UserRole } from '@uptodate/types';
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 export const UserSchema = new mongoose.Schema<User>(
   {
@@ -11,6 +11,7 @@ export const UserSchema = new mongoose.Schema<User>(
     city: { type: String },
     phone: { type: String, required: true, unique: true },
     role: { type: String, enum: UserRole, default: UserRole.User },
+    subscription: { type: Schema.Types.ObjectId, ref: 'Subscription' },
   },
   {
     timestamps: true,

@@ -8,7 +8,7 @@ export const profileGuard: CanActivateFn = async () => {
   const auth = inject(AuthService);
   const dialog = inject(MatDialog);
   setTimeout(() => {
-    if (!auth.isProfileComplete) {
+    if (!auth.isProfileComplete && auth.user) {
       dialog.open(ProfileDialogComponent, {
         disableClose: true,
       });

@@ -1,3 +1,5 @@
+import { Subscription } from "./subscription";
+
 export enum UserRole {
   Admin = 'ADMIN',
   User = 'USER',
@@ -15,5 +17,6 @@ export class User {
   role: UserRole;
   token?: string;
   exp?: number;
+  subscription?: Subscription;
   createdAt: Date;
 }
