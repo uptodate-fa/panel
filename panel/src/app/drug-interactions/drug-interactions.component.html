@@ -1,28 +1,35 @@
 <mat-drawer-container class="example-container">
   <mat-drawer mode="side" opened>
     <app-selector />
-    <mat-list>
+    <mat-list class="left-add">
       @for (drug of interactionsService.items(); track $index) {
-        <mat-list-item>
-          <span matListItemTitle>
-            {{ drug.name }}
-          </span>
-          <button
-            mat-icon-button
-            matListItemMeta
-            (click)="interactionsService.removeItem(drug)"
-          >
-            <i class="fa-regular fa-xmark-circle fa-lg"></i>
-          </button>
-        </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>
+          {{ drug.name }}
+        </span>
+        <button
+          mat-icon-button
+          matListItemMeta
+          (click)="interactionsService.removeItem(drug)"
+        >
+          <i class="fa-regular fa-xmark-circle fa-lg"></i>
+        </button>
+      </mat-list-item>
       }
     </mat-list>
     <mat-divider />
-    <mat-toolbar fxLayout="row" fxLayoutAlign="end center">
-      <button mat-flat-button (click)="interactionsService.analyze()">
+    <mat-toolbar fxLayout="row" fxLayoutAlign="end center" class="left-toolbar">
+      <button mat-flat-button class="clear-btn">Clear</button>
+      <button
+        mat-flat-button
+        (click)="interactionsService.analyze()"
+        class="analyze-btn"
+      >
         Analyze
       </button>
     </mat-toolbar>
   </mat-drawer>
-  <mat-drawer-content>Main content</mat-drawer-content>
+  <mat-drawer-content>
+    <app-result />
+  </mat-drawer-content>
 </mat-drawer-container>
