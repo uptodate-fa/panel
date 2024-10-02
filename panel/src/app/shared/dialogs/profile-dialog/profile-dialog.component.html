@@ -14,7 +14,9 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>birth date</mat-label>
-      <input matInput formControlName="birthDate" required />
+      <input (focus)="picker.open()" matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="YYYY-MM-DD">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="multi-year" startAt="1993-01-01"></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
       <mat-label>email</mat-label>

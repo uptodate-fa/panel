@@ -12,9 +12,9 @@ import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../auth/auth.service';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { injectMutation } from '@tanstack/angular-query-experimental';
-import { lastValueFrom } from 'rxjs';
 import { User } from '@uptodate/types';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-profile-dialog',
@@ -26,6 +26,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatInputModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatDatepickerModule,
   ],
   templateUrl: './profile-dialog.component.html',
   styleUrl: './profile-dialog.component.scss',

@@ -1,4 +1,8 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -11,6 +15,7 @@ import {
   provideAngularQuery,
   QueryClient,
 } from '@tanstack/angular-query-experimental';
+import { MatNativeDateModule } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,5 +26,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideTranslation(),
     apiInterceptorProvider(),
+    importProvidersFrom(MatNativeDateModule),
   ],
 };

@@ -6,11 +6,13 @@
     <img routerLink="/" id="logo" src="icons/wheel-icon.svg" id="logo" />
     <img routerLink="/" id="typo" src="icons/typo-logo.svg" />
     <h2></h2>
-    <button mat-stroked-button (click)="openProfile()">
-      <i class="fa-solid fa-user"></i>
-      {{ auth.user?.firstName }}
-      {{ auth.user?.lastName }}
-    </button>
+    @if (auth.isProfileComplete) {
+      <button mat-stroked-button (click)="openProfile()">
+        <i class="fa-solid fa-user"></i>
+        {{ auth.user?.firstName }}
+        {{ auth.user?.lastName }}
+      </button>
+    }
   </mat-toolbar-row>
   <mat-toolbar-row class="primary-background" id="secondary-toolbar">
     <button mat-flat-button [matMenuTriggerFor]="contentsMenu">
