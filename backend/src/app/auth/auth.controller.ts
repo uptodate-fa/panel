@@ -36,7 +36,7 @@ export class AuthController {
   @Get('info')
   async info(@LoginUser() user: User) {
     if (user && user.id) {
-      return this.userModel.findById(user.id).populate(['subscription']).exec();
+      return this.userModel.findById(user.id).populate('subscription').exec();
     }
     throw new HttpException('no user found', HttpStatus.NOT_FOUND);
   }

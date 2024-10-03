@@ -11,9 +11,12 @@ const JWT_KEY = 'jwtToken';
 export class AuthService {
   private userInfo: User;
   constructor(private client: HttpClient) {
-    this.client.get<User>(`/api/auth/info`).subscribe((user) => {
-      if (user) this.userInfo = user;
-    });
+    this.revalidateUserInfo();
+  }
+
+  async revalidateUserInfo() {
+    const user = await lastValueFrom(this.client.get<User>(`/api/auth/info`));
+    if (user) this.userInfo = user;
   }
 
   async sendToken(mobilePhone: string) {
@@ -31,9 +34,7 @@ export class AuthService {
       .toPromise();
 
     if (jwtToken) this.setToken(jwtToken);
-    this.client.get<User>(`/api/auth/info`).subscribe((user) => {
-      this.userInfo = user;
-    });
+    this.revalidateUserInfo();
     return this.user;
   }
 
@@ -45,9 +46,7 @@ export class AuthService {
 
   async update(dto: User) {
     await lastValueFrom(this.client.put(`/api/auth/edit`, dto));
-    this.client.get<User>(`/api/auth/info`).subscribe((user) => {
-      if (user) this.userInfo = user;
-    });
+    this.revalidateUserInfo();
   }
 
   get user() {

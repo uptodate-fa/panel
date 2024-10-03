@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { ProfileDialogComponent } from '../shared/dialogs/profile-dialog/profile-dialog.component';
 import { AuthService } from '../auth/auth.service';
+import { SubscriptionFormDialogComponent } from '../shared/dialogs/subscription-form-dialog/subscription-form-dialog.component';
 
 @Component({
   selector: 'app-shell',
@@ -29,5 +30,9 @@ export class ShellComponent {
 
   openProfile() {
     this.dialog.open(ProfileDialogComponent);
+  }
+
+  openSubscriptionForm() {
+    this.dialog.open(SubscriptionFormDialogComponent);
   }
 }

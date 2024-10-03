@@ -8,7 +8,11 @@
     <h2></h2>
     @if (auth.isProfileComplete) {
       @if (!auth.user?.subscription) {
-        <button mat-flat-button (click)="openProfile()" class="error-button">
+        <button
+          mat-flat-button
+          (click)="openSubscriptionForm()"
+          class="error-button"
+        >
           No Subscription
         </button>
       }

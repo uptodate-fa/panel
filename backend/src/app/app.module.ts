@@ -11,6 +11,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { SchemasModule } from './schemas/schemas.module';
 import { DrugInteractionsModule } from './drug-interactions/drug-interactions.module';
+import { SubscriptionModule } from './subscription/subscription.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { DrugInteractionsModule } from './drug-interactions/drug-interactions.mo
     ContentsModule,
     CoreModule,
     DrugInteractionsModule,
+    SubscriptionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
