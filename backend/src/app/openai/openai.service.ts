@@ -31,7 +31,7 @@ export class OpenaiService {
       const message = messages.data.shift();
       return message.content[0]['text'].value;
     } else {
-      console.error(run.status);
+      console.error(run.status, run);
     }
     return;
   }

@@ -17,6 +17,7 @@ export class AuthService {
     this.redis.sessionId?.then((key) => {
       if (key && !this._sessionPromise) {
         this._sessionId = key;
+        console.log(this._sessionId);
       }
     });
   }

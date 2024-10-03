@@ -37,20 +37,10 @@ export class ContentComponent {
   bodyHTML = computed(() => {
     const body = this.contentQuery.data()?.bodyHtml;
     if (body) {
-      const div = document.createElement('div');
-      div.innerHTML = body;
+      const div = Content.getBodyHtml(body);
 
-      const allInnerDivs = div.querySelectorAll('div');
-      allInnerDivs.forEach((element) => {
-        if (element.id === 'topicTitle') {
-          element.remove();
-          this.title = element.innerText;
-        }
-        if (element.id) {
-          element.classList.add(element.id);
-        }
-      });
-
+      const titleElement = div.querySelector<HTMLDivElement>('#topicTitle');
+      if (titleElement) this.title = titleElement.innerText;
       return div.innerHTML;
     }
 
