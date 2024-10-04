@@ -11,6 +11,13 @@ export const ContentSchema = new mongoose.Schema<Content>(
     translatedOutlineHtml: { type: String },
     translatedBodyHtml: { type: String },
     translatedAt: { type: Date },
+    relatedGraphics: [
+      {
+        title: { type: String, required: true },
+        imageKey: { type: String, required: true },
+        type: { type: String, required: true },
+      },
+    ],
   },
   {
     timestamps: true,

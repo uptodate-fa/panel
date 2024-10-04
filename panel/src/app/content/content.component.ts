@@ -1,19 +1,11 @@
 import { Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Content } from '@uptodate/types';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SHARED } from '../shared';
-import {
-  injectMutation,
-  injectQuery,
-} from '@tanstack/angular-query-experimental';
-import { lastValueFrom } from 'rxjs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
-import { AlertDialogComponent } from '../shared/dialogs/alert-dialog/alert-dialog.component';
+import { ContentService } from './content.service';
 
 @Component({
   selector: 'app-content',
@@ -23,16 +15,14 @@ import { AlertDialogComponent } from '../shared/dialogs/alert-dialog/alert-dialo
   styleUrl: './content.component.scss',
 })
 export class ContentComponent {
-  title: string;
   id = signal('');
   showTranslation = signal(false);
+  contentQuery = this.contentService.getContentQuery(this.id);
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private snack: MatSnackBar,
-    private dialog: MatDialog,
-    private router: Router,
+    private contentService: ContentService,
   ) {
     this.route.params.subscribe((params) => {
       const id = params['id'];
@@ -40,74 +30,18 @@ export class ContentComponent {
     });
   }
 
-  contentQuery = injectQuery(() => ({
-    queryKey: ['content', this.id()],
-    queryFn: () =>
-      lastValueFrom(this.http.get<Content>(`/api/contents/${this.id()}`)),
-    enabled: !!this.id(),
-    staleTime: Infinity,
-  }));
-
-  translateMutation = injectMutation((client) => ({
-    mutationFn: () =>
-      lastValueFrom(this.http.get(`/api/contents/translate/${this.id()}`)),
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['content', this.id()] });
-      this.snack
-        .open(
-          'Translation complete! Please review the translated article.',
-          'View',
-          { duration: 5000 },
-        )
-        .onAction()
-        .subscribe(() => {
-          this.router.navigateByUrl(`/contents/${this.id()}`);
-        });
-    },
-    onError: () => {
-      client.invalidateQueries({ queryKey: ['content', this.id()] });
-      this.snack
-        .open('Translation failed. Please try again.', 'Retry', {
-          duration: 5000,
-        })
-        .onAction()
-        .subscribe(() => {
-          this.translateMutation.mutate();
-        });
-    },
-    onMutate: () => {
-      this.dialog
-        .open(AlertDialogComponent, {
-          data: {
-            title: this.contentQuery.data()?.translatedAt
-              ? 'Translation Ongoing'
-              : 'Translation Request Submitted',
-            okText: this.contentQuery.data()?.translatedAt ? 'Got it' : 'OK',
-            description: this.contentQuery.data()?.translatedAt
-              ? "The translation is still in progress. Please wait a few more minutes until the process is complete. You'll be notified once it's done."
-              : 'Your translation request has been successfully submitted. The AI is now translating your article, and this process may take around 10 minutes. Please check back later to review the completed translation.',
-            hideCancel: true,
-          },
-          disableClose: true,
-        })
-        .afterClosed()
-        .subscribe(() => {
-          if (!this.contentQuery.data()?.translatedAt) {
-            client.invalidateQueries({ queryKey: ['content', this.id()] });
-          }
-        });
-    },
-  }));
+  title = computed(() => {
+    return this.contentQuery.data()?.title;
+  });
 
   bodyHTML = computed(() => {
+    const data = this.contentQuery.data();
     const body = this.showTranslation()
-      ? this.contentQuery.data()?.translatedBodyHtml
-      : this.contentQuery.data()?.bodyHtml;
+      ? data?.translatedBodyHtml
+      : data?.bodyHtml;
     if (body) {
-      const div = Content.getBodyHtml(body);
-
-      const titleElement = div.querySelector<HTMLDivElement>('#topicTitle');
-      if (titleElement) this.title = titleElement.innerText;
+      const div = this.contentService.getBodyHtml(body, data?.relatedGraphics);
+      console.log(div);
       return div.innerHTML;
     }
 
@@ -139,8 +73,10 @@ export class ContentComponent {
   });
 
   translate() {
-    if (this.contentQuery.data()?.translatedBodyHtml)
-      this.showTranslation.set(true);
-    else this.translateMutation.mutate();
+    const data = this.contentQuery.data();
+    if (data) {
+      if (data.translatedBodyHtml) this.showTranslation.set(true);
+      else this.contentService.translateMutation.mutate(data);
+    }
   }
 }

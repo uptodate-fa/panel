@@ -1,10 +1,11 @@
 mat-toolbar {
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 100;
 }
 #primary-toolbar {
   gap: 16px;
+  height: 56px;
 
   #logo {
     width: 32px;
@@ -24,5 +25,9 @@ mat-toolbar {
 }
 
 #secondary-toolbar {
-  height: 48px;
+  height: 40px;
+}
+
+main {
+  margin-top: calc(40px + 56px);
 }

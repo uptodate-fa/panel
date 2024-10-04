@@ -80,6 +80,7 @@ export class ProxyService {
       uptodateId: data?.topicInfo?.id,
       outlineHtml: data?.outlineHtml,
       title: data?.topicInfo?.title,
+      relatedGraphics: data?.topicInfo?.relatedGraphics,
     } as Content;
   }
 

@@ -15,7 +15,7 @@
     <button mat-icon-button goBack>
       <i class="fa-regular fa-angle-left"></i>
     </button>
-    <h1 fxFlex>{{ title }}</h1>
+    <h1 fxFlex>{{ title() }}</h1>
     @if (!showTranslation()) {
       <button mat-flat-button class="tertiary-button" (click)="translate()">
         <i
@@ -38,6 +38,7 @@
       fxFlex="360px"
       class="nav-body"
       [innerHTML]="outlineHtml() | safeHtml"
+      [class.fa]="showTranslation()"
     ></nav>
     <mat-divider [vertical]="true" />
     <article

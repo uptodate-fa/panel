@@ -9,8 +9,15 @@ article {
   }
 }
 
+nav {
+  &.fa {
+    font-family: Vazirmatn;
+  }
+}
+
 h1 {
   font-weight: 800;
+  text-align: center;
 }
 
 ::ng-deep nav.nav-body {
@@ -20,7 +27,7 @@ h1 {
   overflow-y: auto;
   //background add
   background-color: var(--sys-on-primary);
-  
+
   h2 {
     font-size: 20px;
     line-height: 8px;
@@ -46,15 +53,13 @@ h1 {
     }
   }
 
-
-a:hover{
-  color: var(--sys-primary);
- }
+  a:hover {
+    color: var(--sys-primary);
+  }
 
   //remove li border
-  ul li>ul li {
+  ul li > ul li {
     border: none;
-    
   }
 
   section {
@@ -72,16 +77,13 @@ a:hover{
       }
     }
   }
-  
-  
 
   // & ul {
   //   border-top: 1px solid var(--sys-outline-variant);
   // }
 }
 
-
- //content style
+//content style
 
 ::ng-deep .content-body {
   .headingAnchor {
@@ -90,8 +92,6 @@ a:hover{
     margin-top: 32px;
   }
 
- 
-  
   .h1 {
     font-size: 18px;
     font-weight: 700;
@@ -111,8 +111,7 @@ a:hover{
     color: var(--sys-primary);
   }
 
-  
-//link border add
+  //link border add
   a:hover {
     text-decoration: none;
     border-bottom: 1px solid;
@@ -141,36 +140,35 @@ a:hover{
     }
   }
   dl {
-      display: grid;
-      grid-gap: 4px 16px;
-      grid-template-columns: max-content;
-      font-size: 14px;
-      width: 50%;
-      margin-top: -2px;
-    }
-    dt {
-      padding-right: 5px;
-      font-size: 14px;
-      line-height: 18px;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-variant: all-small-caps;
-      letter-spacing: 2px;
-      color: #232323;
-    }
-    dd {
-      margin: 0;
-      grid-column-start: 2;
-    }
+    display: grid;
+    grid-gap: 4px 16px;
+    grid-template-columns: max-content;
+    font-size: 14px;
+    width: 50%;
+    margin-top: -2px;
+  }
+  dt {
+    padding-right: 5px;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-variant: all-small-caps;
+    letter-spacing: 2px;
+    color: #232323;
+  }
+  dd {
+    margin: 0;
+    grid-column-start: 2;
+  }
 
-    .literatureReviewDate {
-      line-height: 20px;
-      border-top: 1px solid var(--sys-outline-variant);
-      padding-top: 8px;
-    }
+  .literatureReviewDate {
+    line-height: 20px;
+    border-top: 1px solid var(--sys-outline-variant);
+    padding-top: 8px;
+  }
 
-    
-    //login-signin banner
+  //login-signin banner
 
   .subscribeMessage {
     // text-align: center !important;
@@ -194,12 +192,9 @@ a:hover{
         text-decoration: none;
         list-style-type: none;
         line-height: 24px;
-        
       }
     }
   }
-
-
 
   //when signin**********
   // .authorsElementsLeft {
@@ -230,7 +225,6 @@ a:hover{
   //   margin: 0;
   //   grid-column-start: 2;
   // }
-  
 
   // .authorsElementsLeft > div {
   //   width: 50%;
@@ -239,10 +233,7 @@ a:hover{
   // }
 
   .headingAnchor {
-    
   }
-
-
 
   .bulletIndent1 {
     margin-inline-start: 24px;
@@ -270,5 +261,23 @@ a:hover{
     background-color: var(--sys-surface-variant);
   }
 
-  
+  .utd-inline-graphic__container {
+    float: inline-end;
+    padding-inline-start: 24px;
+    padding-block-end: 24px;
+
+    a {
+      width: 160px;
+      padding: 8px;
+      gap: 8px;
+      border: 1px solid var(--sys-outline-variant);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
 }
