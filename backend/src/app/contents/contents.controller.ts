@@ -33,4 +33,9 @@ export class ContentsController {
   async getByIdTranslated(@Param('id') id: string) {
     return this.contentsService.translate(id);
   }
+
+  @Get('tableOfContent/:topic')
+  async getTableOfContent(@Param('topic') topic: string) {
+    return this.proxy.tableOfContent(topic);
+  }
 }

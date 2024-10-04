@@ -1,7 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { HttpService } from '@nestjs/axios';
-import { Content, Drug, DrugInteraction, SearchResult } from '@uptodate/types';
+import {
+  Content,
+  Drug,
+  DrugInteraction,
+  SearchResult,
+  TableOfContent,
+} from '@uptodate/types';
 
 @Injectable()
 export class ProxyService {
@@ -14,12 +20,12 @@ export class ProxyService {
     const response = await this.http
       .get<any>(
         `https://www.uptodate.com/services/app/contents/search/autocomplete/json?term=${query}&limit=${limit}`,
-        {
-          headers: await this.auth.headers(),
-        },
+        // {
+        //   headers: await this.auth.headers(),
+        // },
       )
       .toPromise();
-    await this.auth.checkLogin('presearch', response?.data);
+    // await this.auth.checkLogin('presearch', response?.data);
 
     return response?.data?.data?.searchTerms;
   }
@@ -128,5 +134,22 @@ export class ProxyService {
       result: data.searchResults,
       message: data.message,
     } as DrugInteraction;
+  }
+
+  async tableOfContent(topic: string) {
+    const response = await this.http
+      .get<any>(
+        `https://www.uptodate.com/services/app/contents/table-of-contents/${topic}/json`,
+      )
+      .toPromise();
+
+    const data = response?.data?.data;
+    return {
+      name: data.name,
+      items: data.map((d) => ({
+        name: d.name,
+        url: d.url,
+      })),
+    } as TableOfContent;
   }
 }
