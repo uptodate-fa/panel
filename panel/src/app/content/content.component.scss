@@ -1,3 +1,10 @@
+mat-toolbar {
+  position: sticky;
+  top: 56px;
+  z-index: 100;
+  border-bottom: 1px solid var(--sys-outline-variant);
+}
+
 article {
   padding: 32px;
   //background add
@@ -17,7 +24,6 @@ nav {
 
 h1 {
   font-weight: 800;
-  text-align: center;
 }
 
 ::ng-deep nav.nav-body {

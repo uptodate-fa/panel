@@ -95,7 +95,6 @@ export class ContentService {
     div.innerHTML = htmlString;
 
     const allInnerDivs = div.querySelectorAll('div');
-    div.querySelector('#topicTitle')?.remove();
     allInnerDivs.forEach((element) => {
       if (element.id) {
         element.classList.add(element.id);

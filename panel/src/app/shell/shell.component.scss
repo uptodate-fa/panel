@@ -1,7 +1,7 @@
 mat-toolbar {
-  position: fixed;
+  position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 10;
 }
 #primary-toolbar {
   gap: 16px;
@@ -29,5 +29,5 @@ mat-toolbar {
 }
 
 main {
-  margin-top: calc(40px + 56px);
+  // margin-top: calc(40px + 56px);
 }
