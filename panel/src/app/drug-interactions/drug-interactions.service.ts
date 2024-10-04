@@ -32,12 +32,8 @@ export class DrugInteractionsService {
     this.http.get(`/api/drug-interactions/interactions/${ids}`).toPromise();
   }
 
-  // clearList(item: Drug){
-  //   const index = this.items().findIndex((x) => x.id === item.id);
-  //   if (index> -1){
-  //     const copy = [...this.items()];
-  //     copy.splice(0, copy.length);
-  //     this.items.set(copy)
-  //   }
-  // }
+  clear(){
+    this.items.set([]);
+    this.result.set(undefined)
+  }
 }

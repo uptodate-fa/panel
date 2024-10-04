@@ -19,7 +19,13 @@
     </mat-list>
     <mat-divider />
     <mat-toolbar fxLayout="row" fxLayoutAlign="end center" class="left-toolbar">
-      <button mat-flat-button class="clear-btn">Clear</button>
+      <button
+        mat-flat-button
+        class="clear-btn"
+        (click)="interactionsService.clear()"
+      >
+        Clear
+      </button>
       <button
         mat-flat-button
         (click)="interactionsService.analyze()"
