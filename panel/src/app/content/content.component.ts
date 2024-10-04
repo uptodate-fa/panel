@@ -5,12 +5,19 @@ import { HttpClient } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SHARED } from '../shared';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContentService } from './content.service';
 
 @Component({
   selector: 'app-content',
   standalone: true,
-  imports: [CommonModule, SHARED, MatProgressSpinnerModule, MatToolbarModule],
+  imports: [
+    CommonModule,
+    SHARED,
+    MatProgressSpinnerModule,
+    MatToolbarModule,
+    MatTooltipModule,
+  ],
   templateUrl: './content.component.html',
   styleUrl: './content.component.scss',
 })
@@ -18,11 +25,12 @@ export class ContentComponent {
   id = signal('');
   showTranslation = signal(false);
   contentQuery = this.contentService.getContentQuery(this.id);
+  downloadingPdf = signal(false);
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private contentService: ContentService,
+    public contentService: ContentService,
   ) {
     this.route.params.subscribe((params) => {
       const id = params['id'];
@@ -77,6 +85,15 @@ export class ContentComponent {
     if (data) {
       if (data.translatedBodyHtml) this.showTranslation.set(true);
       else this.contentService.translateMutation.mutate(data);
+    }
+  }
+
+  async downloadPdf() {
+    const data = this.contentQuery.data();
+    if (data) {
+      this.downloadingPdf.set(true);
+      await this.contentService.downloadPdf(data);
+      this.downloadingPdf.set(false);
     }
   }
 }

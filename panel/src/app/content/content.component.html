@@ -16,6 +16,13 @@
       <i class="fa-regular fa-angle-left"></i>
     </button>
     <h1 fxFlex>{{ title() }}</h1>
+    <button
+      mat-icon-button
+      (click)="downloadPdf()"
+      [disabled]="downloadingPdf()"
+    >
+      <i class="fa-solid fa-file-arrow-down"></i>
+    </button>
     @if (!showTranslation()) {
       <button mat-flat-button class="tertiary-button" (click)="translate()">
         <i
