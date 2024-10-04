@@ -14,12 +14,13 @@ export class AuthService {
     private http: HttpService,
     private redis: RedisService,
   ) {
-    this.redis.sessionId?.then((key) => {
-      if (key && !this._sessionPromise) {
-        this._sessionId = key;
-        console.log(this._sessionId);
-      }
-    });
+    // this.redis.sessionId?.then((key) => {
+    //   if (key && !this._sessionPromise) {
+    //     this._sessionId = key;
+    //     console.log(this._sessionId);
+    //   }
+    // });
+    this.login();
   }
 
   async checkLogin(key: string, response?: any) {
@@ -50,6 +51,7 @@ export class AuthService {
       if (sessionCookie) {
         const sessionId = sessionCookie.split('=')[1].split(';')[0];
         this._sessionId = sessionId;
+        console.log(`sessionId set: ` + sessionId);
         this.redis.setSessionId(sessionId);
       }
     }

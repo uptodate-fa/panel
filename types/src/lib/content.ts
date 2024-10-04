@@ -1,10 +1,14 @@
 export class Content {
   id: string;
   uptodateId: string;
+  queryStringId: string;
   url: string;
   title: string;
   outlineHtml: string;
   bodyHtml: string;
+  translatedAt?: Date;
+  translatedOutlineHtml?: string;
+  translatedBodyHtml?: string;
 
   static getBodyHtml(outlineHtml: string) {
     const div = document.createElement('div');
@@ -16,7 +20,7 @@ export class Content {
         element.classList.add(element.id);
       }
     });
-    
+
     return div;
   }
 }

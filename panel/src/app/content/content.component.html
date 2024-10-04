@@ -6,7 +6,7 @@
     style="padding: 24px"
   >
     <mat-spinner [diameter]="32" />
-    @if (translate()) {
+    @if (showTranslation()) {
       <label>it will take a minute to translate...</label>
     }
   </div>
@@ -16,20 +16,19 @@
       <i class="fa-regular fa-angle-left"></i>
     </button>
     <h1 fxFlex>{{ title }}</h1>
-    @if (!translate()) {
-      <button
-        mat-flat-button
-        class="tertiary-button"
-        (click)="translate.set(true)"
-      >
-        <i class="fa-solid fa-sparkles"></i>
+    @if (!showTranslation()) {
+      <button mat-flat-button class="tertiary-button" (click)="translate()">
+        <i
+          class="fa-solid fa-sparkles"
+          [class.fa-spin]="
+            contentQuery.data()?.translatedAt &&
+            !contentQuery.data()?.translatedBodyHtml
+          "
+        ></i>
         AI translation
       </button>
     } @else {
-      <button
-        mat-stroked-button
-        (click)="translate.set(false)"
-      >
+      <button mat-stroked-button (click)="showTranslation.set(false)">
         view original
       </button>
     }
@@ -46,7 +45,7 @@
       class="content-body"
       id="topicContainer"
       fxFlex
-      [class.fa]="translate()"
+      [class.fa]="showTranslation()"
     >
       @if (contentQuery.data()) {
         <div

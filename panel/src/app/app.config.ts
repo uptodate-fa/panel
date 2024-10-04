@@ -21,7 +21,15 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(withInterceptorsFromDi()),
-    provideAngularQuery(new QueryClient()),
+    provideAngularQuery(
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: false,
+          },
+        },
+      }),
+    ),
     provideRouter(appRoutes),
     provideAnimationsAsync(),
     provideTranslation(),

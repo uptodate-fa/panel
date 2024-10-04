@@ -14,7 +14,9 @@ export class ProxyService {
     const response = await this.http
       .get<any>(
         `https://www.uptodate.com/services/app/contents/search/autocomplete/json?term=${query}&limit=${limit}`,
-        {},
+        {
+          headers: await this.auth.headers(),
+        },
       )
       .toPromise();
     await this.auth.checkLogin('presearch', response?.data);
@@ -69,7 +71,7 @@ export class ProxyService {
     const data = response?.data?.data;
     return {
       bodyHtml: data?.bodyHtml,
-      id: data?.topicInfo?.id,
+      uptodateId: data?.topicInfo?.id,
       outlineHtml: data?.outlineHtml,
       title: data?.topicInfo?.title,
     } as Content;
