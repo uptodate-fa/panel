@@ -46,7 +46,7 @@ export class SubscriptionController {
         amount,
         description,
         token: tokenResponse.authority,
-        user: user,
+        user: user.id,
         data: dto,
         maxActiveDevices: dto.maxDevice,
       });
