@@ -39,19 +39,21 @@ export class ContentService {
         ),
       ),
     onSuccess: (data, content: Content) => {
-      client.invalidateQueries({
-        queryKey: ['content', content.queryStringId],
-      });
-      this.snack
-        .open(
-          'Translation complete! Please review the translated article.',
-          'View',
-          { duration: 5000 },
-        )
-        .onAction()
-        .subscribe(() => {
-          this.router.navigateByUrl(`/contents/${content.queryStringId}`);
+      if (content.translatedAt) {
+        client.invalidateQueries({
+          queryKey: ['content', content.queryStringId],
         });
+        this.snack
+          .open(
+            'Translation complete! Please review the translated article.',
+            'View',
+            { duration: 5000 },
+          )
+          .onAction()
+          .subscribe(() => {
+            this.router.navigateByUrl(`/contents/${content.queryStringId}`);
+          });
+      }
     },
     onError: (error, content: Content) => {
       client.invalidateQueries({
