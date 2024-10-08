@@ -42,13 +42,18 @@ export class SubscriptionFormDialogComponent {
 
   mutation = injectMutation(() => ({
     mutationFn: (dto: SubscriptionDto) =>
-      lastValueFrom(this.http.post(`/api/subscription/payment`, dto)),
-    onSuccess: async () => {
-      await this.auth.revalidateUserInfo();
-      this.snack.open('Subscription Purchased Successfully!', '', {
-        duration: 3000,
-      });
-      this.dialogRef.close();
+      lastValueFrom(
+        this.http.post(`/api/subscription/payment`, dto, {
+          responseType: 'text',
+        }),
+      ),
+    onSuccess: async (link: string) => {
+      window.location.href = link;
+      // await this.auth.revalidateUserInfo();
+      // this.snack.open('Subscription Purchased Successfully!', '', {
+      //   duration: 3000,
+      // });
+      // this.dialogRef.close();
     },
   }));
 

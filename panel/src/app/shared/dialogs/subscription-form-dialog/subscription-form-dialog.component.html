@@ -30,6 +30,8 @@
     @if (auth.user?.subscription) {
       <button mat-button mat-dialog-close type="button">cancel</button>
     }
-    <button mat-flat-button type="submit">save</button>
+    <button mat-flat-button type="submit" [disabled]="mutation.isPending()">
+      Pay
+    </button>
   </mat-dialog-actions>
 </form>

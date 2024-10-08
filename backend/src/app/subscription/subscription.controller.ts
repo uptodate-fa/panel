@@ -95,10 +95,12 @@ export class SubscriptionController {
         } else {
           const expiredAt = new Date();
           expiredAt.setDate(expiredAt.getDate() + payment.data.days);
-          const createdData = new this.subscriptionModel({
+          const d = {
             expiredAt,
             maxActiveDevices: payment.data.maxDevice,
-          });
+          }
+          console.log(d);
+          const createdData = new this.subscriptionModel(d);
           const subscription = await createdData.save();
 
           await this.userModel.findByIdAndUpdate(payment.user.id, {

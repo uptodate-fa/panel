@@ -23,18 +23,17 @@ export class AuthService {
     this.login();
   }
 
-  async checkLogin(key: string, response?: any) {
+  async needLogin(response?: any) {
     if (process.env.SESSION_ID) return;
     if (
       response?.assetList &&
       !response.assetList.find((x) => !!x.data.user || !!x.data.userInfo)
     ) {
-      console.log(key, 'need login');
-      await this.login();
+      return true;
     }
   }
 
-  private async login() {
+  async login() {
     const body = `userName=${USERNAME}&password=${PASSWORD}`;
     console.log('start login');
     const response = await this.http
