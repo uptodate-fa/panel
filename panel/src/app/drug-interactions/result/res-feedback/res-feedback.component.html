@@ -1,0 +1,27 @@
+<p class="res-link">
+  <a href="#">Feedback</a>
+</p>
+<div fxLayout="row" fxLayoutAlign="space-between center" class="res">
+  <div class="res-result">
+    <span>{{ drugs }}</span>
+    <span>Result</span>
+  </div>
+  <button
+    mat-flat-button
+    matSuffix
+    id="filter-button"
+    class="on-primary-background scrim-text"
+  >
+    Filter Results By Item
+    <i class="fa-solid fa-angle-down"></i>
+  </button>
+</div>
+<p class="res-desc">View interaction detail by clicking on link(s) below.</p>
+<mat-list class="mat-list">
+  <mat-list-item>
+    <a matListItemTitle>This is the title</a>
+  </mat-list-item>
+  <mat-list-item>
+    <a matListItemTitle>This is the title</a>
+  </mat-list-item>
+</mat-list>

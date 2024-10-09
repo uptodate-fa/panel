@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { Drug } from '@uptodate/types';
+import { Drug, DrugInteraction } from '@uptodate/types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DrugInteractionsService {
   private readonly http = inject(HttpClient);
-  result = signal<string | undefined>(undefined);
+  interaction = signal<DrugInteraction | undefined>(undefined);
   items = signal<Drug[]>([]);
 
   addItem(item: Drug) {
@@ -24,16 +24,18 @@ export class DrugInteractionsService {
     }
   }
 
-  analyze() {
+  async analyze() {
     if (!this.items().length) return;
     const ids = this.items()
       .map((d) => d.id)
       .join(',');
-    this.http.get(`/api/drug-interactions/interactions/${ids}`).toPromise();
+    let result = await this.http.get<DrugInteraction>(`/api/drug-interactions/interactions/${ids}`).toPromise();
+    this.interaction.set(result)
+
   }
 
   clear(){
     this.items.set([]);
-    this.result.set(undefined)
+    this.interaction.set(undefined)
   }
 }
