@@ -1,7 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { HttpService } from '@nestjs/axios';
-import { Content, Drug, DrugInteraction, SearchResult } from '@uptodate/types';
+import {
+  Content,
+  Drug,
+  DrugInteraction,
+  SearchResult,
+  TableOfContent,
+} from '@uptodate/types';
+import { AxiosRequestConfig } from 'axios';
 
 @Injectable()
 export class ProxyService {
@@ -11,27 +18,18 @@ export class ProxyService {
   ) {}
 
   async preSearch(query: string, limit = 10): Promise<string[]> {
-    const response = await this.http
-      .get<any>(
-        `https://www.uptodate.com/services/app/contents/search/autocomplete/json?term=${query}&limit=${limit}`,
-        {},
-      )
-      .toPromise();
-    await this.auth.checkLogin('presearch', response?.data);
+    const response = await this.request({
+      url: `https://www.uptodate.com/services/app/contents/search/autocomplete/json?term=${query}&limit=${limit}`,
+    });
 
     return response?.data?.data?.searchTerms;
   }
 
   async search(query: string, limit = 10): Promise<SearchResult[]> {
-    const response = await this.http
-      .get<any>(
-        `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}`,
-        {
-          headers: await this.auth.headers(),
-        },
-      )
-      .toPromise();
-    await this.auth.checkLogin('search', response?.data);
+    const response = await this.request({
+      url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}`,
+      headers: await this.auth.headers(),
+    });
     const data = response?.data?.data;
 
     if (data) {
@@ -56,35 +54,25 @@ export class ProxyService {
   }
 
   async content(id: string) {
-    const response = await this.http
-      .get<any>(
-        `https://www.uptodate.com/services/app/contents/topic/${id}/json`,
-        {
-          headers: await this.auth.headers(),
-        },
-      )
-      .toPromise();
-    await this.auth.checkLogin('content', response?.data);
+    const response = await this.request({
+      url: `https://www.uptodate.com/services/app/contents/topic/${id}/json`,
+    });
 
     const data = response?.data?.data;
     return {
       bodyHtml: data?.bodyHtml,
-      id: data?.topicInfo?.id,
+      uptodateId: data?.topicInfo?.id,
       outlineHtml: data?.outlineHtml,
       title: data?.topicInfo?.title,
+      relatedGraphics: data?.topicInfo?.relatedGraphics,
     } as Content;
   }
 
   async outline(id: string) {
-    const response = await this.http
-      .get<any>(
-        `https://www.uptodate.com/services/app/outline/topic/${id}/en-US/json`,
-        {
-          headers: await this.auth.headers(),
-        },
-      )
-      .toPromise();
-    await this.auth.checkLogin('content', response?.data);
+    const response = await this.request({
+      url: `https://www.uptodate.com/services/app/outline/topic/${id}/en-US/json`,
+      headers: await this.auth.headers(),
+    });
 
     const data = response?.data?.data;
     return {
@@ -95,15 +83,10 @@ export class ProxyService {
   }
 
   async searchDrug(query: string) {
-    const response = await this.http
-      .get<any>(
-        `https://www.uptodate.com/services/app/drug/interaction/search/autocomplete/json?term=${query}&page=1&pageSize=10`,
-        {
-          headers: await this.auth.headers(),
-        },
-      )
-      .toPromise();
-    await this.auth.checkLogin('content', response?.data);
+    const response = await this.request({
+      url: `https://www.uptodate.com/services/app/drug/interaction/search/autocomplete/json?term=${query}&page=1&pageSize=10`,
+      headers: await this.auth.headers(),
+    });
 
     const data = response?.data?.data;
     return data.drugs as Drug[];
@@ -111,20 +94,52 @@ export class ProxyService {
 
   async drugInteractions(ids: string[]) {
     const drugsQueryParam = ids.map((id) => `drug=${id}`).join('&');
-    const response = await this.http
-      .get<any>(
-        `https://www.uptodate.com/services/app/drug/interaction/search/json?${drugsQueryParam}`,
-        {
-          headers: await this.auth.headers(),
-        },
-      )
-      .toPromise();
-    await this.auth.checkLogin('content', response?.data);
+    const response = this.request({
+      url: `https://www.uptodate.com/services/app/drug/interaction/search/json?${drugsQueryParam}`,
+      headers: await this.auth.headers(),
+    });
 
     const data = response?.data?.data;
     return {
       result: data.searchResults,
       message: data.message,
     } as DrugInteraction;
+  }
+
+  async tableOfContent(topic: string) {
+    const response = await this.request({
+      url: `https://www.uptodate.com/services/app/contents/table-of-contents/${topic}/json`,
+    });
+
+    const data = response?.data?.data;
+    return {
+      name: data.name,
+      items: data.map((d) => ({
+        name: d.name,
+        url: d.url,
+      })),
+    } as TableOfContent;
+  }
+
+  private async request(config: AxiosRequestConfig, skipRetry?: boolean) {
+    try {
+      const response = await this.http.request(config).toPromise();
+      const needLogin = await this.auth.needLogin(response?.data);
+      if (!skipRetry && config.headers && needLogin) {
+        await this.auth.login();
+        console.warn('no user', config.url);
+        config.headers = await this.auth.headers();
+        return this.request(config, true);
+      }
+      return response;
+    } catch (error) {
+      if (!skipRetry && error.response?.status === 403) {
+        await this.auth.login();
+        console.warn('403', config.url);
+        config.headers = await this.auth.headers();
+        return this.request(config, true);
+      }
+      throw error;
+    }
   }
 }

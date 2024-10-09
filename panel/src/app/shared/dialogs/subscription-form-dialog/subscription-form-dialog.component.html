@@ -1,0 +1,37 @@
+<form [formGroup]="form" (ngSubmit)="save()">
+  <h3 matDialogTitle>Choose Your Subscription Plan</h3>
+  <mat-dialog-content fxLayout="column">
+    @if (!auth.isProfileComplete) {
+      <p>
+        Select the plan that best suits your needs. Enjoy uninterrupted access
+        across multiple devices with flexible subscription periods.
+      </p>
+    }
+    <mat-form-field>
+      <mat-label>Subscription Period</mat-label>
+      <mat-select formControlName="days" required>
+        <mat-option [value]="183">6 Months</mat-option>
+        <mat-option [value]="366">1 Year</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Maximum Active Devices</mat-label>
+      <mat-select formControlName="maxDevice" required>
+        <mat-option [value]="1">1 Device</mat-option>
+        <mat-option [value]="2">2 Devices</mat-option>
+        <mat-option [value]="3">3 Devices</mat-option>
+      </mat-select>
+      <mat-hint>
+        Choose how many devices can be logged in at the same time.
+      </mat-hint>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    @if (auth.user?.subscription) {
+      <button mat-button mat-dialog-close type="button">cancel</button>
+    }
+    <button mat-flat-button type="submit" [disabled]="mutation.isPending()">
+      Pay
+    </button>
+  </mat-dialog-actions>
+</form>

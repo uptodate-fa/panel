@@ -14,25 +14,26 @@ export class AuthService {
     private http: HttpService,
     private redis: RedisService,
   ) {
-    this.redis.sessionId?.then((key) => {
-      if (key && !this._sessionPromise) {
-        this._sessionId = key;
-      }
-    });
+    // this.redis.sessionId?.then((key) => {
+    //   if (key && !this._sessionPromise) {
+    //     this._sessionId = key;
+    //     console.log(this._sessionId);
+    //   }
+    // });
+    this.login();
   }
 
-  async checkLogin(key: string, response?: any) {
+  async needLogin(response?: any) {
     if (process.env.SESSION_ID) return;
     if (
       response?.assetList &&
       !response.assetList.find((x) => !!x.data.user || !!x.data.userInfo)
     ) {
-      console.log(key, 'need login');
-      await this.login();
+      return true;
     }
   }
 
-  private async login() {
+  async login() {
     const body = `userName=${USERNAME}&password=${PASSWORD}`;
     console.log('start login');
     const response = await this.http
@@ -49,6 +50,7 @@ export class AuthService {
       if (sessionCookie) {
         const sessionId = sessionCookie.split('=')[1].split(';')[0];
         this._sessionId = sessionId;
+        console.log(`sessionId set: ` + sessionId);
         this.redis.setSessionId(sessionId);
       }
     }
