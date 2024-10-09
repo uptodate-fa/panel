@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DrugInteractionsService } from '../../drug-interactions.service';
 import { MatListModule } from '@angular/material/list';
+
 
 @Component({
   selector: 'app-res-feedback',
@@ -12,7 +13,7 @@ import { MatListModule } from '@angular/material/list';
 })
 export class ResFeedbackComponent {
   readonly interactionsService = inject(DrugInteractionsService);
+  
+  drugs = this.interactionsService.interaction()?.result.length;
 
-  drugs = this.interactionsService.items.length;
-  drugTitle = this.interactionsService.result.length
 }
