@@ -94,7 +94,7 @@ export class ProxyService {
 
   async drugInteractions(ids: string[]) {
     const drugsQueryParam = ids.map((id) => `drug=${id}`).join('&');
-    const response = this.request({
+    const response = await this.request({
       url: `https://www.uptodate.com/services/app/drug/interaction/search/json?${drugsQueryParam}`,
       headers: await this.auth.headers(),
     });
