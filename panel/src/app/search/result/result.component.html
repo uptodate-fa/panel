@@ -24,7 +24,9 @@
   } @else {
     <div id="article-list">
       @for (result of resultQuery.data(); track result.title) {
-        <app-search-result-card [result]="result" />
+        @if (result.url) {
+          <app-search-result-card [result]="result" />
+        }
       }
     </div>
   }
