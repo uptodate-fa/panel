@@ -25,18 +25,24 @@ import { SearchResultCardComponent } from './search-result-card/search-result-ca
 })
 export class ResultComponent {
   query = signal<string>('');
+  selectedTab = signal<number>(0);
 
   resultQuery = injectQuery(() => ({
-    queryKey: ['search', this.query()],
+    queryKey: ['search', this.query(), this.selectedTab()],
     queryFn: () =>
       lastValueFrom(
-        this.http.get<SearchResult[]>(`/api/contents/search/${this.query()}`)
+        this.http.get<SearchResult[]>(`/api/contents/search/${this.query()}`, {
+          params: { sp: this.selectedTab() },
+        }),
       ),
     enabled: !!this.query(),
     staleTime: Infinity,
   }));
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+  ) {
     this.route.queryParams.subscribe((params) => {
       this.query.set(params['query']);
     });

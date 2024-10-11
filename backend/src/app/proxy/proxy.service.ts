@@ -25,9 +25,9 @@ export class ProxyService {
     return response?.data?.data?.searchTerms;
   }
 
-  async search(query: string, limit = 10): Promise<SearchResult[]> {
+  async search(query: string, sp = 0, limit = 20): Promise<SearchResult[]> {
     const response = await this.request({
-      url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}`,
+      url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}&sp=${sp}`,
       headers: await this.auth.headers(),
     });
     const data = response?.data?.data;
@@ -56,6 +56,7 @@ export class ProxyService {
   async content(id: string) {
     const response = await this.request({
       url: `https://www.uptodate.com/services/app/contents/topic/${id}/json`,
+      headers: await this.auth.headers(),
     });
 
     const data = response?.data?.data;

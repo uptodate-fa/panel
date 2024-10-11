@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ProxyService } from '../proxy/proxy.service';
 import { ContentsService } from './contents.service';
 
@@ -15,8 +15,8 @@ export class ContentsController {
   }
 
   @Get('search/:query')
-  search(@Param('query') query: string) {
-    return this.proxy.search(query);
+  search(@Param('query') query: string, @Query('sp') sp?: string) {
+    return this.proxy.search(query, sp ? Number(sp) : 0);
   }
 
   @Get(':id')

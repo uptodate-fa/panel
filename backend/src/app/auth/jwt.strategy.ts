@@ -20,7 +20,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (user?.jwtVersion !== payload.jwtVersion) {
       throw new UnauthorizedException('Token has been invalidated');
     }
-    console.log(payload);
     return payload;
   }
 }

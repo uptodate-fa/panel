@@ -41,6 +41,10 @@ $light-theme: mat.define-theme(
   .tertiary-fab {
     @include mat.fab-color($theme, $color-variant: tertiary);
   }
+
+  .tertiary-tabs {
+    @include mat.tabs-color($theme, $color-variant: tertiary);
+  }
 }
 
 html,
