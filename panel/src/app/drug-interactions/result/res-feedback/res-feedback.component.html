@@ -3,7 +3,7 @@
 </p>
 <div fxLayout="row" fxLayoutAlign="space-between center" class="res">
   <div class="res-result">
-    <span id="res-count">{{ drugs }}</span>
+    <span id="res-count">{{ interaction?.result?.length }}</span>
     <span>Result</span>
   </div>
   <button
@@ -16,12 +16,21 @@
     <i class="fa-solid fa-angle-down"></i>
   </button>
 </div>
-<p class="res-desc">View interaction detail by clicking on link(s) below.</p>
-<mat-list class="mat-list">
-  <mat-list-item>
-    <a matListItemTitle>This is the title</a>
-  </mat-list-item>
-  <mat-list-item>
-    <a matListItemTitle>This is the title</a>
-  </mat-list-item>
-</mat-list>
+<ng-container *ngIf="interaction?.result?.length; else messageTemplate">
+  <p class="res-desc">View interaction detail by clicking on link(s) below.</p>
+  <mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let item of interaction!.result">
+      <div>
+        <span>{{ item.riskRating }}</span>
+        <ul>
+          <li *ngFor="let drug of item.items">
+            <a href="/">{{ drug.name }}</a>
+          </li>
+        </ul>
+      </div>
+    </mat-list-item>
+  </mat-list>
+</ng-container>
+<ng-template #messageTemplate>
+  <p>{{ interaction?.message }}</p>
+</ng-template>

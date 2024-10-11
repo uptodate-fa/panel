@@ -9,7 +9,7 @@ export class DrugInteractionsService {
   private readonly http = inject(HttpClient);
   interaction = signal<DrugInteraction | undefined>(undefined);
   items = signal<Drug[]>([]);
-
+          
   addItem(item: Drug) {
     if (this.items().find((x) => x.id === item.id)) return;
     this.items.update((prev) => [...prev, item]);
@@ -31,7 +31,6 @@ export class DrugInteractionsService {
       .join(',');
     let result = await this.http.get<DrugInteraction>(`/api/drug-interactions/interactions/${ids}`).toPromise();
     this.interaction.set(result);
-    console.log(this.interaction?.length);
     
   }
 
