@@ -16,16 +16,21 @@ export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private jwtService: JwtService,
-    private http: HttpService
+    private http: HttpService,
   ) {
     kavenegarApi = Kavenegar.KavenegarApi({
       apikey: process.env.KAVENEGAR_API_KEY,
     });
   }
 
-  private login(user: User, expireTokenIn = '15d') {
+  private async login(user: User, expireTokenIn = '15d') {
+    await this.userModel.findByIdAndUpdate(user.id, {
+      $inc: { jwtVersion: 1 },
+    });
+
     const payload: User = {
       id: user.id,
+      jwtVersion: user.jwtVersion + 1,
       role: user.role,
       phone: user.phone,
     } as User;
@@ -82,7 +87,7 @@ export class AuthService {
   async lookup(
     mobilePhone: string,
     kavenagarTemplate: string,
-    token: string
+    token: string,
   ): Promise<boolean> {
     return new Promise((resolve, reject) => {
       kavenegarApi.VerifyLookup(
@@ -97,7 +102,7 @@ export class AuthService {
           } else {
             reject(response);
           }
-        }
+        },
       );
     });
   }
