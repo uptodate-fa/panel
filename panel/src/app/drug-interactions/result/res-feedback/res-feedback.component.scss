@@ -32,3 +32,51 @@ a {
     font-weight: 600;
     color: var(--sys-scrim);
 }
+
+.mat-mdc-list-item{
+    border: 1px solid var(--sys-tertiary-container);
+    border-collapse: collapse;
+    display: flex;
+    gap: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    height: 55px;
+    .list-item {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        margin-bottom: 2px;
+        // height: 40px;
+        .risk{
+            width: 25px;
+        }
+        .risk-desk{
+            font-weight: 400;
+            font-size: 14px;
+        }
+    }
+}
+.mark-X{
+    background-color: var(--sys-error);
+    color: white;
+}
+.mark-C{
+    background-color: #f8d130;
+    color: white;
+}
+.mark-A {
+    background-color: var(--sys-surface-container-low);
+    color: var(--sys-primary-fixed-dim);
+}
+.mark-D{
+    background-color: var(--sys-secondary);
+    color: white;
+}
+.mark-B{
+    background-color: var(--sys-surface-container-low);
+    color: #7ed321;
+}
+.mark-K {
+    background-color: var(--sys-outline-variant);
+}
