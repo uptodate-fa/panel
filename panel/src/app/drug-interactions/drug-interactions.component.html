@@ -28,7 +28,7 @@
       </button>
       <button
         mat-flat-button
-        (click)="interactionsService.analyze()"
+        (click)="interactionsService.analyze(); showResult()"
         class="analyze-btn"
       >
         Analyze
@@ -36,6 +36,6 @@
     </mat-toolbar>
   </mat-drawer>
   <mat-drawer-content>
-    <app-result />
+    <app-result id="result" />
   </mat-drawer-content>
 </mat-drawer-container>
