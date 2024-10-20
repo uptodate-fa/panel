@@ -1,0 +1,47 @@
+<p class="res-link">
+  <a href="#">Feedback</a>
+</p>
+<div fxLayout="row" fxLayoutAlign="space-between center" class="res">
+  <div class="res-result">
+    <span id="res-count">{{ interaction?.result?.length }}</span>
+    <span>Result</span>
+  </div>
+  <button
+    mat-flat-button
+    matSuffix
+    id="filter-button"
+    class="on-primary-background scrim-text"
+  >
+    Filter Results By Item
+    <i class="fa-solid fa-angle-down"></i>
+  </button>
+</div>
+<ng-container *ngIf="interaction?.result?.length; else messageTemplate">
+  <p class="res-desc">View interaction detail by clicking on link(s) below.</p>
+  <mat-list role="list" class="matList">
+    <mat-list-item role="listitem" *ngFor="let item of interaction!.result">
+      <div *ngFor="let drug of item.items" class="list">
+        <div class="list-item">
+          <span
+            class="risk"
+            [ngClass]="{
+              'mark-C': item.riskRating == 'C',
+              'mark-A': item.riskRating == 'A',
+              'mark-X': item.riskRating == 'X',
+              'mark-D': item.riskRating == 'D',
+              'mark-B': item.riskRating == 'B'
+            }"
+            ngClass="item.riskRating == 'X'
+                ? 'mark-X'
+                : 'mark-K'"
+            >{{ item.riskRating }}</span
+          >
+          <a href="/" class="risk-desk">{{ drug.name }}</a>
+        </div>
+      </div>
+    </mat-list-item>
+  </mat-list>
+</ng-container>
+<ng-template #messageTemplate>
+  <p>{{ interaction?.message }}</p>
+</ng-template>
