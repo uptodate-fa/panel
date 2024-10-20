@@ -5,6 +5,7 @@ import { ContentComponent } from './content/content.component';
 import { CalculatorsComponent } from './calculators/calculators.component';
 import { authGuard } from './core/guards/auth.guard';
 import { DrugInteractionsComponent } from './drug-interactions/drug-interactions.component';
+import { profileGuard } from './core/guards/profile.guard';
 
 export const appRoutes: Route[] = [
   {
@@ -18,7 +19,7 @@ export const appRoutes: Route[] = [
       },
       {
         path: '',
-        canActivate: [authGuard],
+        canActivate: [authGuard, profileGuard],
         children: [
           { path: 'search', children: searchRoutes },
           { path: '', redirectTo: 'search', pathMatch: 'full' },

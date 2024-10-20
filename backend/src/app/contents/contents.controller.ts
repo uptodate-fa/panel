@@ -1,14 +1,12 @@
-import { HttpService } from '@nestjs/axios';
 import { Controller, Get, Param } from '@nestjs/common';
 import { ProxyService } from '../proxy/proxy.service';
-import { OpenaiService } from '../openai/openai.service';
+import { ContentsService } from './contents.service';
 
 @Controller('contents')
 export class ContentsController {
   constructor(
-    private http: HttpService,
     private proxy: ProxyService,
-    private openai: OpenaiService
+    private contentsService: ContentsService,
   ) {}
 
   @Get('presearch/:query')
@@ -23,27 +21,21 @@ export class ContentsController {
 
   @Get(':id')
   getById(@Param('id') id: string) {
-    return this.proxy.content(id);
+    return this.contentsService.getContent(id);
   }
 
   @Get('outline/:id')
   getOutlineById(@Param('id') id: string) {
-    return this.proxy.outline(id);
+    return this.contentsService.getOutline(id);
   }
 
   @Get('translate/:id')
   async getByIdTranslated(@Param('id') id: string) {
-    const content = await this.proxy.content(id);
-    if (content) {
-      console.log('start translate')
-      try {
-        const translated = await this.openai.getResponse(content.bodyHtml);
-        console.log('translate done')
-        content.bodyHtml = translated;
-        return content;
-      } catch (error) {
-        console.log('translate error', error);
-      }
-    }
+    return this.contentsService.translate(id);
+  }
+
+  @Get('tableOfContent/:topic')
+  async getTableOfContent(@Param('topic') topic: string) {
+    return this.proxy.tableOfContent(topic);
   }
 }

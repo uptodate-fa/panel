@@ -23,6 +23,6 @@ export class RedisService {
   }
 
   setSessionId(value: string) {
-    this.client.set(RedisKey.SessionId, value);
+    this.client?.set(RedisKey.SessionId, value);
   }
 }

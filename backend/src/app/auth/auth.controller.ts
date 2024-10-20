@@ -19,7 +19,7 @@ import { User } from '@uptodate/types';
 export class AuthController {
   constructor(
     private auth: AuthService,
-    @InjectModel(User.name) private userModel: Model<User>
+    @InjectModel(User.name) private userModel: Model<User>,
   ) {}
 
   @Put('edit')
@@ -36,7 +36,7 @@ export class AuthController {
   @Get('info')
   async info(@LoginUser() user: User) {
     if (user && user.id) {
-      return this.userModel.findById(user.id).exec();
+      return this.userModel.findById(user.id).populate('subscription').exec();
     }
     throw new HttpException('no user found', HttpStatus.NOT_FOUND);
   }
@@ -46,7 +46,7 @@ export class AuthController {
   async loginWithToken(@Param() params) {
     return this.auth.loginWithToken(
       PersianNumberService.toEnglish(params.mobile),
-      PersianNumberService.toEnglish(params.token)
+      PersianNumberService.toEnglish(params.token),
     );
   }
 }

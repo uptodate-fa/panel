@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ContentsController } from './contents.controller';
-import { HttpModule } from '@nestjs/axios';
 import { ProxyModule } from '../proxy/proxy.module';
 import { OpenaiModule } from '../openai/openai.module';
+import { ContentsService } from './contents.service';
+import { SchemasModule } from '../schemas/schemas.module';
 
 @Module({
-  imports: [HttpModule, ProxyModule, OpenaiModule],
+  imports: [ProxyModule, OpenaiModule, SchemasModule],
   controllers: [ContentsController],
+  providers: [ContentsService],
 })
 export class ContentsModule {}

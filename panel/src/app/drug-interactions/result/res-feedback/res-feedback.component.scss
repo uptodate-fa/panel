@@ -79,4 +79,11 @@ a {
 }
 .mark-K {
     background-color: var(--sys-outline-variant);
+mat-list-item {
+    border: 1px solid var(--sys-tertiary-container);
+    border-collapse: collapse;
+    a {
+        font-weight: 400;
+    }
+}
 }

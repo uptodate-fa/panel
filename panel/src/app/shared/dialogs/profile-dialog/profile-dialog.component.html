@@ -1,0 +1,45 @@
+<form [formGroup]="form" (ngSubmit)="save()">
+  <h3 matDialogTitle>Update Profile</h3>
+  <mat-dialog-content fxLayout="column">
+    @if (!auth.isProfileComplete) {
+      <p>Update your information to complete your profile.</p>
+    }
+    <mat-form-field>
+      <mat-label>first name</mat-label>
+      <input matInput formControlName="firstName" required />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>last name</mat-label>
+      <input matInput formControlName="lastName" required />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>birth date</mat-label>
+      <input (focus)="picker.open()" matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="YYYY-MM-DD">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="multi-year" startAt="1993-01-01"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>email</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>specialization</mat-label>
+      <input
+        matInput
+        placeholder="e.g., Cardiology, Pediatrics, Dermatology"
+        formControlName="job"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>city</mat-label>
+      <input matInput formControlName="city" required />
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    @if (auth.isProfileComplete) {
+      <button mat-button mat-dialog-close type="button">cancel</button>
+    }
+    <button mat-flat-button type="submit">save</button>
+  </mat-dialog-actions>
+</form>

@@ -33,12 +33,11 @@ export class DrugInteractionsService {
       .join(',');
     let result = await this.http.get<DrugInteraction>(`/api/drug-interactions/interactions/${ids}`).toPromise();
     this.interaction.set(result);
-    
+
   }
 
   clear(){
     this.items.set([]);
     this.interaction.set(undefined)
-    
   }
 }
