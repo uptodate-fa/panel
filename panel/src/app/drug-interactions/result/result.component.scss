@@ -1,4 +1,9 @@
 .container {
     background-color: var(--sys-on-primary);
+    .disclaimer{
+        color: var(--sys-outline);
+        padding-right: 24px;
+        font-size: 12px;
+    }
 }
 

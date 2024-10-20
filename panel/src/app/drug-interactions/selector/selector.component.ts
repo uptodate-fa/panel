@@ -54,4 +54,6 @@ export class SelectorComponent {
     this.interactionsService.addItem(item);
     this.searchControl.setValue('');
   }
+
+  
 }

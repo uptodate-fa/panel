@@ -13,6 +13,7 @@ export class DrugInteractionsService {
   addItem(item: Drug) {
     if (this.items().find((x) => x.id === item.id)) return;
     this.items.update((prev) => [...prev, item]);
+    document.getElementById('drug-item-desc')!.style.display= 'block'
   }
 
   removeItem(item: Drug) {
@@ -22,6 +23,7 @@ export class DrugInteractionsService {
       copy.splice(index, 1);
       this.items.set(copy);
     }
+    document.getElementById('drug-item-desc')!.style.display= 'none'
   }
 
   async analyze() {
