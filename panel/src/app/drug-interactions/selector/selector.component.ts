@@ -36,7 +36,9 @@ export class SelectorComponent {
     queryKey: ['presearch', this.searchTerm()],
     queryFn: () =>
       lastValueFrom(
-        this.http.get<Drug[]>(`/api/drug-interactions/search/${this.searchTerm()}`),
+        this.http.get<Drug[]>(
+          `/api/drug-interactions/search/${this.searchTerm()}`,
+        ),
       ),
     enabled: !!this.searchTerm(),
     staleTime: Infinity,
@@ -54,6 +56,4 @@ export class SelectorComponent {
     this.interactionsService.addItem(item);
     this.searchControl.setValue('');
   }
-
-  
 }

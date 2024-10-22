@@ -12,9 +12,9 @@
       (optionSelected)="onSelectItem($event.option.value)"
     >
       @for (drug of searchQuery.data(); track drug.id) {
-      <mat-option [value]="drug">
-        {{ drug.name }}
-      </mat-option>
+        <mat-option [value]="drug">
+          {{ drug.name }}
+        </mat-option>
       }
     </mat-autocomplete>
 
@@ -27,8 +27,10 @@
       [disabled]="!searchQuery.data() && searchQuery.isLoading()"
       class="primary-background on-primary-text"
     >
-      @if (!searchQuery.isLoading()) { Add } @else {
-      <i class="fa-regular fa-circle-notch fa-lg fa-spin"></i>
+      @if (!searchQuery.isLoading()) {
+        Add
+      } @else {
+        <i class="fa-regular fa-circle-notch fa-lg fa-spin"></i>
       }
     </button>
   </mat-form-field>
