@@ -115,7 +115,7 @@ export class ProxyService {
     const data = response?.data?.data;
     return {
       name: data.name,
-      items: data.map((d) => ({
+      items: data.items.map((d) => ({
         name: d.name,
         url: d.url,
       })),

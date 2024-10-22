@@ -1,0 +1,13 @@
+<mat-toolbar fxLayout="row" fxLayoutGap="8px">
+  <button mat-icon-button goBack>
+    <i class="fa-regular fa-angle-left"></i>
+  </button>
+  <h1 fxFlex>{{ contentsQuery.data()?.name }}</h1>
+</mat-toolbar>
+<main p-md>
+  <div class="items-wrapper">
+    @for (item of items(); track $index) {
+      <a class="item primary-text" href="{{ item.url }}">{{ item.name }}</a>
+    }
+  </div>
+</main>

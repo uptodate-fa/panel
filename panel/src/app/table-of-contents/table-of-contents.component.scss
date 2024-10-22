@@ -1,0 +1,25 @@
+mat-toolbar {
+  position: sticky;
+  top: 56px;
+  z-index: 100;
+  border-bottom: 1px solid var(--sys-outline-variant);
+
+  h1 {
+    font-size: 18px;
+    text-align: center;
+  }
+}
+
+main {
+  .items-wrapper {
+    columns: 3;
+
+    a.item {
+      display: block;
+      text-decoration: none;
+      margin-bottom: 32px;
+      font-size: 14px;
+      text-transform: capitalize;
+    }
+  }
+}
