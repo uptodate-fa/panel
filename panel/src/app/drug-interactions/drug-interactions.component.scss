@@ -25,7 +25,7 @@ mat-drawer-container {
   .clear-btn {
     background-color: white;
     color: var(--sys-primary);
-    font-size: large;
+    font-size: 14px;
     margin: 4px;
     padding: 4px;
     font-weight:400;
@@ -38,3 +38,29 @@ mat-drawer-container {
 
   }
 }
+#result {
+  display: none;
+}
+
+.drug-dec{
+  padding-left: 16px;
+  padding-right: 24px;
+  font-size: 14px;
+  .dtug-note {
+    color: var(--sys-error);
+    position: absolute;
+    bottom: 60px;
+  }
+  .drug-copy-write {
+    color: var(--sys-scrim);
+    position: absolute;
+    bottom: 0;
+    padding-right: 24px;
+  }
+  
+}
+#drug-item-desc{
+  display: none;
+  color: var(--sys-scrim);
+}
+
