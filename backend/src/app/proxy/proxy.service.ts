@@ -107,17 +107,24 @@ export class ProxyService {
     } as DrugInteraction;
   }
 
-  async tableOfContent(topic: string) {
+  async tableOfContent(topic: string, sub?: string) {
     const response = await this.request({
-      url: `https://www.uptodate.com/services/app/contents/table-of-contents/${topic}/json`,
+      url: `https://www.uptodate.com/services/app/contents/table-of-contents/${sub ? `${topic}/${sub}` : topic}/json`,
     });
 
     const data = response?.data?.data;
     return {
       name: data.name,
-      items: data.items.map((d) => ({
+      items: data.items?.map((d) => ({
         name: d.name,
         url: d.url,
+      })),
+      sections: data.sections?.map((section) => ({
+        name: section.name,
+        items: section.items?.map((d) => ({
+          name: d.name,
+          url: d.url,
+        })),
       })),
     } as TableOfContent;
   }

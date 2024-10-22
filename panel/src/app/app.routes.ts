@@ -28,6 +28,10 @@ export const appRoutes: Route[] = [
             path: 'contents/table-of-contents/:topic',
             component: TableOfContentsComponent,
           },
+          {
+            path: 'contents/table-of-contents/:topic/:sub',
+            component: TableOfContentsComponent,
+          },
           { path: 'contents/:id', component: ContentComponent },
           { path: 'calculators', component: CalculatorsComponent },
           { path: 'interactions', component: DrugInteractionsComponent },

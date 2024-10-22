@@ -38,4 +38,12 @@ export class ContentsController {
   async getTableOfContent(@Param('topic') topic: string) {
     return this.proxy.tableOfContent(topic);
   }
+
+  @Get('tableOfContent/:topic/:sub')
+  async getTableOfContentWitSub(
+    @Param('topic') topic: string,
+    @Param('sub') sub: string,
+  ) {
+    return this.proxy.tableOfContent(topic, sub);
+  }
 }

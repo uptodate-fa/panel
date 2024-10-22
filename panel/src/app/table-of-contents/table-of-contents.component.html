@@ -5,9 +5,28 @@
   <h1 fxFlex>{{ contentsQuery.data()?.name }}</h1>
 </mat-toolbar>
 <main p-md>
-  <div class="items-wrapper">
-    @for (item of items(); track $index) {
-      <a class="item primary-text" href="{{ item.url }}">{{ item.name }}</a>
-    }
-  </div>
+  @if (contentsQuery.data()?.sections) {
+    <mat-accordion>
+      @for (section of contentsQuery.data()?.sections; track $index) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> {{ section.name }} </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="items-wrapper">
+            @for (item of section.items; track $index) {
+              <a class="item primary-text" href="{{ item.url }}">
+                {{ item.name }}
+              </a>
+            }
+          </div>
+        </mat-expansion-panel>
+      }
+    </mat-accordion>
+  } @else {
+    <div class="items-wrapper multi-col">
+      @for (item of items(); track $index) {
+        <a class="item primary-text" href="{{ item.url }}">{{ item.name }}</a>
+      }
+    </div>
+  }
 </main>

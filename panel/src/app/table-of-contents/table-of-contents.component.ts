@@ -7,11 +7,12 @@ import { lastValueFrom } from 'rxjs';
 import { SHARED } from '../shared';
 import { TableOfContent } from '@uptodate/types';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-table-of-contents',
   standalone: true,
-  imports: [CommonModule, SHARED, MatToolbarModule],
+  imports: [CommonModule, SHARED, MatToolbarModule, MatExpansionModule],
   templateUrl: './table-of-contents.component.html',
   styleUrl: './table-of-contents.component.scss',
 })
@@ -20,12 +21,13 @@ export class TableOfContentsComponent {
   private readonly http = inject(HttpClient);
 
   topic = signal('');
+  sub = signal('');
   contentsQuery = injectQuery(() => ({
     queryKey: ['tableOfContents', this.topic()],
     queryFn: () =>
       lastValueFrom(
         this.http.get<TableOfContent>(
-          `/api/contents/tableOfContent/${this.topic()}`,
+          `/api/contents/tableOfContent/${this.sub() ? `${this.topic()}/${this.sub()}` : this.topic()}`,
         ),
       ),
     enabled: true,
@@ -45,8 +47,8 @@ export class TableOfContentsComponent {
     this.route.params.subscribe((params) => {
       const topic = params['topic'];
       if (topic) this.topic.set(topic);
+      const sub = params['sub'];
+      if (sub) this.sub.set(sub);
     });
-
-    console.log(12);
   }
 }

@@ -12,7 +12,9 @@ mat-toolbar {
 
 main {
   .items-wrapper {
-    columns: 3;
+    &.multi-col {
+      columns: 3;
+    }
 
     a.item {
       display: block;
