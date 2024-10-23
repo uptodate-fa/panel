@@ -1,7 +1,8 @@
 export class TableOfContent {
   name: string;
-  items: {
+  items?: {
     name: string;
     url: string;
   }[];
+  sections?: TableOfContent[];
 }

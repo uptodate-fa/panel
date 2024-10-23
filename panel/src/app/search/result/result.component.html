@@ -1,23 +1,33 @@
 <nav
   mat-tab-nav-bar
-  backgroundColor="accent"
   [tabPanel]="tabPanel"
   mat-stretch-tabs="false"
   mat-align-tabs="start"
+  class="tertiary-tabs"
 >
-  <a mat-tab-link active> All </a>
-  <a mat-tab-link> Adult </a>
-  <a mat-tab-link> Pediatric </a>
-  <a mat-tab-link> Patient </a>
+  <a mat-tab-link (click)="selectedTab.set(0)" [active]="selectedTab() === 0">
+    All
+  </a>
+  <a mat-tab-link (click)="selectedTab.set(1)" [active]="selectedTab() === 1">
+    Adult
+  </a>
+  <a mat-tab-link (click)="selectedTab.set(2)" [active]="selectedTab() === 2">
+    Pediatric
+  </a>
+  <a mat-tab-link (click)="selectedTab.set(3)" [active]="selectedTab() === 3">
+    Patient
+  </a>
 </nav>
 <mat-tab-nav-panel #tabPanel>
   @if (resultQuery.isLoading()) {
-  <mat-spinner [diameter]="36" />
+    <mat-spinner [diameter]="36" />
   } @else {
-  <div id="article-list">
-    @for (result of resultQuery.data(); track result.title) {
-    <app-search-result-card [result]="result" />
-    }
-  </div>
+    <div id="article-list">
+      @for (result of resultQuery.data(); track result.title) {
+        @if (result.url) {
+          <app-search-result-card [result]="result" />
+        }
+      }
+    </div>
   }
 </mat-tab-nav-panel>

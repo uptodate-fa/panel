@@ -16,7 +16,15 @@ export class User {
   phone: string;
   role: UserRole;
   token?: string;
+  jwtVersion: number;
   exp?: number;
   subscription?: Subscription;
+  createdAt: Date;
+}
+
+export class UserToken {
+  user: User;
+  token: string;
+  expired: boolean;
   createdAt: Date;
 }

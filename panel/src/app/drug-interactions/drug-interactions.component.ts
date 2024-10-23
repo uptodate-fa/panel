@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SelectorComponent } from './selector/selector.component';
 import { ResultComponent } from './result/result.component';
@@ -23,13 +23,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   templateUrl: './drug-interactions.component.html',
   styleUrl: './drug-interactions.component.scss',
 })
-export class DrugInteractionsComponent implements OnInit {
+export class DrugInteractionsComponent {
   readonly interactionsService = inject(DrugInteractionsService);
-
-  ngOnInit(): void {
-  }
-
-  showResult(){
-    document.getElementById('result')!.style.display= 'block'
-  }
+  isDrugSelected = computed(() => {
+    return this.interactionsService.items()?.length > 0;
+  });
 }

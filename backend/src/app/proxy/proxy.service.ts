@@ -25,9 +25,9 @@ export class ProxyService {
     return response?.data?.data?.searchTerms;
   }
 
-  async search(query: string, limit = 10): Promise<SearchResult[]> {
+  async search(query: string, sp = 0, limit = 20): Promise<SearchResult[]> {
     const response = await this.request({
-      url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}`,
+      url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}&sp=${sp}`,
       headers: await this.auth.headers(),
     });
     const data = response?.data?.data;
@@ -56,6 +56,7 @@ export class ProxyService {
   async content(id: string) {
     const response = await this.request({
       url: `https://www.uptodate.com/services/app/contents/topic/${id}/json`,
+      headers: await this.auth.headers(),
     });
 
     const data = response?.data?.data;
@@ -94,7 +95,7 @@ export class ProxyService {
 
   async drugInteractions(ids: string[]) {
     const drugsQueryParam = ids.map((id) => `drug=${id}`).join('&');
-    const response = this.request({
+    const response = await this.request({
       url: `https://www.uptodate.com/services/app/drug/interaction/search/json?${drugsQueryParam}`,
       headers: await this.auth.headers(),
     });
@@ -106,17 +107,24 @@ export class ProxyService {
     } as DrugInteraction;
   }
 
-  async tableOfContent(topic: string) {
+  async tableOfContent(topic: string, sub?: string) {
     const response = await this.request({
-      url: `https://www.uptodate.com/services/app/contents/table-of-contents/${topic}/json`,
+      url: `https://www.uptodate.com/services/app/contents/table-of-contents/${sub ? `${topic}/${sub}` : topic}/json`,
     });
 
     const data = response?.data?.data;
     return {
       name: data.name,
-      items: data.map((d) => ({
+      items: data.items?.map((d) => ({
         name: d.name,
         url: d.url,
+      })),
+      sections: data.sections?.map((section) => ({
+        name: section.name,
+        items: section.items?.map((d) => ({
+          name: d.name,
+          url: d.url,
+        })),
       })),
     } as TableOfContent;
   }
