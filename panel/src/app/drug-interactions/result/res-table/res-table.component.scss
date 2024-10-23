@@ -71,3 +71,12 @@
         }
     }
 }
+.hover {
+    cursor: pointer;
+}
+.hide {
+    display: none;
+}
+.hover:hover + .hide {
+    display: block;
+}

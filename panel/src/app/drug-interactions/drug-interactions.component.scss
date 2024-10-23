@@ -1,10 +1,14 @@
 mat-drawer-container {
-  height: calc(100% - 112px);
+  height: 100%;
   
   mat-drawer {
     width: 360px;
     border-right: 1px solid var(--sys-outline);
     border-radius: 0;
+
+    div.wrapper {
+      height: 100%;
+    }
 
     .left-add{
       background-color: var(--sys-on-primary);
@@ -14,6 +18,7 @@ mat-drawer-container {
       background-color: var(--sys-on-primary);
       gap: 4px;
     }
+
 
   }
 
@@ -38,29 +43,7 @@ mat-drawer-container {
 
   }
 }
-#result {
-  display: none;
-}
 
-.drug-dec{
-  padding-left: 16px;
-  padding-right: 24px;
+.small-text {
   font-size: 14px;
-  .dtug-note {
-    color: var(--sys-error);
-    position: absolute;
-    bottom: 60px;
-  }
-  .drug-copy-write {
-    color: var(--sys-scrim);
-    position: absolute;
-    bottom: 0;
-    padding-right: 24px;
-  }
-  
 }
-#drug-item-desc{
-  display: none;
-  color: var(--sys-scrim);
-}
-
