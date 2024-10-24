@@ -28,7 +28,6 @@ export class ProxyService {
   async search(query: string, sp = 0, limit = 20): Promise<SearchResult[]> {
     const response = await this.request({
       url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}&sp=${sp}`,
-      headers: await this.auth.headers(),
     });
     const data = response?.data?.data;
 
@@ -56,7 +55,6 @@ export class ProxyService {
   async content(id: string) {
     const response = await this.request({
       url: `https://www.uptodate.com/services/app/contents/topic/${id}/json`,
-      headers: await this.auth.headers(),
     });
 
     const data = response?.data?.data;
@@ -72,7 +70,6 @@ export class ProxyService {
   async outline(id: string) {
     const response = await this.request({
       url: `https://www.uptodate.com/services/app/outline/topic/${id}/en-US/json`,
-      headers: await this.auth.headers(),
     });
 
     const data = response?.data?.data;
@@ -86,7 +83,6 @@ export class ProxyService {
   async searchDrug(query: string) {
     const response = await this.request({
       url: `https://www.uptodate.com/services/app/drug/interaction/search/autocomplete/json?term=${query}&page=1&pageSize=10`,
-      headers: await this.auth.headers(),
     });
 
     const data = response?.data?.data;
@@ -97,7 +93,6 @@ export class ProxyService {
     const drugsQueryParam = ids.map((id) => `drug=${id}`).join('&');
     const response = await this.request({
       url: `https://www.uptodate.com/services/app/drug/interaction/search/json?${drugsQueryParam}`,
-      headers: await this.auth.headers(),
     });
 
     const data = response?.data?.data;
@@ -131,12 +126,11 @@ export class ProxyService {
 
   private async request(config: AxiosRequestConfig, skipRetry?: boolean) {
     try {
-      const response = await this.http.request(config).toPromise();
+      const response = await this.auth.client.request(config);
       const needLogin = await this.auth.needLogin(response?.data);
       if (!skipRetry && config.headers && needLogin) {
         await this.auth.login();
         console.warn('no user', config.url);
-        config.headers = await this.auth.headers();
         return this.request(config, true);
       }
       return response;
@@ -144,7 +138,6 @@ export class ProxyService {
       if (!skipRetry && error.response?.status === 403) {
         await this.auth.login();
         console.warn('403', config.url);
-        config.headers = await this.auth.headers();
         return this.request(config, true);
       }
       throw error;
