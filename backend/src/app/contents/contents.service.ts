@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Content } from '@uptodate/types';
+import { Content, ContentHistory, User } from '@uptodate/types';
 import { Model } from 'mongoose';
 import { ProxyService } from '../proxy/proxy.service';
 import * as cheerio from 'cheerio';
@@ -12,9 +12,11 @@ export class ContentsService {
     private proxy: ProxyService,
     private openai: OpenaiService,
     @InjectModel(Content.name) private contentModel: Model<Content>,
+    @InjectModel(ContentHistory.name)
+    private contentHistoryModel: Model<ContentHistory>,
   ) {}
 
-  async getContent(id: string): Promise<Content> {
+  async getContent(id: string, user?: User): Promise<Content> {
     const existContent = await this.contentModel
       .findOne({ queryStringId: id })
       .exec();
@@ -29,6 +31,15 @@ export class ContentsService {
       });
       data = await newContent.save();
     }
+
+    if (user) {
+      const newContentHistory = new this.contentHistoryModel({
+        user: user.id,
+        content: data.id,
+      });
+      newContentHistory.save();
+    }
+
     return data;
   }
 

@@ -1,3 +1,4 @@
+export * from './content-history';
 export * from './content';
 export * from './drug';
 export * from './log';
