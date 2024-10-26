@@ -4,6 +4,7 @@ import { User } from '@uptodate/types';
 import { PersianNumberService } from '@uptodate/utils';
 import { lastValueFrom } from 'rxjs';
 const JWT_KEY = 'jwtToken';
+declare var Goftino: any;
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +21,21 @@ export class AuthService {
     this.revalidateUserInfo();
   }
 
+  private handleGoftino() {
+    window.addEventListener('goftino_ready', () => {
+      Goftino.setUserId(this.user?._id);
+      Goftino.setUser({
+        email: this.user?.email,
+        name: `${this.user?.firstName} ${this.user?.lastName}`,
+        phone: this.user?.phone,
+        forceUpdate: true,
+      });
+    });
+  }
+
   async revalidateUserInfo() {
     const user = await lastValueFrom(this.client.get<User>(`/api/auth/info`));
+    this.handleGoftino();
     if (user) this.userInfo = user;
     this.userLoadedResolver();
   }
