@@ -10,13 +10,20 @@ const JWT_KEY = 'jwtToken';
 })
 export class AuthService {
   private userInfo: User;
+  private userLoaded: Promise<void>;
+  private userLoadedResolver: () => void;
+
   constructor(private client: HttpClient) {
+    this.userLoaded = new Promise((resolve) => {
+      this.userLoadedResolver = resolve;
+    });
     this.revalidateUserInfo();
   }
 
   async revalidateUserInfo() {
     const user = await lastValueFrom(this.client.get<User>(`/api/auth/info`));
     if (user) this.userInfo = user;
+    this.userLoadedResolver();
   }
 
   async sendToken(mobilePhone: string) {
@@ -66,5 +73,9 @@ export class AuthService {
 
   get isProfileComplete() {
     return this.user?.firstName && this.user?.lastName;
+  }
+
+  async complete(): Promise<void> {
+    return this.userLoaded; // Wait for the user to be loaded
   }
 }

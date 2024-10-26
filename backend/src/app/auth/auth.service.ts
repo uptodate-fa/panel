@@ -36,7 +36,6 @@ export class AuthService {
       !dbUser?.subscription?.maxActiveDevices ||
       dbUser.subscription.maxActiveDevices === 1
     ) {
-      console.log('if');
       jwtVersion = [newJwt];
     } else {
       if (jwtVersion.length < dbUser.subscription.maxActiveDevices) {
@@ -51,7 +50,6 @@ export class AuthService {
       }
     }
 
-    console.log(jwtVersion);
     await this.userModel.findByIdAndUpdate(user.id, { jwtVersion }).exec();
 
     const payload: User = {

@@ -7,7 +7,8 @@ import { ProfileDialogComponent } from '../../shared/dialogs/profile-dialog/prof
 export const profileGuard: CanActivateFn = async () => {
   const auth = inject(AuthService);
   const dialog = inject(MatDialog);
-  setTimeout(() => {
+  setTimeout(async () => {
+    await auth.complete();
     if (!auth.isProfileComplete && auth.user) {
       dialog.open(ProfileDialogComponent, {
         disableClose: true,

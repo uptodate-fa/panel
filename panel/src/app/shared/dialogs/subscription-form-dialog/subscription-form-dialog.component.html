@@ -10,8 +10,8 @@
     <mat-form-field>
       <mat-label>Subscription Period</mat-label>
       <mat-select formControlName="days" required>
-        <mat-option [value]="183">6 Months</mat-option>
-        <mat-option [value]="366">1 Year</mat-option>
+        <mat-option [value]="HALF_YEAR_DAYS">6 Months</mat-option>
+        <mat-option [value]="YEARLY_DAYS">1 Year</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
@@ -19,19 +19,26 @@
       <mat-select formControlName="maxDevice" required>
         <mat-option [value]="1">1 Device</mat-option>
         <mat-option [value]="2">2 Devices</mat-option>
-        <mat-option [value]="3">3 Devices</mat-option>
       </mat-select>
       <mat-hint>
         Choose how many devices can be logged in at the same time.
       </mat-hint>
     </mat-form-field>
+    @if (price()) {
+      <br />
+      <br />
+      <b> Your Price is {{ price() | number }} Rials </b>
+    }
   </mat-dialog-content>
   <mat-dialog-actions>
-    @if (auth.user?.subscription) {
+    @if (!data.force) {
       <button mat-button mat-dialog-close type="button">cancel</button>
     }
     <button mat-flat-button type="submit" [disabled]="mutation.isPending()">
       Pay
+      @if (price()) {
+        {{ price() | number }} Rials
+      }
     </button>
   </mat-dialog-actions>
 </form>

@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Query, Response } from '@nestjs/common';
+import {
+  Body,
+  ConflictException,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Response,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Payment, Subscription, SubscriptionDto, User } from '@uptodate/types';
 import { Model } from 'mongoose';
@@ -26,7 +34,8 @@ export class SubscriptionController {
 
   @Post('payment')
   async payment(@Body() dto: SubscriptionDto, @LoginUser() user: User) {
-    const amount = 10000;
+    const amount = SubscriptionDto.price(dto);
+    if (!amount) return new ConflictException();
     const description = `خرید اشتراک`;
 
     const tokenBody = {
@@ -98,7 +107,7 @@ export class SubscriptionController {
           const d = {
             expiredAt,
             maxActiveDevices: payment.data.maxDevice,
-          }
+          };
           console.log(d);
           const createdData = new this.subscriptionModel(d);
           const subscription = await createdData.save();
