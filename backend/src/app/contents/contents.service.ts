@@ -20,14 +20,14 @@ export class ContentsService {
       .exec();
     if (existContent) return existContent;
 
-    const data = await this.proxy.content(id);
+    let data = await this.proxy.content(id);
 
     if (data) {
       const newContent = new this.contentModel({
         ...data,
         queryStringId: id,
       });
-      newContent.save();
+      data = await newContent.save();
     }
     return data;
   }
@@ -75,7 +75,7 @@ export class ContentsService {
         const outline = await this.openai.getResponse(content.outlineHtml);
         content.translatedOutlineHtml = outline;
       } catch (error) {
-        console.log('translate error');
+        console.log('translate error', error);
         await this.contentModel
           .updateOne({ queryStringId: id }, { translatedAt: null })
           .exec();

@@ -57,7 +57,5 @@ export class AuthService {
         },
       },
     );
-
-    console.log(this.cookieJar);
   }
 }
