@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: User) {
     const user = await this.userModel.findById(payload.id).exec();
-    if (user?.jwtVersion !== payload.jwtVersion) {
+    if (!user?.jwtVersion.includes(payload._jwt)) {
       throw new UnauthorizedException('Token has been invalidated');
     }
     return payload;
