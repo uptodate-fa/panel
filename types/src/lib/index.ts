@@ -1,5 +1,6 @@
 export * from './content-history';
 export * from './content';
+export * from './discount-coupon';
 export * from './drug';
 export * from './log';
 export * from './payment';

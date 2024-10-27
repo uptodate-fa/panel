@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import {
   Content,
   ContentHistory,
+  DiscountCoupon,
   Log,
   Payment,
   Subscription,
@@ -14,6 +15,7 @@ import { SubscriptionSchema } from './subscription.schema';
 import { ContentSchema } from './content.schema';
 import { PaymentSchema } from './payment.schema';
 import { ContentHistorySchema } from './content-history.schema';
+import { DiscountCouponSchema } from './discount-coupon.schema';
 
 @Module({
   imports: [
@@ -24,6 +26,7 @@ import { ContentHistorySchema } from './content-history.schema';
       { name: Content.name, schema: ContentSchema },
       { name: Payment.name, schema: PaymentSchema },
       { name: ContentHistory.name, schema: ContentHistorySchema },
+      { name: DiscountCoupon.name, schema: DiscountCouponSchema },
     ]),
   ],
   exports: [MongooseModule],

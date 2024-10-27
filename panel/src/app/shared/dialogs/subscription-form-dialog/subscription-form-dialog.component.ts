@@ -1,4 +1,12 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SHARED } from '../..';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -17,10 +26,18 @@ import {
 } from '@angular/material/dialog';
 import { AuthService } from '../../../auth/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { injectMutation } from '@tanstack/angular-query-experimental';
-import { HALF_YEAR_DAYS, SubscriptionDto, YEARLY_DAYS } from '@uptodate/types';
+import {
+  injectMutation,
+  injectQuery,
+} from '@tanstack/angular-query-experimental';
+import {
+  DiscountCoupon,
+  HALF_YEAR_DAYS,
+  SubscriptionDto,
+  YEARLY_DAYS,
+} from '@uptodate/types';
 import { HttpClient } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
+import { debounceTime, lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-subscription-form-dialog',
@@ -42,7 +59,7 @@ export class SubscriptionFormDialogComponent {
   HALF_YEAR_DAYS = HALF_YEAR_DAYS;
 
   readonly dialogRef = inject(MatDialogRef<SubscriptionFormDialogComponent>);
-  readonly data = inject<{
+  readonly data? = inject<{
     force?: boolean;
   }>(MAT_DIALOG_DATA);
   private fb = inject(FormBuilder);
@@ -50,10 +67,17 @@ export class SubscriptionFormDialogComponent {
   public http = inject(HttpClient);
   public snack = inject(MatSnackBar);
 
+  @ViewChild('couponInput') couponInputElem: ElementRef;
+
+  couponCodeControl = new FormControl();
+  couponCode = signal<string>('');
+
   private formData = signal<SubscriptionDto | undefined>(undefined);
   price = computed(() => {
     const data = this.formData();
-    return SubscriptionDto.price(data);
+    const coupon = this.couponQuery.data();
+
+    return SubscriptionDto.price(data, coupon);
   });
 
   mutation = injectMutation(() => ({
@@ -64,8 +88,24 @@ export class SubscriptionFormDialogComponent {
         }),
       ),
     onSuccess: async (link: string) => {
-      window.location.href = link;
+      if (link) {
+        window.location.href = link;
+      } else {
+        location.reload();
+      }
     },
+  }));
+
+  couponQuery = injectQuery(() => ({
+    queryKey: ['coupon', this.couponCode()],
+    queryFn: () =>
+      lastValueFrom(
+        this.http.get<DiscountCoupon>(
+          `/api/subscription/coupon/${this.couponCode()}`,
+        ),
+      ),
+    enabled: this.couponCode() !== '',
+    retry: false,
   }));
 
   form: FormGroup;
@@ -80,10 +120,33 @@ export class SubscriptionFormDialogComponent {
     this.form.valueChanges.subscribe((dto) => {
       this.formData.set(dto);
     });
+
+    this.couponCodeControl.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe(async (code) => {
+        this.couponCode.set(code);
+      });
+
+    effect(() => {
+      this.couponCodeControl.enable();
+      if (this.couponQuery.status() === 'error') {
+        this.couponCodeControl.setErrors({ notFound: true });
+        this.couponInputElem?.nativeElement.blur();
+      } else if (
+        this.couponQuery.status() === 'success' &&
+        this.couponQuery.data()
+      ) {
+        this.couponCodeControl.disable();
+      }
+    });
   }
 
   save() {
     if (this.form.invalid) return;
-    this.mutation.mutate(this.form.getRawValue());
+    const dto: SubscriptionDto = this.form.getRawValue();
+    if (this.couponQuery.data())
+      dto.discountCouponId = this.couponQuery.data()?._id;
+
+    this.mutation.mutate(dto);
   }
 }

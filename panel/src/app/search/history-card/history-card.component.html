@@ -6,7 +6,7 @@
       class="tertiary-tabs"
     >
       <mat-tab label="history">
-        @if (historyQuery?.data()) {
+        @if (historyQuery.data()) {
           <mat-nav-list>
             @for (history of historyQuery.data(); track $index) {
               <a
