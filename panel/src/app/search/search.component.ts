@@ -8,6 +8,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { injectQuery } from '@tanstack/angular-query-experimental';
+import { HistoryCardComponent } from './history-card/history-card.component';
 
 @Component({
   selector: 'app-search',
@@ -19,6 +20,7 @@ import { injectQuery } from '@tanstack/angular-query-experimental';
     MatInputModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
+    HistoryCardComponent,
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',

@@ -1,5 +1,17 @@
+mat-toolbar {
+  position: sticky;
+  top: 56px;
+  z-index: 100;
+  border-bottom: 1px solid var(--sys-outline-variant);
+
+  h1 {
+    font-size: 18px;
+    text-align: center;
+  }
+}
+
 iframe {
   width: 100%;
-  height: -webkit-fill-available;
+  height: calc(100vh - 96px - 64px);
   border: none;
 }

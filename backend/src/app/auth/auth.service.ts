@@ -24,15 +24,40 @@ export class AuthService {
   }
 
   private async login(user: User, expireTokenIn = '15d') {
-    await this.userModel.findByIdAndUpdate(user.id, {
-      $inc: { jwtVersion: 1 },
-    });
+    const dbUser = await this.userModel
+      .findById(user.id)
+      .populate('subscription')
+      .exec();
+
+    let jwtVersion = user.jwtVersion;
+    const newJwt = Date.now();
+    if (
+      !Array.isArray(dbUser.jwtVersion) ||
+      !dbUser?.subscription?.maxActiveDevices ||
+      dbUser.subscription.maxActiveDevices === 1
+    ) {
+      jwtVersion = [newJwt];
+    } else {
+      if (jwtVersion.length < dbUser.subscription.maxActiveDevices) {
+        jwtVersion.push(newJwt);
+      } else {
+        const minIndex = jwtVersion.indexOf(Math.min(...jwtVersion));
+        if (minIndex !== -1) {
+          jwtVersion[minIndex] = newJwt;
+        } else {
+          jwtVersion = [newJwt];
+        }
+      }
+    }
+
+    await this.userModel.findByIdAndUpdate(user.id, { jwtVersion }).exec();
 
     const payload: User = {
       id: user.id,
-      jwtVersion: user.jwtVersion + 1,
+      jwtVersion,
       role: user.role,
       phone: user.phone,
+      _jwt: newJwt,
     } as User;
 
     const token = this.jwtService.sign(payload, {

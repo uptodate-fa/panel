@@ -1,13 +1,29 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ProxyService } from '../proxy/proxy.service';
 import { ContentsService } from './contents.service';
+import { LoginUser } from '../auth/user.decorator';
+import { ContentHistory, User } from '@uptodate/types';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Controller('contents')
 export class ContentsController {
   constructor(
     private proxy: ProxyService,
     private contentsService: ContentsService,
+    @InjectModel(ContentHistory.name)
+    private contentHistoryModel: Model<ContentHistory>,
   ) {}
+
+  @Get('history')
+  history(@LoginUser() user: User) {
+    return this.contentHistoryModel
+      .find({ user: user.id })
+      .populate('content')
+      .sort({ createdAt: 'desc' })
+      .limit(8)
+      .exec();
+  }
 
   @Get('presearch/:query')
   preSearch(@Param('query') query: string) {
@@ -20,8 +36,8 @@ export class ContentsController {
   }
 
   @Get(':id')
-  getById(@Param('id') id: string) {
-    return this.contentsService.getContent(id);
+  getById(@Param('id') id: string, @LoginUser() user: User) {
+    return this.contentsService.getContent(id, user);
   }
 
   @Get('outline/:id')

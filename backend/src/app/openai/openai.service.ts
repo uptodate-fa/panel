@@ -7,8 +7,7 @@ export class OpenaiService {
 
   constructor() {
     this.openai = new OpenAI({
-      apiKey:
-        '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', // This is the default and can be omitted
+      apiKey: process.env.GPT_KEY,
     });
   }
 
@@ -26,7 +25,7 @@ export class OpenaiService {
 
     if (run.status === 'completed') {
       const messages = await this.openai.beta.threads.messages.list(
-        run.thread_id
+        run.thread_id,
       );
       const message = messages.data.shift();
       return message.content[0]['text'].value;

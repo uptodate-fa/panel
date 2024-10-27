@@ -15,6 +15,18 @@
         >
           No Subscription
         </button>
+      } @else if (remainDays() <= 0) {
+        <button
+          mat-flat-button
+          (click)="openSubscriptionForm()"
+          class="error-button"
+        >
+          Expired
+        </button>
+      } @else {
+        <button mat-stroked-button (click)="openSubscriptionForm()">
+          Subscription: {{ remainDays() }} days remaining
+        </button>
       }
       <button mat-stroked-button (click)="openProfile()">
         <i class="fa-solid fa-user"></i>
@@ -32,10 +44,24 @@
     <a mat-flat-button routerLink="/interactions"> Drug Interactions </a>
     <a mat-flat-button> UpToDate Pathways </a>
     <mat-menu #contentsMenu="matMenu">
-      <a mat-menu-item routerLink="/contents/table-of-contents/whats-new"> What's New </a>
-      <a mat-menu-item routerLink="/contents/practice-changing-updates"> Practice Changing UpDates </a>
-      <a mat-menu-item routerLink="/contents/table-of-contents/drug-information"> Drug Information </a>
-      <a mat-menu-item routerLink="/contents/table-of-contents/patient-education"> Patient Education </a>
+      <a mat-menu-item routerLink="/contents/table-of-contents/whats-new">
+        What's New
+      </a>
+      <a mat-menu-item routerLink="/contents/practice-changing-updates">
+        Practice Changing UpDates
+      </a>
+      <a
+        mat-menu-item
+        routerLink="/contents/table-of-contents/drug-information"
+      >
+        Drug Information
+      </a>
+      <a
+        mat-menu-item
+        routerLink="/contents/table-of-contents/patient-education"
+      >
+        Patient Education
+      </a>
       <a mat-menu-item routerLink="/articles"> Topics by Specialty </a>
       <a mat-menu-item routerLink="/articles"> Authors and Editors </a>
     </mat-menu>

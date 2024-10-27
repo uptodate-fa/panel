@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,6 +27,13 @@ import { SubscriptionFormDialogComponent } from '../shared/dialogs/subscription-
 export class ShellComponent {
   private dialog = inject(MatDialog);
   auth = inject(AuthService);
+  remainDays = computed(() => {
+    const sub = this.auth.user?.subscription;
+    if (sub) {
+      return Math.floor((new Date(sub.expiredAt).valueOf() - Date.now()) / 3600000 / 24);
+    }
+    return -1;
+  })
 
   openProfile() {
     this.dialog.open(ProfileDialogComponent);

@@ -49,7 +49,6 @@ export class ContentComponent {
       : data?.bodyHtml;
     if (body) {
       const div = this.contentService.getBodyHtml(body, data?.relatedGraphics);
-      console.log(div);
       return div.innerHTML;
     }
 

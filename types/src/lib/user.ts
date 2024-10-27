@@ -7,6 +7,7 @@ export enum UserRole {
 
 export class User {
   id: string;
+  _id: string;
   firstName?: string;
   lastName?: string;
   birthDate?: Date;
@@ -16,10 +17,11 @@ export class User {
   phone: string;
   role: UserRole;
   token?: string;
-  jwtVersion: number;
+  jwtVersion: number[];
   exp?: number;
   subscription?: Subscription;
   createdAt: Date;
+  _jwt: number;
 }
 
 export class UserToken {
