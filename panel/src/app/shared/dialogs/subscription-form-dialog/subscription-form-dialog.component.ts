@@ -69,8 +69,8 @@ export class SubscriptionFormDialogComponent {
 
   @ViewChild('couponInput') couponInputElem: ElementRef;
 
-  couponCodeControl = new FormControl();
-  couponCode = signal<string>('');
+  couponCodeControl = new FormControl('');
+  couponCode = signal<string | null>('');
 
   private formData = signal<SubscriptionDto | undefined>(undefined);
   price = computed(() => {
