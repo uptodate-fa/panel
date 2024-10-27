@@ -79,7 +79,7 @@ export class SubscriptionController {
 
     const tokenBody = {
       merchant_id: process.env.MERCHANT_ID,
-      amount: 10000,
+      amount,
       description,
       mobile: user.phone,
       callback_url: `${process.env.PAYMENT_CALLBACK_URL}`,
@@ -131,6 +131,7 @@ export class SubscriptionController {
       const confirmResponse: any = (
         await this.http.post(ZARINPAL_VERIFY_URL, body).toPromise()
       ).data.data;
+
       if (confirmResponse.code == 100 || confirmResponse.code == 101) {
         this.saveSubscription(payment.data, payment.user);
       }
@@ -156,6 +157,12 @@ export class SubscriptionController {
       };
       const createdData = new this.subscriptionModel(d);
       const subscription = await createdData.save();
+
+      if (dto.discountCouponId) {
+        this.discountsModel
+          .findByIdAndUpdate(dto.discountCouponId, { isUsed: true })
+          .exec();
+      }
 
       await this.userModel.findByIdAndUpdate(user.id, {
         subscription,

@@ -11,8 +11,7 @@ export class DiscountCoupon {
   static isValid(coupon?: DiscountCoupon, user?: User) {
     return (
       !!coupon &&
-      !coupon.isUsed &&
-      (!coupon.user || coupon.user.id === user?.id) &&
+      (!coupon.user || coupon.user.id === user?.id || !coupon.isUsed) &&
       (!coupon.expiredAt || new Date(coupon.expiredAt).valueOf() > Date.now())
     );
   }
