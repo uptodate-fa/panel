@@ -9,4 +9,14 @@ import {MatListModule} from '@angular/material/list';
   templateUrl: './res-table.component.html',
   styleUrl: './res-table.component.scss',
 })
-export class ResTableComponent {}
+export class ResTableComponent {
+  isPopupVisible = false; // Tracks the popup visibility
+
+  showPopup() {
+    this.isPopupVisible = true;
+  }
+
+  hidePopup() {
+    this.isPopupVisible = false;
+  }
+}

@@ -71,12 +71,10 @@
         }
     }
 }
-.hover {
-    cursor: pointer;
-}
-.hide {
-    display: none;
-}
-.hover:hover + .hide {
-    display: block;
-}
+.popup {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }

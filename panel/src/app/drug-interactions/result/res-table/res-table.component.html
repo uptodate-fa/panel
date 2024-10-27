@@ -27,12 +27,58 @@
         <div class="demo">
           <span class="table-title desc">No known interaction</span>
           <span class="table-mark mark-K">
-            <i class="fa-solid fa-caret-down fa-xs hover"></i>
-            <div class="hide">
+            <i
+              class="fa-solid fa-caret-down fa-xs hover"
+              (mouseenter)="showPopup()"
+              (mouseleave)="hidePopup()"
+            ></i>
+            <div *ngIf="isPopupVisible" class="popup">
               <mat-list role="list">
-                <mat-list-item role="listitem">Item 1</mat-list-item>
-                <mat-list-item role="listitem">Item 2</mat-list-item>
-                <mat-list-item role="listitem">Item 3</mat-list-item>
+                <mat-list-item role="listitem">
+                  <div>
+                    <span>X</span>
+                    <span>
+                      <strong>Avoid Combination</strong>
+                      Data demonstrate that the specified agents may interact
+                      with each other in a clinically significant manner. The
+                      risks associated with concomitant use of these agents
+                      usually outweigh the benefits. Concurrent use of these
+                      agents should generally be avoided.</span
+                    >
+                  </div>
+                </mat-list-item>
+                <mat-list-item role="listitem">
+                  <div>
+                    <span>D</span>
+                    <span>
+                      <strong>Consider Therapy Modification</strong>
+                      Data demonstrate that the two medications may interact
+                      with each other in a clinically significant manner. A
+                      patient-specific assessment must be conducted to determine
+                      whether the benefits of concomitant therapy outweigh the
+                      risks. Specific actions must be taken in order to realize
+                      the benefits and/or minimize the risks resulting from
+                      concomitant use of the agents. These actions may include
+                      aggressive monitoring, empiric dosage changes, or choosing
+                      alternative agents.
+                    </span>
+                  </div>
+                </mat-list-item>
+                <mat-list-item role="listitem">
+                  <div>
+                    <span>C</span>
+                    <span>
+                      <strong>Monitor Therapy</strong>
+                      Data demonstrate that the specified agents may interact
+                      with each other in a clinically significant manner. The
+                      benefits of concomitant use of these two medications often
+                      outweigh the risks. An appropriate monitoring plan should
+                      be implemented to identify potential negative effects.
+                      Dosage adjustments of one or both agents may be needed in
+                      some patients.
+                    </span>
+                  </div>
+                </mat-list-item>
               </mat-list>
             </div>
           </span>
