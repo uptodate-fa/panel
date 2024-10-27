@@ -23,5 +23,6 @@ export class HistoryCardComponent {
     queryKey: ['history'],
     queryFn: () =>
       lastValueFrom(this.http.get<ContentHistory[]>(`/api/contents/history`)),
+    refetchOnWindowFocus: false
   }));
 }
