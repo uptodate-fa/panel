@@ -27,13 +27,13 @@
         <div class="demo">
           <span class="table-title desc">No known interaction</span>
           <span class="table-mark mark-K">
-            <i
-              class="fa-solid fa-caret-down fa-xs hover"
-              (mouseenter)="showPopup()"
-              (mouseleave)="hidePopup()"
-            ></i>
-            <div *ngIf="isPopupVisible" class="popup">
-              <mat-list role="list">
+            <i class="fa-solid fa-caret-down fa-xs hover"></i>
+            <div id="hide" class="hidden">
+              <mat-list
+                role="list"
+                fxLayout="column"
+                fxLayoutAlign="space-between start"
+              >
                 <mat-list-item role="listitem">
                   <div>
                     <span>X</span>
@@ -67,6 +67,36 @@
                 <mat-list-item role="listitem">
                   <div>
                     <span>C</span>
+                    <span>
+                      <strong>Monitor Therapy</strong>
+                      Data demonstrate that the specified agents may interact
+                      with each other in a clinically significant manner. The
+                      benefits of concomitant use of these two medications often
+                      outweigh the risks. An appropriate monitoring plan should
+                      be implemented to identify potential negative effects.
+                      Dosage adjustments of one or both agents may be needed in
+                      some patients.
+                    </span>
+                  </div>
+                </mat-list-item>
+                <mat-list-item role="listitem">
+                  <div>
+                    <span>B</span>
+                    <span>
+                      <strong>Monitor Therapy</strong>
+                      Data demonstrate that the specified agents may interact
+                      with each other in a clinically significant manner. The
+                      benefits of concomitant use of these two medications often
+                      outweigh the risks. An appropriate monitoring plan should
+                      be implemented to identify potential negative effects.
+                      Dosage adjustments of one or both agents may be needed in
+                      some patients.
+                    </span>
+                  </div>
+                </mat-list-item>
+                <mat-list-item role="listitem">
+                  <div>
+                    <span>A</span>
                     <span>
                       <strong>Monitor Therapy</strong>
                       Data demonstrate that the specified agents may interact
