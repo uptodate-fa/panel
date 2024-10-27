@@ -71,12 +71,80 @@
         }
     }
 }
+.hoverMe{
+    position: relative;
+}
 #hide {
     display: none;
+    position: absolute;
+    top:28px;
+    right: 5px;
     flex-direction: column;
-    background-color: #f9f9f9;
     border: 1px solid #ccc;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 450px;
+    background-color: var(--sys-outline-variant);
+    padding: 4px;
   }
+.hoverMe:hover #hide{
+    display: block;
+}
+.mat-mdc-list-base{
+    
+    width: 500px;
+    background-color: var(--sys-on-secondary);
+}
+.mat-mdc-list-item{
+    border-bottom: 1px solid var(--sys-tertiary-container);
+    border-collapse: collapse;
+    display: flex;
+    height: 55px;
+}
+.mat-mdc-list-item:last-child {
+    border-bottom: none;
+  }
+
+.mdc-list{
+    padding: 0;
+}
+.mdc-list-item{
+    padding: 0 2px;
+    .mat-line {
+        white-space: normal;
+        word-wrap: break-word; 
+    }
+}
+.item-title{
+    display: inline-flex;
+    justify-content: center;
+    width: 25px;
+    margin-right:4px;
+    align-items: center;
+    font-size: 24px;
+}
+
+.item-desc {
+    font-size: 12px;
+    
+}
+.item-strong {
+    margin-right: 4px;
+}
+.mark-X{
+    background-color: var(--sys-error);
+    color: white;
+}
+.mark-C{
+    background-color: #f8d130;
+    color: white;
+}
+.mark-A {
+    background-color: var(--sys-surface-container-low);
+    color: var(--sys-primary-fixed-dim);
+}
+.mark-D{
+    background-color: var(--sys-secondary);
+    color: white;
+}
+.mark-B{
+    background-color: var(--sys-surface-container-low);
+    color: #7ed321;
+}
