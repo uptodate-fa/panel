@@ -23,7 +23,7 @@ mat-card {
         margin: 2px 16px 5px;
         padding: 6px 0;
         border-bottom: none;
-        color: var(--sys-outline);
+        color: var(--sys-inverse-surface);
     }
     #innerOutline {
       font-weight: 400;
@@ -67,7 +67,7 @@ mat-card {
         margin: 2px 16px 5px;
         padding: 16px 0 4px 0;
         border-bottom: none;
-        color: var(--sys-outline);
+        color: var(--sys-inverse-surface);
     }
     #outlineGraphics{
       font-weight: 400;
@@ -112,7 +112,7 @@ mat-card {
         margin: 2px 16px 5px;
         padding: 16px 0 4px 0;
         border-bottom: none;
-        color: var(--sys-outline);
+        color: var(--sys-inverse-surface);
     }
     #outlineTopics{
       font-weight: 400;
