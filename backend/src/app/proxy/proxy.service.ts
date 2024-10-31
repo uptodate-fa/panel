@@ -19,17 +19,23 @@ export class ProxyService {
   ) {}
 
   async preSearch(query: string, limit = 10): Promise<string[]> {
-    const response = await this.request({
-      url: `https://www.uptodate.com/services/app/contents/search/autocomplete/json?term=${query}&limit=${limit}`,
-    });
+    const response = await this.request(
+      {
+        url: `https://www.uptodate.com/services/app/contents/search/autocomplete/json?term=${query}&limit=${limit}`,
+      },
+      { skipLogin: true },
+    );
 
     return response?.data?.data?.searchTerms;
   }
 
   async search(query: string, sp = 0, limit = 20): Promise<SearchResult[]> {
-    const response = await this.request({
-      url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}&sp=${sp}`,
-    });
+    const response = await this.request(
+      {
+        url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}&sp=${sp}`,
+      },
+      { skipLogin: true },
+    );
     const data = response?.data?.data;
 
     if (data) {
@@ -74,9 +80,7 @@ export class ProxyService {
       url: `https://www.uptodate.com/services/app/contents/graphic/detailed/${id}/en_us/json?imageKey=${imageKey}&id=${id}${topicKey ? '&topicKey=' + topicKey : ''}`,
     });
 
-    
     const data = response?.data?.data;
-    console.log(data, topicKey);
     return {
       imageHtml: data?.imageHtml,
       title: data?.graphicInfo?.title,
@@ -142,21 +146,24 @@ export class ProxyService {
     } as TableOfContent;
   }
 
-  private async request(config: AxiosRequestConfig, skipRetry?: boolean) {
+  private async request(
+    config: AxiosRequestConfig,
+    props?: { skipRetry?: boolean; skipLogin?: boolean },
+  ) {
     try {
       const response = await this.auth.client.request(config);
       const needLogin = await this.auth.needLogin(response?.data);
-      if (!skipRetry && config.headers && needLogin) {
+      if (!props?.skipRetry && !props?.skipLogin && needLogin) {
         await this.auth.login();
         console.warn('no user', config.url);
-        return this.request(config, true);
+        return this.request(config, { skipRetry: true });
       }
       return response;
     } catch (error) {
-      if (!skipRetry && error.response?.status === 403) {
+      if (!props?.skipRetry && error.response?.status === 403) {
         await this.auth.login();
         console.warn('403', config.url);
-        return this.request(config, true);
+        return this.request(config, { skipRetry: true });
       }
       throw error;
     }

@@ -68,6 +68,7 @@ export class ContentComponent {
         topicId: this.contentQuery.data()?.uptodateId,
         key,
       },
+      maxWidth: '95vw'
     });
   }
 

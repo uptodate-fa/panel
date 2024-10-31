@@ -35,13 +35,13 @@ export class ContentService {
       staleTime: Infinity,
     }));
 
-  getContentGraphicQuery = (imageKey: string, topicId: string) =>
+  getContentGraphicQuery = (imageKey: Signal<string>, topicId: string) =>
     injectQuery(() => ({
-      queryKey: ['content/graphic', imageKey, topicId],
+      queryKey: ['content/graphic', imageKey(), topicId],
       queryFn: () =>
         lastValueFrom(
-          this.http.get<Content>(`/api/contents/graphic`, {
-            params: { topicId, imageKey },
+          this.http.get<Graphic>(`/api/contents/graphic`, {
+            params: { topicId, imageKey: imageKey() },
           }),
         ),
       staleTime: Infinity,
@@ -151,6 +151,22 @@ export class ContentService {
       }
     });
 
+    return div;
+  }
+
+  getGraphicHtml(htmlString: string) {
+    const div = document.createElement('div');
+    div.innerHTML = htmlString;
+
+    const allImgs = div.querySelectorAll('img');
+    allImgs.forEach((element) => {
+      const src = new URL(element.src);
+      if (src) {
+        element.src = src
+          .toString()
+          .replace(src.origin, `https://www.uptodate.com`);
+      }
+    });
     return div;
   }
 

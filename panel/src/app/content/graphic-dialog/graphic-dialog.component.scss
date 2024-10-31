@@ -1,0 +1,82 @@
+mat-spinner {
+  display: block;
+  margin: 24px auto !important;
+}
+
+mat-dialog-content {
+  width: 95vw;
+}
+
+mat-toolbar {
+  h3 {
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
+mat-drawer {
+  width: 300px;
+  padding: 16px;
+  border-radius: 0 !important;
+
+  .related-graphic-tile {
+    cursor: pointer;
+  }
+}
+
+::ng-deep .related-graphic-tile {
+  .mat-grid-tile-content {
+    align-items: end !important;
+
+    p {
+      padding: 4px;
+      background-color: rgba(0, 0, 0, 0.5);
+      font-size: 11px;
+      margin: 0;
+      color: white;
+    }
+  }
+}
+
+::ng-deep #graphic-main-content {
+  .ttl {
+    display: none;
+  }
+
+  table {
+    text-align: left;
+    border-top: none;
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid #bfbfbf;
+  }
+
+  table td {
+    vertical-align: text-top;
+    line-height: 1.5em;
+    border: 1px solid #bfbfbf;
+    font-size: 14px;
+    padding: 0.3em 0.6em;
+
+    &.subtitle1 {
+      vertical-align: middle;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #bfbfbf;
+      background-color: #e6e6e6;
+    }
+
+    ul {
+      padding-inline-start: 16px;
+    }
+  }
+}

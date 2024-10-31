@@ -1,0 +1,52 @@
+<mat-dialog-content>
+  @if (contentQuery.isLoading()) {
+    <mat-spinner [diameter]="24" />
+  } @else {
+    <mat-toolbar>
+      <h3 fxFlex>
+        {{ contentQuery.data()?.title }}
+      </h3>
+      <button mat-icon-button (click)="drawer.toggle()">
+        @if (drawer.opened) {
+          <i class="fa-regular fa-angle-right"></i>
+        } @else {
+          <i class="fa-regular fa-angle-left"></i>
+        }
+      </button>
+    </mat-toolbar>
+    <mat-divider />
+    <mat-drawer-container>
+      <mat-drawer-content>
+        <main fxFlex id="graphic-main-content">
+          <div [innerHTML]="innerHtml() | safeHtml"></div>
+        </main>
+      </mat-drawer-content>
+      <mat-drawer
+        #drawer
+        [opened]="!isMdScreen()"
+        position="end"
+        [mode]="isMdScreen() ? 'over' : 'side'"
+        class="surface-variant-background"
+      >
+        <mat-grid-list cols="2" rowHeight="1:2" gutterSize="8px">
+          @for (graphic of graphics(); track $index) {
+            <mat-grid-tile
+              class="related-graphic-tile"
+              [ngStyle]="{
+                background:
+                  'url(https://www.uptodate.com/services/app/contents/graphic/view/' +
+                  graphic.imageKey +
+                  '/thumbnail.png)',
+              }"
+              (click)="relatedGraphicClick(graphic)"
+            >
+              <p>
+                {{ graphic.title }}
+              </p>
+            </mat-grid-tile>
+          }
+        </mat-grid-list>
+      </mat-drawer>
+    </mat-drawer-container>
+  }
+</mat-dialog-content>
