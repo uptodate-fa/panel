@@ -37,6 +37,7 @@ export class ContentComponent {
     private http: HttpClient,
     public contentService: ContentService,
   ) {
+    const anchor = this.route.snapshot.queryParams['anchor'];
     this.route.params.subscribe((params) => {
       const id = params['id'];
       if (id) this.id.set(id);
@@ -58,6 +59,13 @@ export class ContentComponent {
             }
           });
         }, 2000);
+        if (anchor) {
+          setTimeout(() => {
+            document
+              .querySelector(location.hash)
+              ?.scrollIntoView({ behavior: 'smooth' });
+          }, 1500);
+        }
       }
 
       if (this.outlineHtml()) {
@@ -67,7 +75,10 @@ export class ContentComponent {
             .forEach((element) => {
               element.addEventListener('click', (event) => {
                 const href = element.getAttribute('anchor')?.split?.('#')?.[1];
-                if (href) location.hash = href;
+                if (href)
+                  document
+                    .getElementById(href)
+                    ?.scrollIntoView({ behavior: 'smooth' });
               });
               element.setAttribute('anchor', element.href);
               element.removeAttribute('href');
