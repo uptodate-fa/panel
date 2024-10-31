@@ -35,7 +35,7 @@ export class TableOfContentsComponent {
 
   items = computed(() => {
     const items = this.contentsQuery.data()?.items;
-    if (items) {
+    if (items && this.topic() == 'whats-new') {
       for (const item of items) {
         item.name = item.name.replace(`What's new in `, '');
       }
