@@ -1,6 +1,6 @@
 mat-drawer-container {
   height: 100%;
-  
+
   mat-drawer {
     width: 360px;
     border-right: 1px solid var(--sys-outline);
@@ -10,7 +10,7 @@ mat-drawer-container {
       height: 100%;
     }
 
-    .left-add{
+    .left-add {
       background-color: var(--sys-on-primary);
     }
 
@@ -18,8 +18,6 @@ mat-drawer-container {
       background-color: var(--sys-on-primary);
       gap: 4px;
     }
-
-
   }
 
   .analyze-btn {
@@ -33,18 +31,16 @@ mat-drawer-container {
     font-size: 14px;
     margin: 4px;
     padding: 4px;
-    font-weight:400;
+    font-weight: 400;
     height: 40px;
   }
 
   mat-drawer-content {
     background-color: var(--sys-on-primary);
     padding: 20px 36px 20px 36px;
-
   }
 }
 
 .small-text {
   font-size: 14px;
 }
-
