@@ -166,6 +166,12 @@ export class ContentService {
     return div;
   }
 
+  getOutlineHtml(htmlString: string) {
+    const div = document.createElement('div');
+    div.innerHTML = htmlString;
+    return div;
+  }
+
   getGraphicHtml(htmlString: string) {
     const div = document.createElement('div');
     div.innerHTML = htmlString;

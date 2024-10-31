@@ -59,6 +59,21 @@ export class ContentComponent {
           });
         }, 2000);
       }
+
+      if (this.outlineHtml()) {
+        setTimeout(() => {
+          document
+            .querySelectorAll<HTMLAnchorElement>('#outlineSections a[href]')
+            .forEach((element) => {
+              element.addEventListener('click', (event) => {
+                const href = element.getAttribute('anchor')?.split?.('#')?.[1];
+                if (href) location.hash = href;
+              });
+              element.setAttribute('anchor', element.href);
+              element.removeAttribute('href');
+            });
+        }, 2000);
+      }
     });
   }
 
@@ -68,7 +83,7 @@ export class ContentComponent {
         topicId: this.contentQuery.data()?.uptodateId,
         key,
       },
-      maxWidth: '95vw'
+      maxWidth: '95vw',
     });
   }
 
@@ -90,23 +105,12 @@ export class ContentComponent {
   });
 
   outlineHtml = computed(() => {
+    const data = this.contentQuery.data();
     const body = this.showTranslation()
-      ? this.contentQuery.data()?.translatedOutlineHtml
-      : this.contentQuery.data()?.outlineHtml;
+      ? data?.translatedOutlineHtml
+      : data?.outlineHtml;
     if (body) {
-      const div = document.createElement('div');
-      div.innerHTML = body;
-
-      const allInnerDivs = div.querySelectorAll('div');
-      allInnerDivs.forEach((element) => {
-        if (element.id === 'topicTitle') {
-          element.remove();
-        }
-        if (element.id) {
-          element.classList.add(element.id);
-        }
-      });
-
+      const div = this.contentService.getOutlineHtml(body);
       return div.innerHTML;
     }
 
