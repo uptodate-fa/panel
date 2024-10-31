@@ -2,3 +2,10 @@
   display: block;
   width: 100%;
 }
+
+.collapse-button {
+  justify-self: end;
+  display: block;
+  margin-bottom: -40px;
+  z-index: 10;
+}

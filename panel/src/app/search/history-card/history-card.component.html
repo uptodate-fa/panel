@@ -1,12 +1,21 @@
 <mat-card>
   <mat-card-content>
+    <button
+      mat-icon-button
+      class="collapse-button"
+      (click)="toggleVisibility()"
+    >
+      <i
+        class="fa-regular fa-sm fa-angle-{{ visibility() ? 'up' : 'down' }}"
+      ></i>
+    </button>
     <mat-tab-group
       mat-stretch-tabs="false"
       mat-align-tabs="start"
       class="tertiary-tabs"
     >
       <mat-tab label="history">
-        @if (historyQuery.data()) {
+        @if (historyQuery.data() && visibility()) {
           <mat-nav-list>
             @for (history of historyQuery.data(); track $index) {
               <a

@@ -10,7 +10,11 @@ import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
-import { apiInterceptorProvider, provideTranslation } from './core/providers';
+import {
+  apiInterceptorProvider,
+  provideJalaliDatePickerProvider,
+  provideTranslation,
+} from './core/providers';
 import {
   provideAngularQuery,
   QueryClient,
@@ -34,6 +38,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideTranslation(),
     apiInterceptorProvider(),
-    importProvidersFrom(MatNativeDateModule),
+    provideJalaliDatePickerProvider(),
   ],
 };

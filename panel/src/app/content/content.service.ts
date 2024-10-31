@@ -112,7 +112,10 @@ export class ContentService {
 
   getBodyHtml(htmlString: string, graphics?: Graphic[]) {
     const div = document.createElement('div');
-    div.innerHTML = htmlString;
+    div.innerHTML = htmlString.replace(
+      /\/external-redirect/g,
+      'https://www.uptodate.com/external-redirect',
+    );
 
     const allInnerDivs = div.querySelectorAll('div');
     allInnerDivs.forEach((element) => {
@@ -133,6 +136,15 @@ export class ContentService {
       i.classList.add('fa-light', 'fa-table', 'fa-sm');
       i.style.paddingInlineEnd = '4px';
       elem.prepend(i);
+    });
+
+    const allExternals = div.querySelectorAll<HTMLAnchorElement>('a.external');
+    allExternals.forEach((elem) => {
+      const i = document.createElement('i');
+      i.classList.add('fa-light', 'fa-arrow-up-right-from-square', 'fa-sm');
+      i.style.paddingInlineEnd = '4px';
+      elem.prepend(i);
+      elem.target = '_blank';
     });
 
     const allPictures = div.querySelectorAll('p:has(a[data-inline-graphics])');
