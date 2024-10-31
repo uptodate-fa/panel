@@ -35,9 +35,21 @@ export class ContentsController {
     return this.proxy.search(query, sp ? Number(sp) : 0);
   }
 
+  @Get('graphic')
+  graphic(
+    @Query('topicId') topicId: string,
+    @Query('imageKey') imageKey: string,
+  ) {
+    return this.proxy.graphic(imageKey, topicId);
+  }
+
   @Get(':id')
-  getById(@Param('id') id: string, @LoginUser() user: User) {
-    return this.contentsService.getContent(id, user);
+  getById(
+    @Param('id') id: string,
+    @Query('force') force: string,
+    @LoginUser() user: User,
+  ) {
+    return this.contentsService.getContent(id, user, !!force);
   }
 
   @Get('outline/:id')

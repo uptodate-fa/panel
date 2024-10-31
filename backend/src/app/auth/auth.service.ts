@@ -23,7 +23,7 @@ export class AuthService {
     });
   }
 
-  private async login(user: User, expireTokenIn = '15d') {
+  private async login(user: User, expireTokenIn = '120d') {
     const dbUser = await this.userModel
       .findById(user.id)
       .populate('subscription')

@@ -16,4 +16,6 @@ export class Graphic {
   imageKey: string;
   title: string;
   type: string;
+  imageHtml?: string;
+  relatedGraphics?: Graphic[];
 }

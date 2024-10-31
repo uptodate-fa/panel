@@ -16,20 +16,32 @@ export class ContentsService {
     private contentHistoryModel: Model<ContentHistory>,
   ) {}
 
-  async getContent(id: string, user?: User): Promise<Content> {
+  async getContent(
+    id: string,
+    user?: User,
+    forceSync = false,
+  ): Promise<Content> {
     const existContent = await this.contentModel
       .findOne({ queryStringId: id })
       .exec();
-    if (existContent) return existContent;
+    if (existContent && !forceSync) return existContent;
 
     let data = await this.proxy.content(id);
 
     if (data) {
-      const newContent = new this.contentModel({
-        ...data,
-        queryStringId: id,
-      });
-      data = await newContent.save();
+      if (existContent) {
+        data = await this.contentModel
+          .findByIdAndUpdate(existContent.id, data, {
+            new: true,
+          })
+          .exec();
+      } else {
+        const newContent = new this.contentModel({
+          ...data,
+          queryStringId: id,
+        });
+        data = await newContent.save();
+      }
     }
 
     if (user) {

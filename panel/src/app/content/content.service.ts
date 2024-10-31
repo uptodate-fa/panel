@@ -22,12 +22,28 @@ export class ContentService {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
 
-  getContentQuery = (id: Signal<string>) =>
+  getContentQuery = (id: Signal<string>, forceUpdate?: Signal<boolean>) =>
     injectQuery(() => ({
-      queryKey: ['content', id()],
+      queryKey: ['content', id(), forceUpdate?.()],
       queryFn: () =>
-        lastValueFrom(this.http.get<Content>(`/api/contents/${id()}`)),
+        lastValueFrom(
+          this.http.get<Content>(`/api/contents/${id()}`, {
+            params: forceUpdate?.() ? { force: '1' } : {},
+          }),
+        ),
       enabled: !!id(),
+      staleTime: Infinity,
+    }));
+
+  getContentGraphicQuery = (imageKey: string, topicId: string) =>
+    injectQuery(() => ({
+      queryKey: ['content/graphic', imageKey, topicId],
+      queryFn: () =>
+        lastValueFrom(
+          this.http.get<Content>(`/api/contents/graphic`, {
+            params: { topicId, imageKey },
+          }),
+        ),
       staleTime: Infinity,
     }));
 
@@ -128,7 +144,8 @@ export class ContentService {
         const graphic = graphics?.find((g) => g.imageKey.search(imageRef) > -1);
         if (graphic) {
           const graphicDiv = document.createElement('div');
-          graphicDiv.innerHTML = `<div class="utd-inline-graphic__container"><a class="utd-thumbnail__container thumbnail-border thumbnail-large utd-inline-graphic__thumbnail" href="https://www.uptodate.com/contents/image?imageKey=${graphic.imageKey}&amp;topicKey=PC%2F5367&amp;source=inline_graphic"><img src="https://www.uptodate.com/services/app/contents/graphic/view/${graphic.imageKey}/largethumbnail.png"/><span>${graphic.title}</span></a></div>`;
+          graphicDiv.innerHTML = `<div class="utd-inline-graphic__container"><a class="utd-thumbnail__container thumbnail-border thumbnail-large utd-inline-graphic__thumbnail" graphic-key="${graphic.imageKey}"><img src="https://www.uptodate.com/services/app/contents/graphic/view/${graphic.imageKey}/largethumbnail.png"/><span>${graphic.title}</span></a></div>`;
+          // graphicDiv.innerHTML = `<div class="utd-inline-graphic__container"><a class="utd-thumbnail__container thumbnail-border thumbnail-large utd-inline-graphic__thumbnail" href="https://www.uptodate.com/contents/image?imageKey=${graphic.imageKey}&amp;topicKey=PC%2F5367&amp;source=inline_graphic"><img src="https://www.uptodate.com/services/app/contents/graphic/view/${graphic.imageKey}/largethumbnail.png"/><span>${graphic.title}</span></a></div>`;
           element.prepend(graphicDiv);
         }
       }

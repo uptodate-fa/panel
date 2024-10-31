@@ -5,6 +5,7 @@ import {
   Content,
   Drug,
   DrugInteraction,
+  Graphic,
   SearchResult,
   TableOfContent,
 } from '@uptodate/types';
@@ -65,6 +66,23 @@ export class ProxyService {
       title: data?.topicInfo?.title,
       relatedGraphics: data?.topicInfo?.relatedGraphics,
     } as Content;
+  }
+
+  async graphic(imageKey: string, topicKey?: string) {
+    const id = imageKey.split('/')[1];
+    const response = await this.request({
+      url: `https://www.uptodate.com/services/app/contents/graphic/detailed/${id}/en_us/json?imageKey=${imageKey}&id=${id}${topicKey ? '&topicKey=' + topicKey : ''}`,
+    });
+
+    
+    const data = response?.data?.data;
+    console.log(data, topicKey);
+    return {
+      imageHtml: data?.imageHtml,
+      title: data?.graphicInfo?.title,
+      imageKey: data?.graphicInfo?.imageKey,
+      relatedGraphics: data?.relatedGraphics,
+    } as Graphic;
   }
 
   async outline(id: string) {
