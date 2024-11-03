@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { HttpService } from '@nestjs/axios';
 import {
   Content,
+  ContentAbstract,
   Drug,
   DrugInteraction,
   Graphic,
@@ -72,6 +73,36 @@ export class ProxyService {
       title: data?.topicInfo?.title,
       relatedGraphics: data?.topicInfo?.relatedGraphics,
     } as Content;
+  }
+
+  async contentAbstract(
+    topic: string,
+    range: string,
+  ): Promise<ContentAbstract[]> {
+    const response = await this.request({
+      url: `https://www.uptodate.com/services/app/contents/topic/${topic}/citation/${range}/json`,
+    });
+
+    const data = response?.data?.data;
+    return data.citations.map(
+      (item) =>
+        ({
+          citationNumber: item.citationInfo.citationNumber,
+          title: item.abstractInfo.title,
+          affiliation: item.abstractInfo.affiliation,
+          authors: item.abstractInfo.authors,
+          pmid: item.abstractInfo.pmid,
+          source: item.abstractInfo.source,
+          texts: item.abstractTexts.map((x) => `${x.name}: ${x.text}`),
+          links: item.links.map((x) => ({
+            ...x,
+            url: `https://uptodate.com${x.url}`,
+          })),
+          content: {
+            title: data.topicInfo.title,
+          },
+        }) as ContentAbstract,
+    );
   }
 
   async graphic(imageKey: string, topicKey?: string) {

@@ -57,6 +57,11 @@ export class ContentsController {
     return this.contentsService.getOutline(id);
   }
 
+  @Get('abstract/:id/:range')
+  getContentAbstracts(@Param('id') id: string, @Param('range') range: string) {
+    return this.proxy.contentAbstract(id, range);
+  }
+
   @Get('translate/:id')
   async getByIdTranslated(@Param('id') id: string) {
     return this.contentsService.translate(id);

@@ -7,7 +7,7 @@ import {
   injectMutation,
   injectQuery,
 } from '@tanstack/angular-query-experimental';
-import { Content, Graphic } from '@uptodate/types';
+import { Content, ContentAbstract, Graphic } from '@uptodate/types';
 import { lastValueFrom } from 'rxjs';
 import { AlertDialogComponent } from '../shared/dialogs/alert-dialog/alert-dialog.component';
 import { jsPDF } from 'jspdf';
@@ -43,6 +43,18 @@ export class ContentService {
           this.http.get<Graphic>(`/api/contents/graphic`, {
             params: { topicId, imageKey: imageKey() },
           }),
+        ),
+      staleTime: Infinity,
+    }));
+
+  getContentAbstractQuery = (topicId: string, range: string) =>
+    injectQuery(() => ({
+      queryKey: ['content/abstract', topicId, range],
+      queryFn: () =>
+        lastValueFrom(
+          this.http.get<ContentAbstract[]>(
+            `/api/contents/abstract/${topicId}/${range}`,
+          ),
         ),
       staleTime: Infinity,
     }));

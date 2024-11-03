@@ -1,0 +1,69 @@
+<mat-toolbar>
+  <button mat-icon-button goBack>
+    <i class="fa-regular fa-angle-left"></i>
+  </button>
+  <h1>
+    Medline ® Abstracts for References {{ rangeQuery }} of
+    {{ query.data()?.[0]?.content?.title }}
+  </h1>
+</mat-toolbar>
+<main p-md fxLayout="column" fxLayoutGap="24px">
+  @if (query.data()) {
+    @for (item of query.data(); track $index; let last = $last) {
+      <table>
+        <tr>
+          <td>
+            <b>{{ item.citationNumber }}</b>
+          </td>
+          <td>
+            @for (link of item.links; track $index) {
+              <a class="primary-text" [href]="link.url" target="_blank">{{ link.label }}</a>
+            }
+          </td>
+        </tr>
+        <tr>
+          <td>TI</td>
+          <td>
+            {{ item.title }}
+          </td>
+        </tr>
+        <tr>
+          <td>AU</td>
+          <td>
+            {{ item.authors }}
+          </td>
+        </tr>
+        <tr>
+          <td>SO</td>
+          <td>
+            {{ item.source }}
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            @for (text of item.texts; track $index) {
+              <p>{{ text }}</p>
+            }
+          </td>
+        </tr>
+        <tr>
+          <td>AD</td>
+          <td>
+            {{ item.affiliation }}
+          </td>
+        </tr>
+        <tr>
+          <td>PMID</td>
+          <td>
+            {{ item.pmid }}
+          </td>
+        </tr>
+      </table>
+
+      @if (!last) {
+        <mat-divider />
+      }
+    }
+  }
+</main>

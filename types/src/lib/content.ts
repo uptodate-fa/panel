@@ -19,3 +19,15 @@ export class Graphic {
   imageHtml?: string;
   relatedGraphics?: Graphic[];
 }
+
+export class ContentAbstract {
+  citationNumber: number;
+  title: string;
+  affiliation?: string;
+  authors?: string;
+  pmid?: string;
+  source?: string;
+  links?: {label: string, url: string}[];
+  texts?: string[];
+  content?: Content;
+}
