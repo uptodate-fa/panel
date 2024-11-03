@@ -46,7 +46,7 @@ h1 {
     color: var(--sys-outline);
     text-decoration: none;
     font-size: 14px;
-    cursor: pointer;
+    cursor: pointer !important;
   }
 
   ul {
@@ -116,6 +116,7 @@ h1 {
   a {
     text-decoration: none;
     color: var(--sys-primary);
+    cursor: pointer !important;
   }
 
   //link border add

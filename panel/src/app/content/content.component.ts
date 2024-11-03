@@ -58,6 +58,22 @@ export class ContentComponent {
               );
             }
           });
+
+          document
+            .querySelectorAll<HTMLAnchorElement>('a.graphic:not([graphic-key])')
+            .forEach((element) => {
+              const url = element.href;
+              const queryString = url?.split('?')[1];
+              const params = new URLSearchParams(queryString);
+              // const queryObject = Object.fromEntries(params.entries());
+              const imageKey = params.get('imageKey');
+              element.removeAttribute('href');
+              if (imageKey) {
+                element.addEventListener('click', (event) =>
+                  this.openImageDialog(imageKey),
+                );
+              }
+            });
         }, 2000);
         if (anchor) {
           setTimeout(() => {

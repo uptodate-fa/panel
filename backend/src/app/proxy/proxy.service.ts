@@ -93,8 +93,8 @@ export class ProxyService {
           authors: item.abstractInfo.authors,
           pmid: item.abstractInfo.pmid,
           source: item.abstractInfo.source,
-          texts: item.abstractTexts.map((x) => `${x.name}: ${x.text}`),
-          links: item.links.map((x) => ({
+          texts: item.abstractTexts?.map((x) => `${x.name}: ${x.text}`),
+          links: item.links?.map((x) => ({
             ...x,
             url: `https://uptodate.com${x.url}`,
           })),
