@@ -1,5 +1,5 @@
 mat-drawer-container {
-  height: 100%;
+  height: calc(100vh - 96px);
 
   mat-drawer {
     width: 360px;

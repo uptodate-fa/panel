@@ -20,14 +20,11 @@
   </mat-card-content>
   @if (outlineQuery.data()) {
     <div fxLayout="column" fxLayoutAlign="center center" id="actions">
-      <button mat-icon-button [mat-menu-trigger-for]="menu" stopPropagation>
+      <button mat-icon-button [mat-menu-trigger-for]="menu" stopPropagation (onMenuOpen)="setGraphicLinks()">
         <i class="fa-solid fa-list"></i>
       </button>
       <mat-menu #menu="matMenu">
-        <div
-          id="outline-content"
-          [innerHTML]="outlineQuery.data()?.outlineHtml | safeHtml"
-        ></div>
+        <div id="outline-content" [innerHTML]="outlineQuery.data()?.outlineHtml | safeHtml"></div>
       </mat-menu>
     </div>
   }
