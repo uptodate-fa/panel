@@ -4,7 +4,10 @@ import { SHARED } from '../../shared';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
-import { injectQuery } from '@tanstack/angular-query-experimental';
+import {
+  injectMutation,
+  injectQuery,
+} from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ContentHistory } from '@uptodate/types';
@@ -38,4 +41,14 @@ export class HistoryCardComponent {
       return !v;
     });
   }
+
+  removeMutation = injectMutation((client) => ({
+    mutationFn: (contentId: string) =>
+      lastValueFrom(this.http.delete<void>(`/api/contents/history/${contentId}`)),
+    onSuccess: () => {
+      client.invalidateQueries({
+        queryKey: ['history'],
+      });
+    },
+  }));
 }

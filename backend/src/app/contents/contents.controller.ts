@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Query } from '@nestjs/common';
 import { ProxyService } from '../proxy/proxy.service';
 import { ContentsService } from './contents.service';
 import { LoginUser } from '../auth/user.decorator';
@@ -19,9 +19,23 @@ export class ContentsController {
   history(@LoginUser() user: User) {
     return this.contentHistoryModel
       .find({ user: user.id })
-      .populate('content')
-      .sort({ createdAt: 'desc' })
+      .populate({
+        path: 'content',
+        select:
+          '-bodyHtml -outlineHtml -translatedBodyHtml -translatedOutlineHtml',
+      })
+      .sort({ updatedAt: 'desc' })
       .limit(8)
+      .exec();
+  }
+
+  @Delete('history/:contentId')
+  async historyRemove(
+    @LoginUser() user: User,
+    @Param('contentId') contentId: string,
+  ) {
+    await this.contentHistoryModel
+      .deleteMany({ user: user.id, content: contentId })
       .exec();
   }
 

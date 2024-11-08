@@ -16,13 +16,21 @@
     >
       <mat-tab label="history">
         @if (historyQuery.data() && visibility()) {
-          <mat-nav-list>
+          <mat-nav-list id="history-list">
             @for (history of historyQuery.data(); track $index) {
               <a
                 mat-list-item
                 routerLink="/contents/{{ history.content.queryStringId }}"
               >
                 {{ history.content.title }}
+                <button
+                  matListItemMeta
+                  mat-icon-button
+                  stopPropagation
+                  (click)="removeMutation.mutate(history.content._id)"
+                >
+                  <i class="fa-regular fa-xmark fa-lg"></i>
+                </button>
               </a>
             }
           </mat-nav-list>

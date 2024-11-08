@@ -21,38 +21,59 @@ export class ContentsService {
     user?: User,
     forceSync = false,
   ): Promise<Content> {
-    const existContent = await this.contentModel
+    let content: Content = await this.contentModel
       .findOne({ queryStringId: id })
       .exec();
-    if (existContent && !forceSync) return existContent;
+    if (!content || forceSync) {
+      let data = await this.proxy.content(id);
 
-    let data = await this.proxy.content(id);
-
-    if (data) {
-      if (existContent) {
-        data = await this.contentModel
-          .findByIdAndUpdate(existContent.id, data, {
-            new: true,
-          })
-          .exec();
-      } else {
-        const newContent = new this.contentModel({
-          ...data,
-          queryStringId: id,
-        });
-        data = await newContent.save();
+      if (data) {
+        if (content) {
+          data = await this.contentModel
+            .findByIdAndUpdate(content.id, data, {
+              new: true,
+            })
+            .exec();
+        } else {
+          const newContent = new this.contentModel({
+            ...data,
+            queryStringId: id,
+          });
+          data = await newContent.save();
+        }
+        content = data;
       }
     }
 
-    if (user) {
-      const newContentHistory = new this.contentHistoryModel({
-        user: user.id,
-        content: data.id,
-      });
-      newContentHistory.save();
+    console.log(!!user, !!content)
+    if (user && content) {
+      this.contentHistoryModel
+        .findOneAndUpdate(
+          { user: user.id, content: content.id },
+          { updatedAt: new Date() },
+        )
+        .populate('content')
+        .sort({ createdAt: 'desc' })
+        .exec()
+        .then(
+          (value) => {
+            console.log('exist', !!value);
+            if (!value) {
+              const newContentHistory = new this.contentHistoryModel({
+                user: user.id,
+                content: content.id,
+              });
+              newContentHistory.save();
+            }
+          },
+          (er) => {
+            console.log('not-exist');
+            console.log(er);
+          },
+        );
     }
 
-    return data;
+    return content;
   }
 
   async getOutline(id: string): Promise<Content> {

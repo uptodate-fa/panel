@@ -1,4 +1,5 @@
 export class Content {
+  _id: string;
   id: string;
   uptodateId: string;
   queryStringId: string;

@@ -9,3 +9,17 @@
   margin-bottom: -40px;
   z-index: 10;
 }
+
+#history-list {
+  a[mat-list-item] {
+    button.mat-mdc-list-item-meta {
+      display: none;
+    }
+
+    &:hover {
+      button.mat-mdc-list-item-meta {
+        display: block;
+      }
+    }
+  }
+}
