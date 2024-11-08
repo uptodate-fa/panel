@@ -8,6 +8,7 @@
       matInput
       [formControl]="searchControl"
       [matAutocomplete]="auto"
+      (keydown)="searchControlKeyDown($event)"
     />
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option
@@ -26,6 +27,7 @@
       id="search-button"
       [disabled]="!searchQuery.data() && searchQuery.isLoading()"
       class="primary-background on-primary-text"
+      (click)="gotToSearchPage()"
     >
       @if (!searchQuery.isLoading()) {
         <i class="fa-regular fa-search fa-lg"></i>

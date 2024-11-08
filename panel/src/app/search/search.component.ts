@@ -9,6 +9,7 @@ import { debounceTime, lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { HistoryCardComponent } from './history-card/history-card.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -32,17 +33,34 @@ export class SearchComponent {
     queryKey: ['presearch', this.searchTerm()],
     queryFn: () =>
       lastValueFrom(
-        this.http.get<string[]>(`/api/contents/presearch/${this.searchTerm()}`)
+        this.http.get<string[]>(`/api/contents/presearch/${this.searchTerm()}`),
       ),
     enabled: !!this.searchTerm(),
     staleTime: Infinity,
   }));
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {
     this.searchControl.valueChanges
       .pipe(debounceTime(400))
       .subscribe(async (query) => {
         this.searchTerm.set(query);
       });
+  }
+
+  searchControlKeyDown(ev: KeyboardEvent) {
+    if (ev.code === 'Enter') {
+      this.gotToSearchPage();
+    }
+  }
+
+  gotToSearchPage() {
+    const term = this.searchTerm();
+    if (term?.length > 1) {
+      console.log(this.searchTerm());
+      this.router.navigateByUrl(`/search/result?query=${term}`);
+    }
   }
 }
