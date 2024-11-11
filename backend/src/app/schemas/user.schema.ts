@@ -9,7 +9,6 @@ export const UserSchema = new mongoose.Schema<User>(
     email: { type: String },
     job: { type: String },
     city: { type: String },
-    jwtVersion: { type: [Number], default: [] },
     phone: { type: String, required: true, unique: true },
     role: { type: String, enum: UserRole, default: UserRole.User },
     subscription: { type: Schema.Types.ObjectId, ref: 'Subscription' },

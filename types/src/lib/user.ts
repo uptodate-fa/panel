@@ -1,4 +1,4 @@
-import { Subscription } from "./subscription";
+import { Subscription } from './subscription';
 
 export enum UserRole {
   Admin = 'ADMIN',
@@ -17,7 +17,6 @@ export class User {
   phone: string;
   role: UserRole;
   token?: string;
-  jwtVersion: number[];
   exp?: number;
   subscription?: Subscription;
   createdAt: Date;
@@ -29,4 +28,15 @@ export class UserToken {
   token: string;
   expired: boolean;
   createdAt: Date;
+}
+
+export class UserDevice {
+  id: string;
+  _id: string;
+  userAgent: string;
+  user: User;
+  token: number;
+  isExpired?: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }

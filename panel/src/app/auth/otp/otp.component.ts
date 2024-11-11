@@ -16,6 +16,9 @@ import { SHARED } from '../../shared';
 import { AuthService } from '../auth.service';
 import { PersianNumberService } from '@uptodate/utils';
 import { MatCardModule } from '@angular/material/card';
+import { HttpStatusCode } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogComponent } from '../../shared/dialogs/alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-otp',
@@ -44,7 +47,8 @@ export class OtpComponent implements OnDestroy {
   constructor(
     private auth: AuthService,
     private router: Router,
-    private snack: MatSnackBar
+    private snack: MatSnackBar,
+    private dialog: MatDialog,
   ) {
     const phone = this.router.getCurrentNavigation()?.extras?.state?.['phone'];
 
@@ -67,9 +71,19 @@ export class OtpComponent implements OnDestroy {
     try {
       await this.auth.login(this.phone, token);
       this.router.navigate(['/']);
-    } catch (error) {
+    } catch (error: any) {
       this.error.set(true);
-      this.snack.open('code is not correct', '', { duration: 2000 });
+      if (error.status === HttpStatusCode.Forbidden) {
+        this.snack.open('code is not correct', '', { duration: 2000 });
+      } else if(error.status === HttpStatusCode.TooManyRequests) {
+        this.dialog.open(AlertDialogComponent, {
+          data: {
+            title: 'Login Error',
+            description: 'You have reached the maximum number of devices allowed for login. To access your account on a new device, please contact support for assistance.',
+            hideCancel: true,
+          }
+        })
+      }
       this.loading.set(false);
     }
     ev?.preventDefault?.();

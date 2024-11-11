@@ -8,6 +8,7 @@ import {
   Payment,
   Subscription,
   User,
+  UserDevice,
 } from '@uptodate/types';
 import { UserSchema } from './user.schema';
 import { LogSchema } from './log.schema';
@@ -16,12 +17,14 @@ import { ContentSchema } from './content.schema';
 import { PaymentSchema } from './payment.schema';
 import { ContentHistorySchema } from './content-history.schema';
 import { DiscountCouponSchema } from './discount-coupon.schema';
+import { UserDeviceSchema } from './user-device.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
       { name: Log.name, schema: LogSchema },
+      { name: UserDevice.name, schema: UserDeviceSchema },
       { name: Subscription.name, schema: SubscriptionSchema },
       { name: Content.name, schema: ContentSchema },
       { name: Payment.name, schema: PaymentSchema },

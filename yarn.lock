@@ -11453,6 +11453,11 @@ typescript@~5.4.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.4.5.tgz#42ccef2c571fdbd0f6718b1d1f5e6e5ef006f611"
   integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
 
+ua-parser-js@2.0.0:
+  version "2.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-2.0.0-beta.3.tgz#32da02099f4173c68cd81ac9745332ddf6dc5f0c"
+  integrity sha512-vZkEG/GplLRxj4XVrjLUQpSNg9Qj9RdnIqrOy8dqrLP1e5x7i2N8RfVYlWRbKEZdDSWfeWNcWS38gmieX03/5A==
+
 uid@2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/uid/-/uid-2.0.2.tgz#4b5782abf0f2feeefc00fa88006b2b3b7af3e3b9"
