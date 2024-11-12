@@ -3,6 +3,7 @@ import {
   ConflictException,
   Controller,
   Get,
+  GoneException,
   NotFoundException,
   Param,
   Post,
@@ -11,6 +12,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {
+  ActivationCode,
   DiscountCoupon,
   Payment,
   Subscription,
@@ -37,10 +39,43 @@ export class SubscriptionController {
     private userModel: Model<User>,
     @InjectModel(DiscountCoupon.name)
     private discountsModel: Model<DiscountCoupon>,
+    @InjectModel(ActivationCode.name)
+    private activationCodeModel: Model<ActivationCode>,
     @InjectModel(Payment.name)
     private paymentModel: Model<Payment>,
     private http: HttpService,
   ) {}
+
+  @Get('active/:code')
+  async activeByActivationCode(
+    @LoginUser() user: User,
+    @Param('code') code: string,
+  ) {
+    const activationCode = await this.activationCodeModel
+      .findOne({ codes: { $in: [code.toLowerCase()] } })
+      .exec();
+
+    if (!activationCode) throw new NotFoundException();
+    if (
+      activationCode.expiredAt &&
+      new Date(activationCode.expiredAt).valueOf() < Date.now()
+    )
+      throw new GoneException('code expired');
+
+    const usedSub = await this.subscriptionModel
+      .findOne({ activationCode: code })
+      .exec();
+    if (usedSub) throw new ConflictException('code already used');
+
+    await this.saveSubscription(
+      {
+        maxDevice: activationCode.maxActiveDevices,
+        days: activationCode.period,
+        activationCode: code,
+      },
+      user,
+    );
+  }
 
   @Get('coupon/:code')
   async getDiscountCoupon(
@@ -151,11 +186,11 @@ export class SubscriptionController {
     } else {
       const expiredAt = new Date();
       expiredAt.setDate(expiredAt.getDate() + dto.days);
-      const d = {
+      const createdData = new this.subscriptionModel({
         expiredAt,
         maxActiveDevices: dto.maxDevice,
-      };
-      const createdData = new this.subscriptionModel(d);
+        activationCode: dto.activationCode,
+      });
       const subscription = await createdData.save();
 
       if (dto.discountCouponId) {

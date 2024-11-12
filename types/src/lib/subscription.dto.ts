@@ -7,6 +7,7 @@ export class SubscriptionDto {
   days: number;
   maxDevice = 1;
   discountCouponId?: string;
+  activationCode?: string;
 
   static price(dto?: SubscriptionDto, coupon?: DiscountCoupon) {
     let price = -1;

@@ -1,3 +1,4 @@
+export * from './activation-code';
 export * from './content-history';
 export * from './content';
 export * from './discount-coupon';

@@ -1,0 +1,27 @@
+<h3 matDialogTitle>Activate Your Subscription</h3>
+<mat-dialog-content fxLayout="column">
+  <p>
+    Enter your activation code to unlock your subscription benefits. If you
+    don’t have a code, you can proceed without it.
+  </p>
+  <mat-form-field>
+    <mat-label>Activation Code</mat-label>
+    <input
+      matInput
+      placeholder="Enter your activation code"
+      [formControl]="codeControl"
+      [disabled]="mutation.isPending()"
+    />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [disabled]="mutation.isPending()" (click)="noCodeClick()">I have no code</button>
+  <button
+    mat-flat-button
+    type="submit"
+    [disabled]="mutation.isPending()"
+    (click)="save()"
+  >
+    Activate Subscription
+  </button>
+</mat-dialog-actions>

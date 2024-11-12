@@ -5,5 +5,6 @@ export class Subscription {
   expiredAt: Date;
   user: User;
   maxActiveDevices: number;
+  activationCode?: string;
   createdAt: Date;
 }

@@ -21,6 +21,7 @@ import {
 } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
+  MatDialog,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
@@ -38,6 +39,7 @@ import {
 } from '@uptodate/types';
 import { HttpClient } from '@angular/common/http';
 import { debounceTime, lastValueFrom } from 'rxjs';
+import { ActivationCodeSubscriptionDialogComponent } from '../activation-code-subscription-dialog/activation-code-subscription-dialog.component';
 
 @Component({
   selector: 'app-subscription-form-dialog',
@@ -58,6 +60,7 @@ export class SubscriptionFormDialogComponent {
   YEARLY_DAYS = YEARLY_DAYS;
   HALF_YEAR_DAYS = HALF_YEAR_DAYS;
 
+  readonly dialog = inject(MatDialog);
   readonly dialogRef = inject(MatDialogRef<SubscriptionFormDialogComponent>);
   readonly data? = inject<{
     force?: boolean;
@@ -148,5 +151,12 @@ export class SubscriptionFormDialogComponent {
       dto.discountCouponId = this.couponQuery.data()?._id;
 
     this.mutation.mutate(dto);
+  }
+
+  haveCodeClick() {
+    this.dialogRef.close();
+    this.dialog.open(ActivationCodeSubscriptionDialogComponent, {
+      disableClose: true,
+    });
   }
 }
