@@ -19,15 +19,29 @@
   </a>
 </nav>
 <mat-tab-nav-panel #tabPanel>
-  @if (resultQuery.isLoading()) {
-    <mat-spinner [diameter]="36" />
-  } @else {
-    <div id="article-list">
-      @for (result of resultQuery.data(); track result.title) {
-        @if (result.url) {
-          <app-search-result-card [result]="result" />
-        }
-      }
-    </div>
-  }
+  <main>
+    @if (resultQuery.isLoading()) {
+      <mat-spinner [diameter]="36" />
+    } @else {
+      <div fxLayout="row" class="drawer-container" fxLayoutGap="24px">
+        <div class="drawer-content" fxFlex>
+          <div id="article-list">
+            @for (result of resultQuery.data()?.contents; track result.title) {
+              @if (result.url) {
+                <app-search-result-card [result]="result" />
+              }
+            }
+          </div>
+        </div>
+        <div class="drawer">
+          @if (resultQuery.data()?.drugPanel) {
+            <app-drug-panel [drugPanel]="resultQuery.data()!.drugPanel!" />
+          }
+        </div>
+      </div>
+      <!-- <div fxLayout="row" fxLayoutGap="24px">
+  
+      </div> -->
+    }
+  </main>
 </mat-tab-nav-panel>

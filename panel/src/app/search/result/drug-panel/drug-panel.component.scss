@@ -1,0 +1,27 @@
+mat-card {
+  overflow: hidden;
+
+  mat-toolbar {
+    height: 40px;
+    h5 {
+      font-size: 16px;
+    }
+  }
+}
+
+mat-card-content {
+  padding: 0 !important;
+}
+
+.accordion-content {
+  max-height: 250px;
+  overflow-y: auto;
+  font-size: 13px;
+}
+
+mat-expansion-panel {
+  background-color: white;
+  box-shadow: none !important;
+  border-top: 1px solid var(--sys-outline-variant);
+  border-radius: 0 !important;
+}

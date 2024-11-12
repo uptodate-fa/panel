@@ -1,7 +1,7 @@
 import { Component, computed, inject, Input, signal } from '@angular/core';
 import { SHARED } from '../../../shared';
 import { MatCardModule } from '@angular/material/card';
-import { Content, SearchResult } from '@uptodate/types';
+import { Content, ContentSearchResult, SearchResult } from '@uptodate/types';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -27,7 +27,7 @@ export class SearchResultCardComponent {
   private http = inject(HttpClient);
   private dialog = inject(MatDialog);
 
-  @Input() result: SearchResult;
+  @Input() result: ContentSearchResult;
   isMouseOver = signal(false);
 
   outlineQuery = injectQuery(() => ({
@@ -56,7 +56,6 @@ export class SearchResultCardComponent {
           if (imageKey && topicKey) {
             console.log(element);
             element.addEventListener('click', (event) => {
-              debugger;
               this.openImageDialog(imageKey, topicKey);
             });
           }
@@ -65,7 +64,6 @@ export class SearchResultCardComponent {
   }
 
   openImageDialog(key: string, topicId: string): void {
-    debugger;
     this.dialog.open(GraphicDialogComponent, {
       data: {
         topicId,

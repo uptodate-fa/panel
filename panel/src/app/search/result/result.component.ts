@@ -9,6 +9,8 @@ import { injectQuery } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { SearchResultCardComponent } from './search-result-card/search-result-card.component';
+import { DrugPanelComponent } from "./drug-panel/drug-panel.component";
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-result',
@@ -19,7 +21,9 @@ import { SearchResultCardComponent } from './search-result-card/search-result-ca
     MatProgressSpinner,
     SHARED,
     SearchResultCardComponent,
-  ],
+    DrugPanelComponent,
+    MatSidenavModule,
+],
   templateUrl: './result.component.html',
   styleUrl: './result.component.scss',
 })
@@ -31,7 +35,7 @@ export class ResultComponent {
     queryKey: ['search', this.query(), this.selectedTab()],
     queryFn: () =>
       lastValueFrom(
-        this.http.get<SearchResult[]>(`/api/contents/search/${this.query()}`, {
+        this.http.get<SearchResult>(`/api/contents/search/${this.query()}`, {
           params: { sp: this.selectedTab() },
         }),
       ),

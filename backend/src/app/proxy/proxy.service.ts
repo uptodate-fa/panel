@@ -4,8 +4,10 @@ import { HttpService } from '@nestjs/axios';
 import {
   Content,
   ContentAbstract,
+  ContentSearchResult,
   Drug,
   DrugInteraction,
+  DrugPanelTab,
   Graphic,
   SearchResult,
   TableOfContent,
@@ -30,7 +32,7 @@ export class ProxyService {
     return response?.data?.data?.searchTerms;
   }
 
-  async search(query: string, sp = 0, limit = 20): Promise<SearchResult[]> {
+  async search(query: string, sp = 0, limit = 20): Promise<SearchResult> {
     const response = await this.request(
       {
         url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}&sp=${sp}`,
@@ -40,24 +42,55 @@ export class ProxyService {
     const data = response?.data?.data;
 
     if (data) {
-      return data.searchResults.map(
-        (item) =>
-          ({
-            id: item.id,
-            title: item.title,
-            url: item.url,
-            description: item.snippet,
-            results: item.searchResults?.map(
-              (sub) =>
-                ({
-                  title: sub.title,
-                  url: sub.url,
-                }) as SearchResult,
-            ),
-          }) as SearchResult,
+      const contents = data.searchResults
+        .filter((item) => item.type === 'medical')
+        .map(
+          (item) =>
+            ({
+              id: item.id,
+              title: item.title,
+              url: item.url,
+              description: item.snippet,
+              results: item.searchResults?.map(
+                (sub) =>
+                  ({
+                    title: sub.title,
+                    url: sub.url,
+                  }) as ContentSearchResult,
+              ),
+            }) as ContentSearchResult,
+        );
+
+      const result: SearchResult = {
+        contents,
+      };
+
+      const drugPanel = data.searchResults.find(
+        (item) => item.type === 'drug_info_panel',
       );
+      if (drugPanel) {
+        console.log(drugPanel)
+        result.drugPanel = {
+          title: drugPanel.searchResults?.[0]?.title?.split(':')?.[0],
+          tabs: drugPanel.searchResults?.map(
+            (tab) =>
+              ({
+                contentTitle: tab.title,
+                contentUrl: tab.url,
+                label: tab.subtype?.split('_')?.[1],
+                accordions: tab.drugPanel?.accordion,
+                alerts: tab.drugPanel?.alerts,
+                dosing: tab.drugPanel?.dosing,
+              }) as DrugPanelTab,
+          ),
+        };
+      }
+
+      return result;
     }
-    return [];
+    return {
+      contents: [],
+    };
   }
 
   async content(id: string) {

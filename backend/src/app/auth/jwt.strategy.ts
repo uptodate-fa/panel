@@ -11,6 +11,9 @@ import { Model } from 'mongoose';
 import { HttpStatusCode } from 'axios';
 import { UAParser } from 'ua-parser-js';
 
+const DEVICE_CONFLICT_TIME = process.env['DEVICE_CONFLICT_TIME']
+  ? Number(process.env['DEVICE_CONFLICT_TIME'])
+  : 180000;
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
@@ -39,10 +42,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       (device) =>
         device !== currentDevice &&
         device.connectionAt &&
-        Date.now() - new Date(device.connectionAt).valueOf() < 180000,
+        Date.now() - new Date(device.connectionAt).valueOf() <
+          DEVICE_CONFLICT_TIME,
     );
 
-    console.log(currentDevice, conflictDevice);
     if (conflictDevice)
       throw new HttpException(
         `Session already active on another device (${UAParser(conflictDevice.userAgent).device.toString()}).`,

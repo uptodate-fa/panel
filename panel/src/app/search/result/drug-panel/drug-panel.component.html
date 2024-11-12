@@ -1,0 +1,53 @@
+<mat-card>
+  <mat-toolbar
+    class="primary-background on-primary-text"
+    fxLayout="row"
+    fxLayoutGap="8px"
+  >
+    <i class="fa-regular fa-capsules"></i>
+    <h5>{{ drugPanel.title }}</h5>
+  </mat-toolbar>
+  <mat-card-content>
+    <mat-tab-group class="tertiary-tabs">
+      @for (tab of drugPanel.tabs; track $index) {
+        <mat-tab label="{{ tab.label }}">
+          <div p-md>
+            <b> View Full Topic </b>
+            <a mat-button [href]="tab.contentUrl">{{ tab.contentTitle }}</a>
+            @if (tab.dosing?.length) {
+              <b> Dosing </b>
+              @for (d of tab.dosing; track $index) {
+                <div>
+                  <a mat-button [href]="d.url">{{ d.label }}</a>
+                  @if (d.childDrugContent) {
+                    <div fxLayout="column" fxLayoutAlign="start start" style="padding: 0 24px;">
+                      @for (child of d.childDrugContent; track $index) {
+                        <a mat-button [href]="child.url">{{ child.label }}</a>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+            }
+          </div>
+
+          @if (tab.accordions?.length) {
+            <mat-accordion>
+              @for (accordion of tab.accordions; track $index) {
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title> {{ accordion.name }} </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div
+                    class="accordion-content"
+                    [innerHTML]="accordion.value | safeHtml"
+                  ></div>
+                </mat-expansion-panel>
+              }
+            </mat-accordion>
+          }
+        </mat-tab>
+      }
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>
