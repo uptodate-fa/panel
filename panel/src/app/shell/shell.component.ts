@@ -9,12 +9,14 @@ import { RouterModule } from '@angular/router';
 import { ProfileDialogComponent } from '../shared/dialogs/profile-dialog/profile-dialog.component';
 import { AuthService } from '../auth/auth.service';
 import { SubscriptionFormDialogComponent } from '../shared/dialogs/subscription-form-dialog/subscription-form-dialog.component';
+import { SHARED } from '../shared';
 
 @Component({
   selector: 'app-shell',
   standalone: true,
   imports: [
     RouterModule,
+    SHARED,
     CommonModule,
     MatToolbarModule,
     MatButtonModule,

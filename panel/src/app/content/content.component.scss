@@ -5,6 +5,10 @@ mat-toolbar {
   border-bottom: 1px solid var(--sys-outline-variant);
 }
 
+mat-drawer {
+  border-radius: 0 !important;
+}
+
 article {
   padding: 32px;
   //background add
@@ -27,19 +31,14 @@ h1 {
 }
 
 ::ng-deep nav.nav-body {
-  top: 120px;
-  position: sticky;
-  max-height: 100vh;
-  overflow-y: auto;
-  //background add
   background-color: var(--sys-on-primary);
 
   h2 {
     font-size: 20px;
-    line-height: 8px;
     padding: 0 16px;
     border-bottom: none;
     color: var(--sys-on-surface-variant);
+    margin: 0;
   }
 
   a {
@@ -133,6 +132,10 @@ h1 {
     display: flex;
     position: relative;
     align-items: center;
+
+    @media screen and (max-width: 959px) {
+      display: none !important;
+    }
   }
 
   //when not sign in

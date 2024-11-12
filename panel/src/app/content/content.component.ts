@@ -9,6 +9,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContentService } from './content.service';
 import { MatDialog } from '@angular/material/dialog';
 import { GraphicDialogComponent } from './graphic-dialog/graphic-dialog.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-content',
@@ -19,12 +21,15 @@ import { GraphicDialogComponent } from './graphic-dialog/graphic-dialog.componen
     MatProgressSpinnerModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatSidenavModule,
   ],
   templateUrl: './content.component.html',
   styleUrl: './content.component.scss',
 })
 export class ContentComponent {
   private readonly dialog = inject(MatDialog);
+  private readonly breakpointObserver = inject(BreakpointObserver);
+  isSmallScreen = this.breakpointObserver.isMatched('(max-width: 959px)');
   id = signal('');
   forceUpdate = signal(false);
 

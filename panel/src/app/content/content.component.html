@@ -15,7 +15,11 @@
     <button mat-icon-button goBack>
       <i class="fa-regular fa-angle-left"></i>
     </button>
-    <h1 fxFlex>{{ title() }}</h1>
+    <button mat-stroked-button (click)="drawer.open()" [fxHide.gt-sm]="true">
+      view outline
+    </button>
+    <h1 [fxHide.lt-md]="true">{{ title() }}</h1>
+    <span fxFlex></span>
     <button
       mat-icon-button
       (click)="downloadPdf()"
@@ -40,28 +44,35 @@
       </button>
     }
   </mat-toolbar>
-  <main fxLayout="row">
-    <nav
-      fxFlex="360px"
-      class="nav-body"
-      [innerHTML]="outlineHtml() | safeHtml"
-      [class.fa]="showTranslation()"
-    ></nav>
-    <mat-divider [vertical]="true" />
-    <article
-      fxFlex
-      class="content-body"
-      id="topicContainer"
-      fxFlex
-      [class.fa]="showTranslation()"
+  <mat-drawer-container>
+    <mat-drawer
+      [opened]="!isSmallScreen"
+      [disableClose]="!isSmallScreen"
+      [mode]="isSmallScreen ? 'over' : 'side'"
+      #drawer
     >
-      @if (contentQuery.data()) {
-        <div
-          id="topicContent"
-          class="utdArticleSection"
-          [innerHTML]="bodyHTML() | safeHtml"
-        ></div>
-      }
-    </article>
-  </main>
+      <nav
+        class="nav-body"
+        [innerHTML]="outlineHtml() | safeHtml"
+        [class.fa]="showTranslation()"
+      ></nav>
+    </mat-drawer>
+    <mat-drawer-content>
+      <article
+        fxFlex
+        class="content-body"
+        id="topicContainer"
+        fxFlex
+        [class.fa]="showTranslation()"
+      >
+        @if (contentQuery.data()) {
+          <div
+            id="topicContent"
+            class="utdArticleSection"
+            [innerHTML]="bodyHTML() | safeHtml"
+          ></div>
+        }
+      </article>
+    </mat-drawer-content>
+  </mat-drawer-container>
 }

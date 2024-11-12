@@ -1,42 +1,93 @@
 <mat-toolbar>
   <mat-toolbar-row
     id="primary-toolbar"
-    class="form-theme background-background"
+    ngClass="form-theme background-background"
+    ngClass.lt-md="primary-background on-primary-text"
   >
     <img routerLink="/" id="logo" src="icons/wheel-icon.svg" id="logo" />
-    <img routerLink="/" id="typo" src="icons/typo-logo.svg" />
+    <img
+      [fxHide.lt-md]="true"
+      routerLink="/"
+      id="typo"
+      src="icons/typo-logo.svg"
+    />
     <h2></h2>
-    @if (auth.isProfileComplete) {
+    <button
+      mat-icon-button
+      [fxHide.gt-sm]="true"
+      [matMenuTriggerFor]="mainMenu"
+    >
+      <i class="fa-regular fa-bars on-primary-text"></i>
+    </button>
+    <mat-menu #mainMenu="matMenu">
+      <button mat-menu-item (click)="openProfile()">
+        <i class="fa-solid fa-user mat-icon"></i>
+        Dr.
+        {{ auth.user?.firstName }}
+        {{ auth.user?.lastName }}
+      </button>
       @if (!auth.user?.subscription) {
         <button
-          mat-flat-button
+          mat-menu-item
           (click)="openSubscriptionForm()"
           class="error-button"
         >
           No Subscription
         </button>
       } @else if (remainDays() <= 0) {
-        <button
-          mat-flat-button
-          (click)="openSubscriptionForm()"
-          class="error-button"
-        >
-          Expired
+        <button mat-menu-item (click)="openSubscriptionForm()">
+          Subscription Expired
         </button>
       } @else {
-        <button mat-stroked-button (click)="openSubscriptionForm()">
+        <button mat-menu-item (click)="openSubscriptionForm()">
           Subscription: {{ remainDays() }} days remaining
         </button>
       }
-      <button mat-stroked-button (click)="openProfile()">
-        <i class="fa-solid fa-user"></i>
-        Dr.
-        {{ auth.user?.firstName }}
-        {{ auth.user?.lastName }}
+      <mat-divider />
+      <button mat-menu-item [matMenuTriggerFor]="contentsMenu">
+        Contents
       </button>
-    }
+      <a mat-menu-item routerLink="/calculators"> Calculators </a>
+      <a mat-menu-item routerLink="/interactions"> Drug Interactions </a>
+      <a mat-menu-item> UpToDate Pathways </a>
+    </mat-menu>
+    <div fxLayout="row" fxLayoutGap="8px" [fxHide.lt-md]="true">
+      @if (auth.isProfileComplete) {
+        @if (!auth.user?.subscription) {
+          <button
+            mat-flat-button
+            (click)="openSubscriptionForm()"
+            class="error-button"
+          >
+            No Subscription
+          </button>
+        } @else if (remainDays() <= 0) {
+          <button
+            mat-flat-button
+            (click)="openSubscriptionForm()"
+            class="error-button"
+          >
+            Expired
+          </button>
+        } @else {
+          <button mat-stroked-button (click)="openSubscriptionForm()">
+            Subscription: {{ remainDays() }} days remaining
+          </button>
+        }
+        <button mat-stroked-button (click)="openProfile()">
+          <i class="fa-solid fa-user"></i>
+          Dr.
+          {{ auth.user?.firstName }}
+          {{ auth.user?.lastName }}
+        </button>
+      }
+    </div>
   </mat-toolbar-row>
-  <mat-toolbar-row class="primary-background" id="secondary-toolbar">
+  <mat-toolbar-row
+    class="primary-background"
+    id="secondary-toolbar"
+    [fxHide.lt-md]="true"
+  >
     <button mat-flat-button [matMenuTriggerFor]="contentsMenu">
       Contents
       <i class="fa-regular fa-angle-down"></i>

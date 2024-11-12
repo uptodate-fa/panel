@@ -23,7 +23,7 @@
     @if (resultQuery.isLoading()) {
       <mat-spinner [diameter]="36" />
     } @else {
-      <div fxLayout="row" class="drawer-container" fxLayoutGap="24px">
+      <div fxLayout.gt-sm="row" fxLayout="column-reverse" class="drawer-container" fxLayoutGap="24px">
         <div class="drawer-content" fxFlex>
           <div id="article-list">
             @for (result of resultQuery.data()?.contents; track result.title) {
@@ -33,7 +33,7 @@
             }
           </div>
         </div>
-        <div class="drawer">
+        <div class="drawer" fxFlex.gt-sm="400px">
           @if (resultQuery.data()?.drugPanel) {
             <app-drug-panel [drugPanel]="resultQuery.data()!.drugPanel!" />
           }
