@@ -37,6 +37,7 @@ export class UserDevice {
   user: User;
   token: number;
   isExpired?: boolean;
+  connectionAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }

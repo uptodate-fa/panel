@@ -7,6 +7,7 @@ export const UserDeviceSchema = new mongoose.Schema<UserDevice>(
     token: { type: Number },
     isExpired: { type: Boolean, default: false },
     user: { type: Types.ObjectId, ref: 'User', required: true },
+    connectionAt: { type: Date, required: false },
   },
   {
     timestamps: true,

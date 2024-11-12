@@ -9,11 +9,14 @@ import { inject, Injectable, Provider } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogComponent } from '../../shared/dialogs/alert-dialog/alert-dialog.component';
 const JWT_KEY = 'jwtToken';
 const IGNORE_CASES = [new RegExp('^https?:\\/\\/?'), new RegExp('/i18n/')];
 
 @Injectable()
 class ApiInterceptor implements HttpInterceptor {
+  dialog = inject(MatDialog);
   router = inject(Router);
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     let ignore = false;
@@ -48,9 +51,27 @@ class ApiInterceptor implements HttpInterceptor {
           sessionStorage.removeItem(JWT_KEY);
           localStorage.removeItem(JWT_KEY);
           this.router.navigateByUrl('/login');
+        } else if (err.status === HttpStatusCode.TooEarly) {
+          this.dialog
+            .open(AlertDialogComponent, {
+              data: {
+                title: 'Device Conflict Detected',
+                description:
+                  `${err.error?.message} Please wait a few minutes and try again.`,
+                hideCancel: true,
+                okText: 'Reload',
+              },
+              disableClose: true,
+            })
+            .afterClosed()
+            .subscribe((ok) => {
+              if (ok) {
+                location.reload();
+              }
+            });
         }
         return throwError(err);
-      })
+      }),
     );
   }
 }
