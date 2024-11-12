@@ -39,7 +39,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       (device) =>
         device !== currentDevice &&
         device.connectionAt &&
-        Date.now() - new Date(device.connectionAt).valueOf() < 60000,
+        Date.now() - new Date(device.connectionAt).valueOf() < 180000,
     );
 
     console.log(currentDevice, conflictDevice);
