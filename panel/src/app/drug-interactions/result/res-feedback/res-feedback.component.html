@@ -25,11 +25,11 @@
           <span
             class="risk"
             [ngClass]="{
-              'mark-C': item.riskRating == 'C',
-              'mark-A': item.riskRating == 'A',
-              'mark-X': item.riskRating == 'X',
-              'mark-D': item.riskRating == 'D',
-              'mark-B': item.riskRating == 'B'
+              'mark-C': item.riskRating === 'C',
+              'mark-A': item.riskRating === 'A',
+              'mark-X': item.riskRating === 'X',
+              'mark-D': item.riskRating === 'D',
+              'mark-B': item.riskRating === 'B',
             }"
             ngClass="item.riskRating == 'X'
                 ? 'mark-X'

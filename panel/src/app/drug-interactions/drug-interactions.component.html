@@ -1,67 +1,60 @@
-<mat-drawer-container class="example-container">
-  <mat-drawer mode="side" opened disableClose>
-    <div class="wrapper" fxLayout="column">
-      <app-selector />
-      <mat-list class="left-add">
-        @for (drug of interactionsService.items(); track $index) {
-          <mat-list-item>
-            <span matListItemTitle>
-              {{ drug.name }}
-            </span>
-            <button
-              mat-icon-button
-              matListItemMeta
-              (click)="interactionsService.removeItem(drug)"
-            >
-              <i class="fa-regular fa-xmark-circle fa-lg"></i>
-            </button>
-          </mat-list-item>
-        }
-      </mat-list>
-      <mat-divider />
-      <mat-toolbar
-        fxLayout="row"
-        fxLayoutAlign="end center"
-        class="left-toolbar"
-      >
-        <button
-          mat-flat-button
-          class="clear-btn"
-          (click)="interactionsService.clear()"
-        >
-          Clear
-        </button>
-        <button
-          mat-flat-button
-          (click)="interactionsService.analyze()"
-          class="analyze-btn"
-        >
-          Analyze
-        </button>
-      </mat-toolbar>
-      @if (isDrugSelected()) {
-        <p p-md class="small-text">
-          Display complete list of interactions for an individual item by
-          clicking item name. Add another item to analyze for potential
-          interactions.
-        </p>
+<main fxLayout.gt-sm="row" fxLayout.lt-md="column">
+  <div class="selector-section" fxLayout="column" fxFlex.gt-sm="300px">
+    <app-selector />
+    <mat-list>
+      @for (drug of interactionsService.items(); track $index) {
+        <mat-list-item>
+          <span matListItemTitle>
+            {{ drug.name }}
+          </span>
+          <button
+            mat-icon-button
+            matListItemMeta
+            (click)="interactionsService.removeItem(drug)"
+          >
+            <i class="fa-regular fa-xmark-circle fa-lg"></i>
+          </button>
+        </mat-list-item>
       }
-      <span fxFlex></span>
-      <div p-md>
-        <p class="error-text small-text">
-          NOTE: This tool does not address chemical compatibility related to
-          I.V. drug preparation or administration.
-        </p>
-        <p class="small-text">
-          © 2024 UpToDate, Inc. and/or its affiliates. All Rights Reserved.
-        </p>
-      </div>
+    </mat-list>
+    <mat-divider />
+    <mat-toolbar fxLayout="row" fxLayoutAlign="end center">
+      <button
+        mat-button
+        class="clear-btn"
+        (click)="interactionsService.clear()"
+      >
+        Clear
+      </button>
+      <button
+        mat-flat-button
+        (click)="interactionsService.analyze()"
+        class="analyze-btn"
+      >
+        Analyze
+      </button>
+    </mat-toolbar>
+    @if (isDrugSelected()) {
+      <p p-md class="small-text" fxHide.lt-md>
+        Display complete list of interactions for an individual item by clicking
+        item name. Add another item to analyze for potential interactions.
+      </p>
+    }
+    <span fxFlex></span>
+    <div p-md fxHide.lt-md>
+      <p class="error-text small-text">
+        NOTE: This tool does not address chemical compatibility related to I.V.
+        drug preparation or administration.
+      </p>
+      <p class="small-text">
+        © 2024 UpToDate, Inc. and/or its affiliates. All Rights Reserved.
+      </p>
     </div>
-  </mat-drawer>
+  </div>
 
-  <mat-drawer-content>
+  <div fxFlex class="content">
     @if (isDrugSelected()) {
       <app-result />
     }
-  </mat-drawer-content>
-</mat-drawer-container>
+  </div>
+</main>

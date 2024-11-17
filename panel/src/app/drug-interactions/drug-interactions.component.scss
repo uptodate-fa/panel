@@ -1,23 +1,8 @@
-mat-drawer-container {
+main {
   height: calc(100vh - 96px);
 
-  mat-drawer {
-    width: 360px;
+  .selector-section {
     border-right: 1px solid var(--sys-outline);
-    border-radius: 0;
-
-    div.wrapper {
-      height: 100%;
-    }
-
-    .left-add {
-      background-color: var(--sys-on-primary);
-    }
-
-    .left-toolbar {
-      background-color: var(--sys-on-primary);
-      gap: 4px;
-    }
   }
 
   .analyze-btn {
@@ -26,8 +11,6 @@ mat-drawer-container {
   }
 
   .clear-btn {
-    background-color: white;
-    color: var(--sys-primary);
     font-size: 14px;
     margin: 4px;
     padding: 4px;
@@ -35,7 +18,7 @@ mat-drawer-container {
     height: 40px;
   }
 
-  mat-drawer-content {
+  .content {
     background-color: var(--sys-on-primary);
     padding: 20px 36px 20px 36px;
   }

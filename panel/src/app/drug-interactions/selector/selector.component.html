@@ -18,20 +18,12 @@
       }
     </mat-autocomplete>
 
-    <i matPrefix class="fa-regular fa-search fa-lg search-icon"></i>
-
-    <button
-      mat-flat-button
-      matSuffix
-      id="search-button"
-      [disabled]="!searchQuery.data() && searchQuery.isLoading()"
-      class="primary-background on-primary-text"
-    >
-      @if (!searchQuery.isLoading()) {
-        Add
-      } @else {
+    @if (searchQuery.isLoading()) {
+      <div style="padding: 0 16px" matSuffix>
         <i class="fa-regular fa-circle-notch fa-lg fa-spin"></i>
-      }
-    </button>
+      </div>
+    } @else {
+      <i matSuffix class="fa-regular fa-search fa-lg search-icon"></i>
+    }
   </mat-form-field>
 </div>

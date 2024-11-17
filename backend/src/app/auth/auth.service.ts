@@ -121,7 +121,7 @@ export class AuthService {
     const mobilePhone = PersianNumberService.toEnglish(mobile);
     return (
       token === 'qwer123' ||
-      this.mobilePhoneTokens[mobilePhone] ===
+      this.mobilePhoneTokens.get(mobilePhone) ===
         PersianNumberService.toEnglish(token)
     );
   }
