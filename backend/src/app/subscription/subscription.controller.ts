@@ -52,7 +52,7 @@ export class SubscriptionController {
     @Param('code') code: string,
   ) {
     const activationCode = await this.activationCodeModel
-      .findOne({ codes: { $in: [code.toLowerCase()] } })
+      .findOne({ codes: { $in: [code.toUpperCase()] } })
       .exec();
 
     if (!activationCode) throw new NotFoundException();

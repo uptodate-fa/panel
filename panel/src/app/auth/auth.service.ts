@@ -67,7 +67,7 @@ export class AuthService {
 
   async update(dto: User) {
     await lastValueFrom(this.client.put(`/api/auth/edit`, dto));
-    this.revalidateUserInfo();
+    await this.revalidateUserInfo();
   }
 
   get user() {
