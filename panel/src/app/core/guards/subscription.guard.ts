@@ -8,21 +8,18 @@ import { ActivationCodeSubscriptionDialogComponent } from '../../shared/dialogs/
 export const subscriptionGuard: CanActivateFn = async () => {
   const auth = inject(AuthService);
   const dialog = inject(MatDialog);
-  setTimeout(async () => {
-    await auth.complete();
-    if (auth.isProfileComplete && auth.user) {
-      if (!auth.user.subscription)
-        dialog.open(ActivationCodeSubscriptionDialogComponent, {
-          disableClose: true,
-        });
-      else if (
-        new Date(auth.user.subscription.expiredAt).valueOf() < Date.now()
-      )
-        dialog.open(SubscriptionFormDialogComponent, {
-          data: { force: true },
-          disableClose: true,
-        });
-    }
-  }, 2000);
+  await auth.complete();
+  console.log(1)
+  if (auth.isProfileComplete && auth.user) {
+    if (!auth.user.subscription)
+      dialog.open(ActivationCodeSubscriptionDialogComponent, {
+        disableClose: true,
+      });
+    else if (new Date(auth.user.subscription.expiredAt).valueOf() < Date.now())
+      dialog.open(SubscriptionFormDialogComponent, {
+        data: { force: true },
+        disableClose: true,
+      });
+  }
   return true;
 };
