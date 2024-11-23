@@ -1,1 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+@use '../public/fonts/fontawesome/scss/fontawesome.scss';
+
+@use '../public/fonts/iransans/iransans.scss';
+@use '../public/fonts/fontawesome/scss/regular.scss';
+@use '../public/fonts/fontawesome/scss/brands.scss';
+@use '../public/fonts/fontawesome/scss/solid.scss';
+@use '../public/fonts/fontawesome/scss/light.scss';
+@use '../public/fonts/fontawesome/scss/thin.scss';
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme(
+    (
+      color: mat.$violet-palette,
+      typography: IRANSans,
+    )
+  );
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: IRANSans, 'Helvetica Neue', sans-serif;
+}
