@@ -146,8 +146,26 @@ export class AuthService {
     }
   }
 
-  async loginAdmin(user: User) {
-    return this.login(user, UserRole.Admin);
+  async loginAdmin(username: string, password: string): Promise<string> {
+    const user = await this.userModel.findOne({ username, password }).exec();
+    if (user) {
+      const expireTokenIn = '3d';
+      const newJwt = Date.now();
+      const payload: User = {
+        id: user.id,
+        role: user.role,
+        phone: user.phone,
+        _jwt: newJwt,
+      } as User;
+      const token = this.jwtService.sign(payload, {
+        secret: process.env.JWT_ACCESS_SECRET,
+        expiresIn: expireTokenIn,
+      });
+
+      return token;
+    } else {
+      throw new HttpException('code is not valid', HttpStatus.FORBIDDEN);
+    }
   }
 
   async lookup(

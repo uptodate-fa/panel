@@ -5,7 +5,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { User, UserDevice } from '@uptodate/types';
+import { User, UserDevice, UserRole } from '@uptodate/types';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { HttpStatusCode } from 'axios';
@@ -28,36 +28,44 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: User) {
-    const devices = await this.userDeviceModel
-      .find({ user: payload.id, isExpired: false })
-      .exec();
-    const currentDevice = devices.find(
-      (device) => device.token === payload._jwt,
-    );
-    if (!currentDevice) {
-      throw new UnauthorizedException('Token has been invalidated');
-    }
+    if (payload.role === UserRole.User) {
+      const devices = await this.userDeviceModel
+        .find({ user: payload.id, isExpired: false })
+        .exec();
+      const currentDevice = devices.find(
+        (device) => device.token === payload._jwt,
+      );
+      if (!currentDevice) {
+        throw new UnauthorizedException('Token has been invalidated');
+      }
 
-    const conflictDevice = devices.find(
-      (device) =>
-        device !== currentDevice &&
-        device.connectionAt &&
-        Date.now() - new Date(device.connectionAt).valueOf() <
-          DEVICE_CONFLICT_TIME,
-    );
-
-    if (conflictDevice)
-      throw new HttpException(
-        `Session already active on another device (${UAParser(conflictDevice.userAgent).device.toString()}).`,
-        HttpStatusCode.TooEarly,
-        {
-          description: ``,
-        },
+      const conflictDevice = devices.find(
+        (device) =>
+          device !== currentDevice &&
+          device.connectionAt &&
+          Date.now() - new Date(device.connectionAt).valueOf() <
+            DEVICE_CONFLICT_TIME,
       );
 
-    currentDevice.connectionAt = new Date();
-    currentDevice.save();
+      if (conflictDevice)
+        throw new HttpException(
+          `Session already active on another device (${UAParser(conflictDevice.userAgent).device.toString()}).`,
+          HttpStatusCode.TooEarly,
+          {
+            description: ``,
+          },
+        );
 
-    return payload;
+      currentDevice.connectionAt = new Date();
+      currentDevice.save();
+
+      return payload;
+    } else if (payload.role === UserRole.Admin) {
+      const user = await this.userModel.findById(payload.id).exec();
+      if (user.role === UserRole.Admin || user?._jwt !== payload._jwt) {
+        throw new UnauthorizedException('Token has been invalidated');
+      }
+      return payload;
+    }
   }
 }

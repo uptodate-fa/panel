@@ -7,6 +7,8 @@ export const UserSchema = new mongoose.Schema<User>(
     lastName: { type: String },
     birthDate: { type: Date },
     email: { type: String },
+    username: { type: String, required: false },
+    password: { type: String, required: false },
     job: { type: String },
     city: { type: String },
     phone: { type: String, required: true, unique: true },

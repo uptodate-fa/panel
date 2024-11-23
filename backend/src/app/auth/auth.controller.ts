@@ -5,6 +5,7 @@ import {
   HttpException,
   HttpStatus,
   Param,
+  Post,
   Put,
   Req,
 } from '@nestjs/common';
@@ -38,7 +39,6 @@ export class AuthController {
   @Get('info')
   async info(@LoginUser() user: User, @Req() request: Request) {
     const userAgent = request.headers['user-agent'];
-    const { browser, cpu, device } = UAParser(userAgent);
     if (user && user.id) {
       return this.userModel
         .findById(user.id)
@@ -58,5 +58,11 @@ export class AuthController {
       PersianNumberService.toEnglish(params.token),
       userAgent,
     );
+  }
+
+  @Public()
+  @Post('login-admin')
+  async loginAdmin(@Body() body) {
+    return this.auth.loginAdmin(body.username, body.password);
   }
 }
