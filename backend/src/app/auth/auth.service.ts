@@ -148,7 +148,7 @@ export class AuthService {
 
   async loginAdmin(username: string, password: string): Promise<string> {
     const user = await this.userModel.findOne({ username, password }).exec();
-    if (user) {
+    if (user && user.role === UserRole.Admin) {
       const expireTokenIn = '3d';
       const newJwt = Date.now();
       const payload: User = {
@@ -162,9 +162,15 @@ export class AuthService {
         expiresIn: expireTokenIn,
       });
 
+      user._jwt = newJwt;
+      await user.save();
+
       return token;
     } else {
-      throw new HttpException('code is not valid', HttpStatus.FORBIDDEN);
+      throw new HttpException(
+        'username or password incorrect',
+        HttpStatus.FORBIDDEN,
+      );
     }
   }
 

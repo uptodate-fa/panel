@@ -38,7 +38,6 @@ export class AuthController {
 
   @Get('info')
   async info(@LoginUser() user: User, @Req() request: Request) {
-    const userAgent = request.headers['user-agent'];
     if (user && user.id) {
       return this.userModel
         .findById(user.id)

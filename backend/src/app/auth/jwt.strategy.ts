@@ -28,6 +28,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: User) {
+    console.log(payload);
     if (payload.role === UserRole.User) {
       const devices = await this.userDeviceModel
         .find({ user: payload.id, isExpired: false })
@@ -62,7 +63,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       return payload;
     } else if (payload.role === UserRole.Admin) {
       const user = await this.userModel.findById(payload.id).exec();
-      if (user.role === UserRole.Admin || user?._jwt !== payload._jwt) {
+      console.log(user)
+      if (user.role !== UserRole.Admin || user?._jwt !== payload._jwt) {
         throw new UnauthorizedException('Token has been invalidated');
       }
       return payload;

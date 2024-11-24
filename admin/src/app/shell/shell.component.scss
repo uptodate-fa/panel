@@ -3,8 +3,13 @@
 }
 
 .sidenav {
-  width: 200px;
+  width: 80px;
+  padding: 16px;
   background-color: var(--mat-sys-surface-container);
+  
+  nav{
+    
+  }
 }
 
 .sidenav .mat-toolbar {
