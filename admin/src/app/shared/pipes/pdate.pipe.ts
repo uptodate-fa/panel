@@ -12,7 +12,7 @@ export class PdatePipe implements PipeTransform {
         const formatter = new Intl.DateTimeFormat('fa-IR', {
           day: 'numeric',
           month: 'long',
-          year: '2-digit',
+          year: 'numeric',
           hour: 'numeric',
           minute: 'numeric'
         });

@@ -1,0 +1,31 @@
+@if (query.data()) {
+  <mat-list>
+    @for (item of query.data(); track $index; let last = $last) {
+      <mat-list-item>
+        @if (item._uap.getDevice().type === 'mobile') {
+          <i matListItemIcon class="fa-solid fa-mobile"></i>
+        } @else {
+          <i matListItemIcon class="fa-solid fa-laptop"></i>
+        }
+        <span matListItemTitle eng>
+          {{ item._uap.getDevice().vendor }}
+          {{ item._uap.getDevice().model }}
+        </span>
+        <span matListItemLine>
+          اولین اتصال: {{ item.createdAt | pdate: true }}
+        </span>
+        <span matListItemLine>
+          آخرین اتصال: {{ item.updatedAt | pdate: true }}
+        </span>
+        @if (item.isExpired) {
+          <span matListItemMeta>logout</span>
+        }
+      </mat-list-item>
+      @if (!last) {
+        <mat-divider inset />
+      }
+    }
+  </mat-list>
+} @else {
+  <mat-spinner [diameter]="24" />
+}

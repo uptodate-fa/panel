@@ -83,6 +83,7 @@
     "@swc/helpers": "0.5.11",
     "@types/jest": "29.5.14",
     "@types/node": "18.16.9",
+    "@types/ua-parser-js": "^0.7.39",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
     "@typescript-eslint/utils": "^7.16.0",

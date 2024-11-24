@@ -1,4 +1,5 @@
 import { Subscription } from './subscription';
+import { UAParser } from 'ua-parser-js';
 
 export enum UserRole {
   Admin = 'ADMIN',
@@ -41,5 +42,6 @@ export class UserDevice {
   isExpired?: boolean;
   connectionAt?: Date;
   createdAt: Date;
+  _uap: UAParser;
   updatedAt: Date;
 }
