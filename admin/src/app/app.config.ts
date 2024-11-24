@@ -10,7 +10,10 @@ import {
   provideTanStackQuery,
   QueryClient,
 } from '@tanstack/angular-query-experimental';
-import { apiInterceptorProvider } from './core/providers';
+import {
+  apiInterceptorProvider,
+  provideJalaliDatePickerProvider,
+} from './core/providers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,5 +31,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes),
     provideAnimationsAsync(),
     apiInterceptorProvider(),
+    provideJalaliDatePickerProvider(),
   ],
 };

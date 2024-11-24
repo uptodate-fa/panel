@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import { SchemasModule } from './schemas/schemas.module';
 import { DrugInteractionsModule } from './drug-interactions/drug-interactions.module';
 import { SubscriptionModule } from './subscription/subscription.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { SubscriptionModule } from './subscription/subscription.module';
     CoreModule,
     DrugInteractionsModule,
     SubscriptionModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

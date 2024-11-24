@@ -10,6 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from './auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ import { AuthService } from './auth.service';
 })
 export class LoginComponent {
   private auth = inject(AuthService);
+  private snack = inject(MatSnackBar);
   loginForm = new FormGroup({
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
@@ -34,6 +36,12 @@ export class LoginComponent {
   async submit() {
     const { username, password } = this.loginForm.getRawValue();
     if (this.loginForm.invalid || !username || !password) return;
-    this.auth.login(username, password);
+    try {
+      await this.auth.login(username, password);
+    } catch (error) {
+      this.snack.open('نام کابری یا رمز عبور اشتباه است', '', {
+        duration: 2000,
+      });
+    }
   }
 }

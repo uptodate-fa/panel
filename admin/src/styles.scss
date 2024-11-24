@@ -48,3 +48,11 @@ body {
 *[center-align] {
   text-align: center;
 }
+
+*[ltr] {
+  direction: ltr;
+}
+
+*[eng] {
+  font-family: monospace;
+}

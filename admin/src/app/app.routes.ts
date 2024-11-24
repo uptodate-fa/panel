@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
-import { ShellComponent } from './shell/shell.component';
 import { authGuard } from './core/guards/auth.guard';
 import { authRoutes } from './auth/auth.routes';
+import { usersRoutes } from './users/users.routes';
 
 export const appRoutes: Route[] = [
   {
@@ -11,6 +11,9 @@ export const appRoutes: Route[] = [
   {
     path: '',
     canActivate: [authGuard],
-    children: [],
+    children: [
+      { path: 'users', children: usersRoutes },
+      { path: '', redirectTo: 'users', pathMatch: 'full' },
+    ],
   },
 ];
