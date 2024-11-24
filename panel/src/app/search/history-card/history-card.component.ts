@@ -7,6 +7,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import {
   injectMutation,
   injectQuery,
+  QueryClient,
 } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -22,6 +23,7 @@ const HIDE_HISTORY_CARD_KEY = 'hideHistoryCard';
   styleUrl: './history-card.component.scss',
 })
 export class HistoryCardComponent {
+  private queryClient = inject(QueryClient);
   private http = inject(HttpClient);
   visibility = signal(
     localStorage.getItem(HIDE_HISTORY_CARD_KEY) ? false : true,
@@ -42,11 +44,13 @@ export class HistoryCardComponent {
     });
   }
 
-  removeMutation = injectMutation((client) => ({
+  removeMutation = injectMutation(() => ({
     mutationFn: (contentId: string) =>
-      lastValueFrom(this.http.delete<void>(`/api/contents/history/${contentId}`)),
+      lastValueFrom(
+        this.http.delete<void>(`/api/contents/history/${contentId}`),
+      ),
     onSuccess: () => {
-      client.invalidateQueries({
+      this.queryClient.invalidateQueries({
         queryKey: ['history'],
       });
     },

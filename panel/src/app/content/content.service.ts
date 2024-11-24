@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import {
   injectMutation,
   injectQuery,
+  QueryClient,
 } from '@tanstack/angular-query-experimental';
 import { Content, ContentAbstract, Graphic } from '@uptodate/types';
 import { lastValueFrom } from 'rxjs';
@@ -21,6 +22,7 @@ export class ContentService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
+  private readonly queryClient = inject(QueryClient);
 
   getContentQuery = (id: Signal<string>, forceUpdate?: Signal<boolean>) =>
     injectQuery(() => ({
@@ -59,7 +61,7 @@ export class ContentService {
       staleTime: Infinity,
     }));
 
-  translateMutation = injectMutation((client) => ({
+  translateMutation = injectMutation(() => ({
     mutationFn: (content: Content) =>
       lastValueFrom(
         this.http.get<Content>(
@@ -68,7 +70,7 @@ export class ContentService {
       ),
     onSuccess: (data, content: Content) => {
       if (content.translatedAt) {
-        client.invalidateQueries({
+        this.queryClient.invalidateQueries({
           queryKey: ['content', content.queryStringId],
         });
         this.snack
@@ -84,7 +86,7 @@ export class ContentService {
       }
     },
     onError: (error, content: Content) => {
-      client.invalidateQueries({
+      this.queryClient.invalidateQueries({
         queryKey: ['content', content.queryStringId],
       });
       this.snack
@@ -114,7 +116,7 @@ export class ContentService {
         .afterClosed()
         .subscribe(() => {
           if (!content.translatedAt) {
-            client.invalidateQueries({
+            this.queryClient.invalidateQueries({
               queryKey: ['content', content.queryStringId],
             });
           }

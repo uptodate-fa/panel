@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '@uptodate/types';
+import { User, UserRole } from '@uptodate/types';
 import { PersianNumberService } from '@uptodate/utils';
 import { lastValueFrom } from 'rxjs';
 const JWT_KEY = 'jwtToken';
-declare var Goftino: any;
+declare let Goftino: any;
 
 @Injectable({
   providedIn: 'root',
@@ -35,8 +35,12 @@ export class AuthService {
 
   async revalidateUserInfo() {
     const user = await lastValueFrom(this.client.get<User>(`/api/auth/info`));
+    if (user?.role === UserRole.User) this.userInfo = user;
+    else if (user) {
+      this.clearToken();
+      location.reload();
+    }
     this.handleGoftino();
-    if (user) this.userInfo = user;
     this.userLoadedResolver();
   }
 

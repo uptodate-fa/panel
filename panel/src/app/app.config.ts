@@ -16,7 +16,7 @@ import {
   provideTranslation,
 } from './core/providers';
 import {
-  provideAngularQuery,
+  provideTanStackQuery,
   QueryClient,
 } from '@tanstack/angular-query-experimental';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -25,7 +25,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(withInterceptorsFromDi()),
-    provideAngularQuery(
+    provideTanStackQuery(
       new QueryClient({
         defaultOptions: {
           queries: {
