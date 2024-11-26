@@ -58,7 +58,7 @@ export class ActivationCodeTableComponent {
         const exist = previousData?.find((x) => x._id === dto.code._id);
         if (exist) {
           exist.codes.push(...data);
-          this.queryClient.setQueryData<ActivationCode[]>(['users'], (old) =>
+          this.queryClient.setQueryData<ActivationCode[]>(['activationCodes'], (old) =>
             old ? [...old] : [],
           );
         }

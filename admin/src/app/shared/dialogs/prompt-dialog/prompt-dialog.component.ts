@@ -17,6 +17,7 @@ export type PromptField = {
   type?: string;
   control: FormControl;
   hint?: string;
+  placeholder?: string;
 };
 
 @Component({
@@ -44,6 +45,7 @@ export class PromptDialogComponent {
   readonly title = this.data.title;
   readonly description = this.data.description;
   readonly fields = this.data.fields;
+  readonly keys = Object.keys(this.fields)
 
   submit() {
     const dto: any = {};

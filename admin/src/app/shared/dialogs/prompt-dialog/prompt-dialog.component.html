@@ -1,22 +1,22 @@
 <h4 matDialogTitle>{{ title }}</h4>
-<mat-dialog-content fxLayout="column">
+<mat-dialog-content fxLayout="column" fxLayoutGap="16px">
   @if (description) {
     <p>{{ description }}</p>
   }
 
-  @for (field of fields | keyvalue; track $index) {
+  @for (key of keys; track $index) {
     <mat-form-field>
-      @if (field.value.label) {
-        <mat-label>{{ field.value.label }}</mat-label>
+      @if (fields[key].label) {
+        <mat-label>{{ fields[key].label }}</mat-label>
       }
-      @switch (field.value.type) {
+      @switch (fields[key].type) {
         @case ('date') {
           <ng-container>
             <input
               (click)="picker.open()"
               matInput
               [matDatepicker]="picker"
-              [formControl]="field.value.control"
+              [formControl]="fields[key].control"
               placeholder="YYYY-MM-DD"
             />
             <mat-datepicker #picker></mat-datepicker>
@@ -25,13 +25,14 @@
         @default {
           <input
             matInput
-            [formControl]="field.value.control"
-            [type]="field.value.type || 'text'"
+            [placeholder]="fields[key].placeholder || ''"
+            [formControl]="fields[key].control"
+            [type]="fields[key].type || 'text'"
           />
         }
       }
-      @if (field.value.hint) {
-        <mat-hint>{{ field.value.hint }}</mat-hint>
+      @if (fields[key].hint) {
+        <mat-hint>{{ fields[key].hint }}</mat-hint>
       }
     </mat-form-field>
   }
