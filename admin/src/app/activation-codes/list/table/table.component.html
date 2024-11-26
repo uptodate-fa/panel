@@ -1,0 +1,70 @@
+<table mat-table [dataSource]="codes() || []">
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef>عنوان</th>
+    <td mat-cell *matCellDef="let code">
+      {{ code.title }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="createdAt">
+    <th mat-header-cell *matHeaderCellDef>تاریخ ایجاد</th>
+    <td mat-cell *matCellDef="let code">
+      {{ code.createdAt | pdate: true }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="period">
+    <th mat-header-cell *matHeaderCellDef>بازه زمانی</th>
+    <td mat-cell *matCellDef="let code">
+      @switch (code.period) {
+        @case (YEARLY_DAYS) {
+          یک ساله
+        }
+        @case (HALF_YEAR_DAYS) {
+          شش ماهه
+        }
+        @default {
+          {{ code.period | number }} روزه
+        }
+      }
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="maxDevices">
+    <th mat-header-cell *matHeaderCellDef>تعداد دستگاه مجاز</th>
+    <td mat-cell *matCellDef="let code">{{ code.maxActiveDevices }} دستگاه</td>
+  </ng-container>
+
+  <ng-container matColumnDef="expiredAt">
+    <th mat-header-cell *matHeaderCellDef>تاریخ انقضا</th>
+    <td mat-cell *matCellDef="let code">
+      @if (code.expiredAt) {
+        {{ code.expiredAt | pdate }}
+      } @else {
+        نامحدود
+      }
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="codes">
+    <th mat-header-cell *matHeaderCellDef>کد‌ها</th>
+    <td mat-cell *matCellDef="let code">
+      {{ code.codes?.length }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>کد‌ها</th>
+    <td mat-cell *matCellDef="let code">
+      <button mat-icon-button (click)="download(code.codes)">
+        <i class="fa-regular fa-download fa-sm"></i>
+      </button>
+      <button mat-icon-button (click)="addNewCodes(code)">
+        <i class="fa-regular fa-plus-circle fa-sm"></i>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

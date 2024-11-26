@@ -8,9 +8,12 @@
     disableClose
   >
     @if (auth.user) {
-      <nav fxLayout="column" fxLayoutAlign="center center">
-        <button mat-icon-button routerLink="/users">
+      <nav fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="32px">
+        <button mat-icon-button routerLink="/users" matTooltip="کاربران">
           <i class="fa-solid fa-user"></i>
+        </button>
+        <button mat-icon-button routerLink="/codes" matTooltip="کد‌های فعالسازی">
+          <i class="fa-solid fa-barcode"></i>
         </button>
       </nav>
     }

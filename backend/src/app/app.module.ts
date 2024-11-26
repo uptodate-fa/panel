@@ -13,6 +13,7 @@ import { SchemasModule } from './schemas/schemas.module';
 import { DrugInteractionsModule } from './drug-interactions/drug-interactions.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { UsersModule } from './users/users.module';
+import { ActivationCodesModule } from './activation-codes/activation-codes.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { UsersModule } from './users/users.module';
     DrugInteractionsModule,
     SubscriptionModule,
     UsersModule,
+    ActivationCodesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

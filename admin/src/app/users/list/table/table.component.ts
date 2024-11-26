@@ -1,4 +1,4 @@
-import { Component, inject, Input, Signal } from '@angular/core';
+import { Component, inject, input, Input, signal, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription, User } from '@uptodate/types';
 import { MatTableModule } from '@angular/material/table';
@@ -30,7 +30,7 @@ export class UserTableComponent {
   private readonly dialog = inject(MatDialog);
   private readonly bottomSheet = inject(MatBottomSheet);
   private readonly queryClient = inject(QueryClient);
-  @Input() users: Signal<User[] | undefined>;
+  users = input<User[] | undefined>([]);
   readonly displayedColumns = [
     'name',
     'phone',

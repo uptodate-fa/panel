@@ -11,6 +11,7 @@
 html {
   @include mat.theme(
     (
+      
       color: mat.$azure-palette,
       typography: IRANSans,
     )
@@ -19,6 +20,7 @@ html {
 
 html,
 body {
+  color-scheme: dark;
   height: 100%;
 }
 body {

@@ -1,0 +1,7 @@
+<main p-md>
+  <h1>لیست کد‌های فعالسازی</h1>
+
+  @if (query.data()) {
+    <app-activation-code-table [codes]="query.data()" />
+  }
+</main>
