@@ -79,7 +79,7 @@ export class ActivationCodesListComponent {
       },
       expiredAt: {
         label: 'تاریخ انقضا',
-        control: new FormControl('', Validators.required),
+        control: new FormControl(''),
         type: 'date',
       },
     };
