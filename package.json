@@ -4,11 +4,11 @@
   "license": "MIT",
   "scripts": {
     "dev:admin": "nx run admin:serve",
-    "build:admin": "nx run admin:build --skip-nx-cache --verbose",
+    "build:admin": "nx run admin:build --skip-nx-cache --verbose --no-cloud",
     "dev:panel": "nx run panel:serve",
-    "build:panel": "nx run panel:build --skip-nx-cache --verbose",
+    "build:panel": "nx run panel:build --skip-nx-cache --verbose --no-cloud",
     "dev:backend": "nx run backend:serve",
-    "build:backend": "nx run backend:build --skip-nx-cache --verbose"
+    "build:backend": "nx run backend:build --skip-nx-cache --verbose --no-cloud"
   },
   "private": true,
   "dependencies": {
