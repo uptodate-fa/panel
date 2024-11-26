@@ -7,10 +7,13 @@ import {
 import { SHARED } from '../../../shared';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { injectQuery } from '@tanstack/angular-query-experimental';
+import {
+  injectMutation,
+  injectQuery,
+} from '@tanstack/angular-query-experimental';
 import { lastValueFrom, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { UserDevice } from '@uptodate/types';
+import { Subscription, UserDevice } from '@uptodate/types';
 import { UAParser } from 'ua-parser-js';
 
 @Component({
@@ -49,10 +52,4 @@ export class UserDevicesModalComponent {
       ),
     enabled: !!this.data?.userId,
   }));
-
-  constructor() {
-    effect(() => {
-      console.log(this.query.data());
-    });
-  }
 }

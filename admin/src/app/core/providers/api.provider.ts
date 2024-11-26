@@ -47,7 +47,10 @@ class ApiInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError((err) => {
-        if (err.status === HttpStatusCode.Unauthorized) {
+        if (
+          err.status === HttpStatusCode.Unauthorized ||
+          err.status === HttpStatusCode.Forbidden
+        ) {
           sessionStorage.removeItem(JWT_KEY);
           localStorage.removeItem(JWT_KEY);
           this.router.navigateByUrl('/login');

@@ -7,6 +7,7 @@ import {
   NotFoundException,
   Param,
   Post,
+  Put,
   Query,
   Response,
 } from '@nestjs/common';
@@ -18,11 +19,13 @@ import {
   Subscription,
   SubscriptionDto,
   User,
+  UserRole,
 } from '@uptodate/types';
 import { Model } from 'mongoose';
 import { LoginUser } from '../auth/user.decorator';
 import { HttpService } from '@nestjs/axios';
 import { Public } from '../auth/public.decorator';
+import { Roles } from '../auth/roles.decorators';
 
 const ZARINPAL_REQUEST_URL =
   'https://api.zarinpal.com/pg/v4/payment/request.json';
@@ -203,5 +206,13 @@ export class SubscriptionController {
         subscription,
       });
     }
+  }
+
+  @Roles(UserRole.Admin)
+  @Put(':id')
+  updateSubscription(@Body() dto: Subscription, @Param('id') id: string) {
+    return this.subscriptionModel.findByIdAndUpdate(id, dto, {
+      new: true,
+    });
   }
 }
