@@ -45,7 +45,6 @@ export class ContentsService {
       }
     }
 
-    console.log(!!user, !!content)
     if (user && content) {
       this.contentHistoryModel
         .findOneAndUpdate(
@@ -57,7 +56,6 @@ export class ContentsService {
         .exec()
         .then(
           (value) => {
-            console.log('exist', !!value);
             if (!value) {
               const newContentHistory = new this.contentHistoryModel({
                 user: user.id,
@@ -66,10 +64,7 @@ export class ContentsService {
               newContentHistory.save();
             }
           },
-          (er) => {
-            console.log('not-exist');
-            console.log(er);
-          },
+          (er) => {},
         );
     }
 
@@ -104,14 +99,12 @@ export class ContentsService {
       const $ = cheerio.load(content.bodyHtml);
 
       $('#topicText > *').remove();
-      console.log('translate start');
 
       try {
         let i = 0;
         for (const batch of batches) {
           const translated = await this.openai.getResponse(batch);
           $(translated).appendTo('#topicText');
-          console.log(`${i + 1} from ${batches.length}`);
           i++;
         }
         content.translatedBodyHtml = $.html();
@@ -119,13 +112,11 @@ export class ContentsService {
         const outline = await this.openai.getResponse(content.outlineHtml);
         content.translatedOutlineHtml = outline;
       } catch (error) {
-        console.log('translate error', error);
         await this.contentModel
           .updateOne({ queryStringId: id }, { translatedAt: null })
           .exec();
       }
 
-      console.log('translate done');
       return await this.contentModel
         .findOneAndUpdate({ queryStringId: id }, { ...content }, { new: true })
         .exec();

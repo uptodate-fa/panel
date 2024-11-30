@@ -2,7 +2,7 @@ mat-toolbar {
   position: sticky;
   top: 56px;
   z-index: 100;
-  border-bottom: 1px solid var(--sys-outline-variant);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
 }
 
 mat-drawer {
@@ -12,7 +12,7 @@ mat-drawer {
 article {
   padding: 32px;
   //background add
-  background-color: var(--sys-on-primary);
+  background-color: var(--mat-sys-on-primary);
 
   &.fa {
     font-family: Vazirmatn;
@@ -31,18 +31,18 @@ h1 {
 }
 
 ::ng-deep nav.nav-body {
-  background-color: var(--sys-on-primary);
+  background-color: var(--mat-sys-on-primary);
 
   h2 {
     font-size: 20px;
     padding: 0 16px;
     border-bottom: none;
-    color: var(--sys-on-surface-variant);
+    color: var(--mat-sys-on-surface-variant);
     margin: 0;
   }
 
   a {
-    color: var(--sys-outline);
+    color: var(--mat-sys-outline);
     text-decoration: none;
     font-size: 14px;
     cursor: pointer !important;
@@ -54,13 +54,13 @@ h1 {
 
     li {
       padding: 8px 16px;
-      border-bottom: 1px solid var(--sys-outline-variant);
+      border-bottom: 1px solid var(--mat-sys-outline-variant);
       display: block;
     }
   }
 
   a:hover {
-    color: var(--sys-primary);
+    color: var(--mat-sys-primary);
   }
 
   //remove li border
@@ -69,13 +69,13 @@ h1 {
   }
 
   section {
-    border-bottom: 1px solid var(--sys-outline-variant);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
     h2 {
       font-size: 20px;
       line-height: 8px;
       padding: 0 16px;
       border-bottom: none;
-      color: var(--sys-on-surface-variant);
+      color: var(--mat-sys-on-surface-variant);
     }
     ul {
       li {
@@ -85,7 +85,7 @@ h1 {
   }
 
   // & ul {
-  //   border-top: 1px solid var(--sys-outline-variant);
+  //   border-top: 1px solid var(--mat-sys-outline-variant);
   // }
 }
 
@@ -114,7 +114,7 @@ h1 {
 
   a {
     text-decoration: none;
-    color: var(--sys-primary);
+    color: var(--mat-sys-primary);
     cursor: pointer !important;
   }
 
@@ -126,7 +126,7 @@ h1 {
   }
 
   .authorSectionElem {
-    background-color: var(--sys-primary-container) !important;
+    background-color: var(--mat-sys-primary-container) !important;
     font-size: 12px;
     //style add
     display: flex;
@@ -175,7 +175,7 @@ h1 {
 
   .literatureReviewDate {
     line-height: 20px;
-    border-top: 1px solid var(--sys-outline-variant);
+    border-top: 1px solid var(--mat-sys-outline-variant);
     padding-top: 8px;
   }
 
@@ -183,10 +183,10 @@ h1 {
 
   .subscribeMessage {
     // text-align: center !important;
-    border: 1px solid var(--sys-outline) !important;
+    border: 1px solid var(--mat-sys-outline) !important;
     border-radius: 0 !important;
     margin: 20px 0 !important;
-    background: var(--sys-surface-container-lowest) !important;
+    background: var(--mat-sys-surface-container-lowest) !important;
     padding: 0 !important;
     font-size: 16px;
     filter: none !important;
@@ -267,9 +267,9 @@ h1 {
     margin: 16px 0 8px;
     padding: 6px;
     line-height: 24px;
-    color: var(--sys-on-surface-variant);
-    border: 1px solid var(--sys-shadow);
-    background-color: var(--sys-surface-variant);
+    color: var(--mat-sys-on-surface-variant);
+    border: 1px solid var(--mat-sys-shadow);
+    background-color: var(--mat-sys-surface-variant);
   }
 
   .utd-inline-graphic__container {
@@ -281,7 +281,7 @@ h1 {
       width: 160px;
       padding: 8px;
       gap: 8px;
-      border: 1px solid var(--sys-outline-variant);
+      border: 1px solid var(--mat-sys-outline-variant);
       display: flex;
       flex-direction: column;
       align-items: center;

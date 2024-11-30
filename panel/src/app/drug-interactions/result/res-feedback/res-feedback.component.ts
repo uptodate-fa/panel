@@ -4,8 +4,6 @@ import { DrugInteractionsService } from '../../drug-interactions.service';
 import { MatListModule } from '@angular/material/list';
 import { DrugInteraction } from '@uptodate/types';
 
-
-
 @Component({
   selector: 'app-res-feedback',
   standalone: true,
@@ -16,15 +14,11 @@ import { DrugInteraction } from '@uptodate/types';
 export class ResFeedbackComponent {
   readonly interactionsService = inject(DrugInteractionsService);
 
-  interaction?: DrugInteraction
+  interaction?: DrugInteraction;
 
-  constructor(){
-    effect(()=>{
-      this.interaction= this.interactionsService.interaction()
-      console.log(this.interaction);
-      
-    })
+  constructor() {
+    effect(() => {
+      this.interaction = this.interactionsService.interaction();
+    });
   }
-  
-
 }

@@ -69,7 +69,6 @@ export class ProxyService {
         (item) => item.type === 'drug_info_panel',
       );
       if (drugPanel) {
-        console.log(drugPanel)
         result.drugPanel = {
           title: drugPanel.searchResults?.[0]?.title?.split(':')?.[0],
           tabs: drugPanel.searchResults?.map(

@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 mat-toolbar {
   position: sticky;
   top: 0;
@@ -7,6 +8,7 @@ mat-toolbar {
 #primary-toolbar {
   gap: 16px;
   height: 56px;
+  background-color: var(--mat-sys-surface);
 
   #logo {
     width: 32px;
@@ -23,12 +25,22 @@ mat-toolbar {
   h2 {
     flex: 1;
   }
+
+  &.primary-theme {
+    background-color: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+
+    button i {
+      color: var(--mat-sys-on-primary);
+    }
+  }
 }
 
 #secondary-toolbar {
   height: 40px;
+  background-color: var(--mat-sys-primary);
 }
 
 main {
-  min-height: calc(100vh - 96px)
+  min-height: calc(100vh - 96px);
 }

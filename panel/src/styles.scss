@@ -1,6 +1,27 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme(
+    (
+      color: mat.$azure-palette,
+      typography: Roboto,
+    )
+  );
+}
+
+.green-theme {
+  @include mat.theme(
+    (
+      color: mat.$spring-green-palette,
+      typography: Roboto,
+    )
+  );
+}
+
 html,
 body {
   min-height: 100%;
+  background-color: var(--mat-sys-surface);
 }
 body {
   margin: 0;
@@ -13,4 +34,8 @@ body {
 
 .mat-calendar {
   font-family: 'Vazirmatn' !important;
+}
+
+mat-card {
+  background-color: white !important;
 }

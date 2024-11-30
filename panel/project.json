@@ -23,7 +23,6 @@
           }
         ],
         "styles": [
-          "panel/src/theme.scss",
           "panel/src/styles.scss",
           "panel/public/fonts/fontawesome/scss/fontawesome.scss",
           "panel/public/fonts/fontawesome/scss/light.scss",

@@ -9,7 +9,6 @@ export const subscriptionGuard: CanActivateFn = async () => {
   const auth = inject(AuthService);
   const dialog = inject(MatDialog);
   await auth.complete();
-  console.log(1)
   if (auth.isProfileComplete && auth.user) {
     if (!auth.user.subscription)
       dialog.open(ActivationCodeSubscriptionDialogComponent, {

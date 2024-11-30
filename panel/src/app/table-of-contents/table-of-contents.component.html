@@ -14,9 +14,11 @@
           </mat-expansion-panel-header>
           <div class="items-wrapper">
             @for (item of section.items; track $index) {
-              <a class="item primary-text" href="{{ item.url }}">
-                {{ item.name }}
-              </a>
+              <div>
+                <a mat-button href="{{ item.url }}">
+                  {{ item.name }}
+                </a>
+              </div>
             }
           </div>
         </mat-expansion-panel>
@@ -25,7 +27,10 @@
   } @else {
     <div class="items-wrapper multi-col">
       @for (item of items(); track $index) {
-        <a class="item primary-text" href="{{ item.url }}">{{ item.name }}</a>
+        <div>
+
+          <a mat-button href="{{ item.url }}">{{ item.name }}</a>
+        </div>
       }
     </div>
   }

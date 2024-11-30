@@ -2,7 +2,7 @@
   <mat-toolbar-row
     id="primary-toolbar"
     ngClass="form-theme background-background"
-    ngClass.lt-md="primary-background on-primary-text"
+    ngClass.lt-md="primary-theme"
   >
     <img routerLink="/" id="logo" src="icons/wheel-icon.svg" id="logo" />
     <img
@@ -17,7 +17,7 @@
       [fxHide.gt-sm]="true"
       [matMenuTriggerFor]="mainMenu"
     >
-      <i class="fa-regular fa-bars on-primary-text"></i>
+      <i class="fa-regular fa-bars"></i>
     </button>
     <mat-menu #mainMenu="matMenu">
       <button mat-menu-item (click)="openProfile()">
@@ -84,7 +84,6 @@
     </div>
   </mat-toolbar-row>
   <mat-toolbar-row
-    class="primary-background"
     id="secondary-toolbar"
     [fxHide.lt-md]="true"
   >
