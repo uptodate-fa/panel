@@ -35,7 +35,7 @@ export class AuthController {
   async preLogin(@Param() params) {
     const phone = PersianNumberService.toEnglish(params.mobile);
     const user = await this.userModel.findOne({ phone }).exec();
-    if (user.password) {
+    if (user?.password) {
       return { password: true };
     } else {
       await this.auth.sendToken(PersianNumberService.toEnglish(params.mobile));
