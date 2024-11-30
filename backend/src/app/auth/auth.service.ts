@@ -146,6 +146,19 @@ export class AuthService {
     }
   }
 
+  async loginWithPassword(
+    phone: string,
+    password: string,
+    userAgent: string,
+  ): Promise<string> {
+    const user = await this.userModel.findOne({ phone }).exec();
+    if (user && password === user.password) {
+      return this.login(user, userAgent);
+    } else {
+      throw new HttpException('password is not valid', HttpStatus.FORBIDDEN);
+    }
+  }
+
   async loginAdmin(username: string, password: string): Promise<string> {
     const user = await this.userModel.findOne({ username, password }).exec();
     if (user && user.role === UserRole.Admin) {

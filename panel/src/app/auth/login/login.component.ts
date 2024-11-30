@@ -31,15 +31,18 @@ export class LoginComponent {
   constructor(
     private auth: AuthService,
     private router: Router,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+  ) {
+    this.auth.clearToken()
+  }
 
   async sendToken(phone: string, ev: SubmitEvent) {
     if (phone.length !== 11) return;
     phone = PersianNumberService.toEnglish(phone);
     this.loading.set(true);
-    await this.auth.sendToken(`${phone}`);
-    this.router.navigate(['/login/otp'], {
+    const res = await this.auth.preLogin(`${phone}`);
+
+    this.router.navigate([res?.password ? '/login/password' : '/login/otp'], {
       state: { phone: `${phone}` },
       queryParams: this.route.snapshot.queryParams,
     });

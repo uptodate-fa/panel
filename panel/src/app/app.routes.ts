@@ -9,6 +9,7 @@ import { profileGuard } from './core/guards/profile.guard';
 import { TableOfContentsComponent } from './table-of-contents/table-of-contents.component';
 import { subscriptionGuard } from './core/guards/subscription.guard';
 import { AbstractsComponent } from './content/abstracts/abstracts.component';
+import { passwordGuard } from './core/guards/password.guard';
 
 export const appRoutes: Route[] = [
   {
@@ -26,27 +27,33 @@ export const appRoutes: Route[] = [
         children: [
           {
             path: '',
-            canActivate: [subscriptionGuard],
+            canActivate: [passwordGuard],
             children: [
-              { path: 'search', children: searchRoutes },
-              { path: '', redirectTo: 'search', pathMatch: 'full' },
               {
-                path: 'contents/table-of-contents/:topic',
-                component: TableOfContentsComponent,
+                path: '',
+                canActivate: [subscriptionGuard],
+                children: [
+                  { path: 'search', children: searchRoutes },
+                  { path: '', redirectTo: 'search', pathMatch: 'full' },
+                  {
+                    path: 'contents/table-of-contents/:topic',
+                    component: TableOfContentsComponent,
+                  },
+                  {
+                    path: 'contents/table-of-contents/:topic/:sub',
+                    component: TableOfContentsComponent,
+                  },
+                  { path: 'contents/:id', component: ContentComponent },
+                  {
+                    path: 'contents/:topic/abstract/:range',
+                    component: AbstractsComponent,
+                  },
+                  { path: 'calculators', component: CalculatorsComponent },
+                  { path: 'interactions', component: DrugInteractionsComponent },
+                ],
               },
-              {
-                path: 'contents/table-of-contents/:topic/:sub',
-                component: TableOfContentsComponent,
-              },
-              { path: 'contents/:id', component: ContentComponent },
-              {
-                path: 'contents/:topic/abstract/:range',
-                component: AbstractsComponent,
-              },
-              { path: 'calculators', component: CalculatorsComponent },
-              { path: 'interactions', component: DrugInteractionsComponent },
-            ],
-          },
+            ]
+          }
         ],
       },
     ],

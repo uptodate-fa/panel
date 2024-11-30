@@ -31,6 +31,19 @@ export class AuthController {
   }
 
   @Public()
+  @Get('preLogin/:mobile')
+  async preLogin(@Param() params) {
+    const phone = PersianNumberService.toEnglish(params.mobile);
+    const user = await this.userModel.findOne({ phone }).exec();
+    if (user.password) {
+      return { password: true };
+    } else {
+      await this.auth.sendToken(PersianNumberService.toEnglish(params.mobile));
+      return { password: false };
+    }
+  }
+
+  @Public()
   @Get('sendToken/:mobile')
   async sendToken(@Param() params) {
     return this.auth.sendToken(PersianNumberService.toEnglish(params.mobile));
@@ -39,10 +52,28 @@ export class AuthController {
   @Get('info')
   async info(@LoginUser() user: User, @Req() request: Request) {
     if (user && user.id) {
-      return this.userModel
+      const dbUser = await this.userModel
         .findById(user.id)
         .select('-jwtVersion')
         .populate('subscription')
+        .exec();
+
+      if (dbUser.password) dbUser.password = '***';
+      return dbUser;
+    }
+    throw new HttpException('no user found', HttpStatus.NOT_FOUND);
+  }
+
+  @Post('password')
+  async setPassword(
+    @LoginUser() user: User,
+    @Body() dto: { password: string },
+  ) {
+    if (user && user.id) {
+      return this.userModel
+        .findByIdAndUpdate(user.id, {
+          password: dto.password,
+        })
         .exec();
     }
     throw new HttpException('no user found', HttpStatus.NOT_FOUND);
@@ -55,6 +86,20 @@ export class AuthController {
     return this.auth.loginWithToken(
       PersianNumberService.toEnglish(params.mobile),
       PersianNumberService.toEnglish(params.token),
+      userAgent,
+    );
+  }
+
+  @Public()
+  @Post('login')
+  async loginWithPassword(
+    @Body() dto: { username: string; password: string },
+    @Req() request: Request,
+  ) {
+    const userAgent = request.headers['user-agent'];
+    return this.auth.loginWithPassword(
+      PersianNumberService.toEnglish(dto.username),
+      dto.password,
       userAgent,
     );
   }

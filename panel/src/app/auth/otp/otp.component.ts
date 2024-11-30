@@ -70,19 +70,20 @@ export class OtpComponent implements OnDestroy {
     const token = PersianNumberService.toEnglish(this.otpFormControl.value);
     try {
       await this.auth.login(this.phone, token);
-      this.router.navigate(['/']);
+      this.router.navigate(['/'], { replaceUrl: true });
     } catch (error: any) {
       this.error.set(true);
       if (error.status === HttpStatusCode.Forbidden) {
         this.snack.open('code is not correct', '', { duration: 2000 });
-      } else if(error.status === HttpStatusCode.TooManyRequests) {
+      } else if (error.status === HttpStatusCode.TooManyRequests) {
         this.dialog.open(AlertDialogComponent, {
           data: {
             title: 'Login Error',
-            description: 'You have reached the maximum number of devices allowed for login. To access your account on a new device, please contact support for assistance.',
+            description:
+              'You have reached the maximum number of devices allowed for login. To access your account on a new device, please contact support for assistance.',
             hideCancel: true,
-          }
-        })
+          },
+        });
       }
       this.loading.set(false);
     }

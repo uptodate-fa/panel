@@ -37,7 +37,6 @@ export class ProxyService {
       {
         url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}&sp=${sp}`,
       },
-      { skipLogin: true },
     );
     const data = response?.data?.data;
 

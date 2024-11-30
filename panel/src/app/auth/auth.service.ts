@@ -44,6 +44,13 @@ export class AuthService {
     this.userLoadedResolver();
   }
 
+  async preLogin(mobilePhone: string) {
+    const sanitizePhone = PersianNumberService.toEnglish(mobilePhone);
+    return this.client
+      .get<{ password: string }>(`/api/auth/preLogin/${sanitizePhone}`)
+      .toPromise();
+  }
+
   async sendToken(mobilePhone: string) {
     const sanitizePhone = PersianNumberService.toEnglish(mobilePhone);
     await this.client.get(`/api/auth/sendToken/${sanitizePhone}`).toPromise();
@@ -59,7 +66,27 @@ export class AuthService {
       .toPromise();
 
     if (jwtToken) this.setToken(jwtToken);
-    this.revalidateUserInfo();
+    await this.revalidateUserInfo();
+    return this.user;
+  }
+
+  async loginWithPassword(mobilePhone: string, password: string) {
+    const sanitizePhone = PersianNumberService.toEnglish(mobilePhone);
+    const jwtToken = await this.client
+      .post(
+        `/api/auth/login`,
+        {
+          username: sanitizePhone,
+          password,
+        },
+        {
+          responseType: 'text',
+        },
+      )
+      .toPromise();
+
+    if (jwtToken) this.setToken(jwtToken);
+    await this.revalidateUserInfo();
     return this.user;
   }
 
@@ -67,7 +94,7 @@ export class AuthService {
 
   private setToken = (token: string) => localStorage.setItem(JWT_KEY, token);
 
-  private clearToken = () => localStorage.removeItem(JWT_KEY);
+  clearToken = () => localStorage.removeItem(JWT_KEY);
 
   async update(dto: User) {
     await lastValueFrom(this.client.put(`/api/auth/edit`, dto));

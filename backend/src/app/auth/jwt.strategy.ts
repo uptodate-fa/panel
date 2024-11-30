@@ -41,7 +41,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
       const conflictDevice = devices.find(
         (device) =>
-          device !== currentDevice &&
+          device._id !== currentDevice._id &&
           device.connectionAt &&
           Date.now() - new Date(device.connectionAt).valueOf() <
             DEVICE_CONFLICT_TIME,
