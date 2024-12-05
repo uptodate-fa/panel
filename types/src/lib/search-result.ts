@@ -23,6 +23,7 @@ export class DrugPanelTab {
   accordions?: Accordion[];
   alerts?: Alert[];
   dosing?: Dosing[];
+  links?: Links;
 }
 
 class Accordion {
@@ -39,4 +40,12 @@ class Dosing {
   label: string;
   url: string;
   childDrugContent?: Dosing[];
+}
+
+class Links {
+  title: string;
+  items: {
+    label: string;
+    url: string;
+  }[]
 }

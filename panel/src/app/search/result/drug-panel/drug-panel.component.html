@@ -12,20 +12,34 @@
       @for (tab of drugPanel.tabs; track $index) {
         <mat-tab label="{{ tab.label }}">
           <div p-md>
-            <b> View Full Topic </b>
-            <a mat-button [href]="tab.contentUrl">{{ tab.contentTitle }}</a>
+            @if (tab.contentTitle) {
+              <b> View Full Topic </b>
+              <a mat-button [href]="tab.contentUrl">{{ tab.contentTitle }}</a>
+            }
             @if (tab.dosing?.length) {
               <b> Dosing </b>
               @for (d of tab.dosing; track $index) {
                 <div>
                   <a mat-button [href]="d.url">{{ d.label }}</a>
                   @if (d.childDrugContent) {
-                    <div fxLayout="column" fxLayoutAlign="start start" style="padding: 0 24px;">
+                    <div
+                      fxLayout="column"
+                      fxLayoutAlign="start start"
+                      style="padding: 0 24px"
+                    >
                       @for (child of d.childDrugContent; track $index) {
                         <a mat-button [href]="child.url">{{ child.label }}</a>
                       }
                     </div>
                   }
+                </div>
+              }
+            }
+            @if (tab.links) {
+              <b> {{ tab.links.title }} </b>
+              @for (item of tab.links.items; track $index) {
+                <div>
+                  <a mat-button [href]="item.url">{{ item.label }}</a>
                 </div>
               }
             }
@@ -45,6 +59,18 @@
                 </mat-expansion-panel>
               }
             </mat-accordion>
+          }
+
+          @if (tab.alerts) {
+            <mat-divider />
+            @for (alert of tab.alerts; track $index) {
+              <div>
+                <a mat-button [href]="alert.url">
+                  {{ alert.label }}
+                  <i class="fa-regular fa-arrow-right"></i>
+                </a>
+              </div>
+            }
           }
         </mat-tab>
       }

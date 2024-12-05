@@ -65,6 +65,7 @@ export class ProxyService {
       const drugPanel = data.searchResults.find(
         (item) => item.type === 'drug_info_panel',
       );
+      const qap = data.searchResults.find((item) => item.type === 'QAP');
       if (drugPanel) {
         result.drugPanel = {
           title: drugPanel.searchResults?.[0]?.title?.split(':')?.[0],
@@ -79,6 +80,19 @@ export class ProxyService {
                 dosing: tab.drugPanel?.dosing,
               }) as DrugPanelTab,
           ),
+        };
+      } else if (qap) {
+        result.drugPanel = {
+          title: qap.qapContents?.[0]?.title?.split(':')?.[0],
+          tabs: qap.qapContents?.map((tab) => {
+            const links = tab.sections?.find((x) => x.type === 'links');
+            const dips = tab.sections?.find((x) => x.type === 'dip');
+            return {
+              label: tab.contentLabel,
+              links: links,
+              alerts: dips?.items,
+            } as DrugPanelTab;
+          }),
         };
       }
 
