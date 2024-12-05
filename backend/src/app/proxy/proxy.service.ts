@@ -33,11 +33,9 @@ export class ProxyService {
   }
 
   async search(query: string, sp = 0, limit = 20): Promise<SearchResult> {
-    const response = await this.request(
-      {
-        url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}&sp=${sp}`,
-      },
-    );
+    const response = await this.request({
+      url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}&sp=${sp}`,
+    });
     const data = response?.data?.data;
 
     if (data) {
@@ -216,15 +214,13 @@ export class ProxyService {
       const response = await this.auth.client.request(config);
       const needLogin = await this.auth.needLogin(response?.data);
       if (!props?.skipRetry && !props?.skipLogin && needLogin) {
-        await this.auth.login();
-        console.warn('no user', config.url);
+        await this.auth.login(config.url);
         return this.request(config, { skipRetry: true });
       }
       return response;
     } catch (error) {
       if (!props?.skipRetry && error.response?.status === 403) {
-        await this.auth.login();
-        console.warn('403', config.url);
+        await this.auth.login(config.url);
         return this.request(config, { skipRetry: true });
       }
       throw error;

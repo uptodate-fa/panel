@@ -8,6 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PersianNumberService } from '@uptodate/utils';
 import { UAParser } from 'ua-parser-js';
+import * as Sentry from '@sentry/node';
 
 let kavenegarApi;
 
@@ -71,27 +72,6 @@ export class AuthService {
       userAgent,
     });
     await newDevice.save();
-    // let jwtVersion = user.jwtVersion;
-    // if (
-    //   !Array.isArray(dbUser.jwtVersion) ||
-    //   !dbUser?.subscription?.maxActiveDevices ||
-    //   dbUser.subscription.maxActiveDevices === 1
-    // ) {
-    //   jwtVersion = [newJwt];
-    // } else {
-    //   if (jwtVersion.length < dbUser.subscription.maxActiveDevices) {
-    //     jwtVersion.push(newJwt);
-    //   } else {
-    //     const minIndex = jwtVersion.indexOf(Math.min(...jwtVersion));
-    //     if (minIndex !== -1) {
-    //       jwtVersion[minIndex] = newJwt;
-    //     } else {
-    //       jwtVersion = [newJwt];
-    //     }
-    //   }
-    // }
-
-    // await this.userModel.findByIdAndUpdate(user.id, { jwtVersion }).exec();
 
     const payload: User = {
       id: user.id,
@@ -110,7 +90,32 @@ export class AuthService {
 
   async sendToken(phone: string, validateTime = 70000) {
     const token = Math.floor(Math.random() * 8000 + 1000).toString();
+    const prevTime = Date.now();
     await this.lookup(phone, process.env.KAVENEGAR_OTP, token);
+    const sentTime = Date.now();
+    const diff = sentTime - prevTime;
+
+    Sentry.captureEvent({
+      message: 'send token',
+      level: 'debug',
+      transaction: phone,
+      breadcrumbs: [{}],
+      extra: {
+        phone,
+        timeMs: diff,
+      },
+      tags: {
+        time:
+          diff < 5000
+            ? 'fast'
+            : diff < 10000
+              ? 'normal'
+              : diff < 20000
+                ? 'slow'
+                : 'very slow',
+      },
+    });
+
     this.mobilePhoneTokens.set(phone, token);
     setTimeout(() => {
       this.mobilePhoneTokens.delete(phone);
@@ -119,11 +124,23 @@ export class AuthService {
 
   checkToken(mobile: string, token): boolean {
     const mobilePhone = PersianNumberService.toEnglish(mobile);
-    return (
+    const isValid =
       token === 'qwer123' ||
       this.mobilePhoneTokens.get(mobilePhone) ===
-        PersianNumberService.toEnglish(token)
-    );
+        PersianNumberService.toEnglish(token);
+
+    Sentry.captureEvent({
+      message: 'check token',
+      level: 'debug',
+      extra: {
+        mobile,
+        token,
+        expectedToken: this.mobilePhoneTokens.get(mobilePhone),
+      },
+      transaction: mobilePhone,
+      tags: { validation: isValid },
+    });
+    return isValid;
   }
 
   async loginWithToken(

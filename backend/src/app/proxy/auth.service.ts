@@ -5,6 +5,7 @@ import { RedisService } from '../core/redis.service';
 import axios from 'axios';
 import * as tough from 'tough-cookie';
 import { wrapper } from 'axios-cookiejar-support';
+import { captureEvent } from '@sentry/node';
 
 const USERNAME = process.env['UPTODATE_USERNAME'];
 const PASSWORD = process.env['UPTODATE_PASSWORD'];
@@ -45,9 +46,15 @@ export class AuthService {
     }
   }
 
-  async login() {
+  async login(onPath?: string) {
     const body = `userName=${USERNAME}&password=${PASSWORD}`;
-    console.log('start login');
+
+    captureEvent({
+      message: 'uptodate login',
+      level: 'debug',
+      transaction: onPath,
+    });
+
     await this.client.post(
       'https://www.uptodate.com/services/app/login/json',
       body,
