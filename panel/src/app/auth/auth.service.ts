@@ -4,7 +4,8 @@ import { User, UserRole } from '@uptodate/types';
 import { PersianNumberService } from '@uptodate/utils';
 import { lastValueFrom } from 'rxjs';
 const JWT_KEY = 'jwtToken';
-declare let Goftino: any;
+declare const Goftino: any;
+declare const clarity: any;
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +43,7 @@ export class AuthService {
     }
     this.handleGoftino();
     this.userLoadedResolver();
+    if (user.phone) clarity('set', 'userId', user?.phone);
   }
 
   async preLogin(mobilePhone: string) {

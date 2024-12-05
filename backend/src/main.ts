@@ -17,6 +17,7 @@ async function bootstrap() {
     Sentry.init({
       dsn: process.env.SENTRY_DSN,
       // Performance Monitoring
+      environment: process.env.NODE_ENV || 'production',
       tracesSampleRate: 1.0,
     });
 
