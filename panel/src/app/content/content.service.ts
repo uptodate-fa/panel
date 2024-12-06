@@ -11,8 +11,6 @@ import {
 import { Content, ContentAbstract, Graphic } from '@uptodate/types';
 import { lastValueFrom } from 'rxjs';
 import { AlertDialogComponent } from '../shared/dialogs/alert-dialog/alert-dialog.component';
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
 
 @Injectable({
   providedIn: 'root',
@@ -204,39 +202,5 @@ export class ContentService {
 
   async downloadPdf(content: Content) {
     window.print();
-    // const element: HTMLElement = document.querySelector(
-    //   'article',
-    // ) as HTMLElement;
-
-    // if (element) {
-    //   this.snack.open('Generating PDF...', '', { duration: 8000 });
-    //   const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-    //   const imgData = canvas.toDataURL('image/png');
-
-    //   // A4 size dimensions in jsPDF (210mm x 297mm) in points
-    //   const pdf = new jsPDF('p', 'mm', 'a4');
-    //   const imgWidth = 210; // A4 width in mm
-    //   const pageHeight = 297; // A4 height in mm
-    //   const imgHeight = (canvas.height * imgWidth) / canvas.width; // Dynamically scale the image height
-    //   let heightLeft = imgHeight;
-
-    //   let position = 0;
-
-    //   // Add first page
-    //   pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-    //   heightLeft -= pageHeight;
-
-    //   // Handle multiple pages
-    //   while (heightLeft > 0) {
-    //     position = heightLeft - imgHeight;
-    //     pdf.addPage();
-    //     pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-    //     heightLeft -= pageHeight;
-    //   }
-
-    //   // Save the generated PDF
-    //   pdf.save(`${content.title}.pdf`);
-    //   this.snack.open('PDF generated successfully!', '', { duration: 2000 });
-    // }
   }
 }
