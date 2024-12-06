@@ -11,7 +11,7 @@
     }
   </div>
 } @else {
-  <mat-toolbar fxLayout="row" fxLayoutGap="8px">
+  <mat-toolbar fxLayout="row" fxLayoutGap="8px" class="not-printable">
     <button mat-icon-button goBack>
       <i class="fa-regular fa-angle-left"></i>
     </button>
@@ -49,6 +49,7 @@
       [opened]="!isSmallScreen"
       [disableClose]="!isSmallScreen"
       [mode]="isSmallScreen ? 'over' : 'side'"
+      class="not-printable"
       #drawer
     >
       <nav
@@ -60,7 +61,7 @@
     <mat-drawer-content>
       <article
         fxFlex
-        class="content-body"
+        class="content-body printable"
         id="topicContainer"
         fxFlex
         [class.fa]="showTranslation()"

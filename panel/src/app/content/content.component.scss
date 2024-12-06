@@ -9,6 +9,12 @@ mat-drawer {
   border-radius: 0 !important;
 }
 
+@media print {
+  mat-drawer-content {
+    margin-left: 0 !important;
+  }
+}
+
 article {
   padding: 32px;
   //background add

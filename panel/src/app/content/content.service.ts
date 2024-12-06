@@ -203,39 +203,40 @@ export class ContentService {
   }
 
   async downloadPdf(content: Content) {
-    const element: HTMLElement = document.querySelector(
-      'article',
-    ) as HTMLElement;
+    window.print();
+    // const element: HTMLElement = document.querySelector(
+    //   'article',
+    // ) as HTMLElement;
 
-    if (element) {
-      this.snack.open('Generating PDF...', '', { duration: 8000 });
-      const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-      const imgData = canvas.toDataURL('image/png');
+    // if (element) {
+    //   this.snack.open('Generating PDF...', '', { duration: 8000 });
+    //   const canvas = await html2canvas(element, { scale: 2, useCORS: true });
+    //   const imgData = canvas.toDataURL('image/png');
 
-      // A4 size dimensions in jsPDF (210mm x 297mm) in points
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgWidth = 210; // A4 width in mm
-      const pageHeight = 297; // A4 height in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width; // Dynamically scale the image height
-      let heightLeft = imgHeight;
+    //   // A4 size dimensions in jsPDF (210mm x 297mm) in points
+    //   const pdf = new jsPDF('p', 'mm', 'a4');
+    //   const imgWidth = 210; // A4 width in mm
+    //   const pageHeight = 297; // A4 height in mm
+    //   const imgHeight = (canvas.height * imgWidth) / canvas.width; // Dynamically scale the image height
+    //   let heightLeft = imgHeight;
 
-      let position = 0;
+    //   let position = 0;
 
-      // Add first page
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+    //   // Add first page
+    //   pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+    //   heightLeft -= pageHeight;
 
-      // Handle multiple pages
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
+    //   // Handle multiple pages
+    //   while (heightLeft > 0) {
+    //     position = heightLeft - imgHeight;
+    //     pdf.addPage();
+    //     pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+    //     heightLeft -= pageHeight;
+    //   }
 
-      // Save the generated PDF
-      pdf.save(`${content.title}.pdf`);
-      this.snack.open('PDF generated successfully!', '', { duration: 2000 });
-    }
+    //   // Save the generated PDF
+    //   pdf.save(`${content.title}.pdf`);
+    //   this.snack.open('PDF generated successfully!', '', { duration: 2000 });
+    // }
   }
 }

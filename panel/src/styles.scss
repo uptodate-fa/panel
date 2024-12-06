@@ -39,3 +39,9 @@ body {
 mat-card {
   background-color: white !important;
 }
+
+@media print {
+  .not-printable {
+    display: none !important;
+  }
+}
