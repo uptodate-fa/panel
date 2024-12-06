@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { GraphicDialogComponent } from './graphic-dialog/graphic-dialog.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-content',
@@ -41,6 +42,7 @@ export class ContentComponent {
     private route: ActivatedRoute,
     private http: HttpClient,
     public contentService: ContentService,
+    private titleService: Title,
   ) {
     const anchor = this.route.snapshot.queryParams['anchor'];
     this.route.params.subscribe((params) => {
@@ -106,6 +108,11 @@ export class ContentComponent {
             });
         }, 2000);
       }
+    });
+
+    effect(() => {
+      const title = this.title();
+      if (title) this.titleService.setTitle(title);
     });
   }
 

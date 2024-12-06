@@ -142,6 +142,10 @@ h1 {
     @media screen and (max-width: 959px) {
       display: none !important;
     }
+
+    @media print {
+      display: none !important;
+    }
   }
 
   //when not sign in
