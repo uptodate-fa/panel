@@ -118,7 +118,8 @@ export class AuthService {
 
     this.mobilePhoneTokens.set(phone, token);
     setTimeout(() => {
-      this.mobilePhoneTokens.delete(phone);
+      if (this.mobilePhoneTokens.get(phone) === token)
+        this.mobilePhoneTokens.delete(phone);
     }, validateTime);
   }
 
