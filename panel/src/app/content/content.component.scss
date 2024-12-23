@@ -19,6 +19,11 @@ article {
   padding: 32px;
   //background add
   background-color: var(--mat-sys-on-primary);
+  max-width: 100%;
+
+  @media screen and (max-width: 959px) {
+    padding: 12px;
+  }
 
   &.fa {
     font-family: Vazirmatn;
@@ -113,14 +118,32 @@ h1 {
     }
   }
 
+  .breakAll {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+
   p {
     font-weight: 400; //change from 300 to 400
     line-height: 24px;
+    word-wrap: break-word;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  div,
+  p,
+  li {
+    word-wrap: break-word;
   }
 
   a {
     text-decoration: none;
     color: var(--mat-sys-primary);
+    word-wrap: break-word;
     cursor: pointer !important;
   }
 
@@ -283,9 +306,11 @@ h1 {
   }
 
   .utd-inline-graphic__container {
-    float: inline-end;
-    padding-inline-start: 24px;
-    padding-block-end: 24px;
+    @media screen and (min-width: 960px) {
+      float: inline-end;
+      padding-inline-start: 24px;
+      padding-block-end: 24px;
+    }
 
     a {
       width: 160px;
