@@ -26,6 +26,19 @@
     <td mat-cell *matCellDef="let user">{{ user.job }}</td>
   </ng-container>
 
+  <ng-container matColumnDef="password">
+    <th mat-header-cell *matHeaderCellDef>رمز ورود</th>
+    <td mat-cell *matCellDef="let user">
+      <span eng ltr copyClipboard>
+        {{ user.password }}
+      </span>
+      <i
+        class="fa-regular fa-rotate fa-xs reset-password"
+        (click)="resetPassword(user)"
+      ></i>
+    </td>
+  </ng-container>
+
   <ng-container matColumnDef="maxDevice">
     <th mat-header-cell *matHeaderCellDef>تعداد دستگاه</th>
     <td mat-cell *matCellDef="let user">

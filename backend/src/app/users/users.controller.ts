@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Roles } from '../auth/roles.decorators';
 import { User, UserDevice, UserRole } from '@uptodate/types';
 import { Model } from 'mongoose';
@@ -26,6 +26,13 @@ export class UsersController {
     return this.userDeviceModel
       .find({ user: userId })
       .sort({ createdAt: 'desc' })
+      .exec();
+  }
+
+  @Post('changePassword')
+  changePassword(@Body() dto: { id: string; password: string }) {
+    return this.userDeviceModel
+      .findByIdAndUpdate(dto.id, { password: dto.password })
       .exec();
   }
 }

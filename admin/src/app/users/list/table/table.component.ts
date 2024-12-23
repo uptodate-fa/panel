@@ -37,6 +37,7 @@ export class UserTableComponent {
     'mail',
     'city',
     'job',
+    'password',
     'maxDevice',
     'expired',
     'activationCode',
@@ -60,6 +61,29 @@ export class UserTableComponent {
             const user = old.find((u) => u.subscription?._id === data._id);
             if (user) {
               user.subscription = data;
+              return [...previousUsers];
+            }
+          }
+          return [];
+        });
+      }
+    },
+  }));
+
+  passwordMutation = injectMutation(() => ({
+    mutationFn: (dto: { id: string; password: string }) =>
+      lastValueFrom(this.http.post<void>(`/api/users/changePassword`, dto)),
+    onSuccess: async (data, dto) => {
+      await this.queryClient.cancelQueries({ queryKey: ['users'] });
+
+      const previousUsers = this.queryClient.getQueryData<User[]>(['users']);
+
+      if (previousUsers) {
+        this.queryClient.setQueryData<User[]>(['users'], (old) => {
+          if (old) {
+            const user = old.find((u) => u._id === dto.id);
+            if (user) {
+              user.password = dto.password;
               return [...previousUsers];
             }
           }
@@ -124,6 +148,32 @@ export class UserTableComponent {
             _id: user.subscription!._id,
             expiredAt: dto.expiredAt,
           } as Subscription);
+        });
+    }
+  }
+
+  resetPassword(user: User) {
+    if (user.subscription) {
+      const fields: PromptFields = {
+        password: {
+          label: 'رمز جدید',
+          type: 'text',
+          control: new FormControl(user.password, Validators.required),
+        },
+      };
+      this.dialog
+        .open(PromptDialogComponent, {
+          data: {
+            title: 'تغییر رمز ' + user.firstName,
+            fields,
+          },
+        })
+        .afterClosed()
+        .subscribe((dto) => {
+          this.passwordMutation.mutate({
+            id: user._id,
+            password: dto.password,
+          });
         });
     }
   }
