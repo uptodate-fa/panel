@@ -35,6 +35,15 @@ export class ContentService {
       staleTime: Infinity,
     }));
 
+  getContentPrintQuery = (id: string) =>
+    injectQuery(() => ({
+      queryKey: ['content/print', id],
+      queryFn: () =>
+        lastValueFrom(this.http.get<Content>(`/api/contents/print/${id}`)),
+      enabled: !!id,
+      staleTime: Infinity,
+    }));
+
   getContentGraphicQuery = (imageKey: Signal<string>, topicId: string) =>
     injectQuery(() => ({
       queryKey: ['content/graphic', imageKey(), topicId],

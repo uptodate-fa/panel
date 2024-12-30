@@ -10,6 +10,7 @@ import { TableOfContentsComponent } from './table-of-contents/table-of-contents.
 import { subscriptionGuard } from './core/guards/subscription.guard';
 import { AbstractsComponent } from './content/abstracts/abstracts.component';
 import { passwordGuard } from './core/guards/password.guard';
+import { PrintContentComponent } from './content/print/print-content.component';
 
 export const appRoutes: Route[] = [
   {
@@ -45,15 +46,22 @@ export const appRoutes: Route[] = [
                   },
                   { path: 'contents/:id', component: ContentComponent },
                   {
+                    path: 'contents/print/:id',
+                    component: PrintContentComponent,
+                  },
+                  {
                     path: 'contents/:topic/abstract/:range',
                     component: AbstractsComponent,
                   },
                   { path: 'calculators', component: CalculatorsComponent },
-                  { path: 'interactions', component: DrugInteractionsComponent },
+                  {
+                    path: 'interactions',
+                    component: DrugInteractionsComponent,
+                  },
                 ],
               },
-            ]
-          }
+            ],
+          },
         ],
       },
     ],

@@ -163,13 +163,4 @@ export class ContentComponent {
       else this.contentService.translateMutation.mutate(data);
     }
   }
-
-  async downloadPdf() {
-    const data = this.contentQuery.data();
-    if (data) {
-      this.downloadingPdf.set(true);
-      await this.contentService.downloadPdf(data);
-      this.downloadingPdf.set(false);
-    }
-  }
 }

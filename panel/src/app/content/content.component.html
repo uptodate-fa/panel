@@ -22,8 +22,7 @@
     <span fxFlex></span>
     <button
       mat-icon-button
-      (click)="downloadPdf()"
-      [disabled]="downloadingPdf()"
+      routerLink="../print/{{ id() }}"
     >
       <i class="fa-solid fa-file-arrow-down"></i>
     </button>

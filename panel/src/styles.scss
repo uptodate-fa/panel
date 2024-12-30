@@ -4,7 +4,7 @@ html {
   @include mat.theme(
     (
       color: mat.$azure-palette,
-      typography: Roboto,
+      typography: Noto Sans,
     )
   );
 }
@@ -13,7 +13,7 @@ html {
   @include mat.theme(
     (
       color: mat.$spring-green-palette,
-      typography: Roboto,
+      typography: Noto Sans,
     )
   );
 }
@@ -25,7 +25,13 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-family:
+    Noto Sans,
+    Noto Kufi Arabic,
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
 }
 
 *[p-md] {

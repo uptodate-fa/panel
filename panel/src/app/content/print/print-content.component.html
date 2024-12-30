@@ -1,0 +1,62 @@
+<mat-toolbar class="not-printable" fxLayoutGap="8px" [fxHide.lt-md]="true">
+  <mat-checkbox [(ngModel)]="textsVisibility">Text</mat-checkbox>
+  <mat-checkbox [(ngModel)]="referencesVisibility">References</mat-checkbox>
+  <mat-checkbox [(ngModel)]="graphicsVisibility">Graphics</mat-checkbox>
+  <mat-checkbox [(ngModel)]="contributorVisibility"
+    >Contributor Disclosures</mat-checkbox
+  >
+  <span fxFlex></span>
+  <button mat-flat-button (click)="print()">
+    <i class="fa-solid fa-file-arrow-down"></i>
+    Download
+  </button>
+  <button mat-icon-button goBack>
+    <i class="fa-solid fa-xmark-circle"></i>
+  </button>
+</mat-toolbar>
+<mat-card class="not-printable" [fxHide.gt-sm]="true">
+  <mat-card-content fxLayout="column" fxLayoutGap="8px">
+    <mat-checkbox [(ngModel)]="textsVisibility">Text</mat-checkbox>
+    <mat-checkbox [(ngModel)]="referencesVisibility">References</mat-checkbox>
+    <mat-checkbox [(ngModel)]="graphicsVisibility">Graphics</mat-checkbox>
+    <mat-checkbox [(ngModel)]="contributorVisibility"
+      >Contributor Disclosures</mat-checkbox
+    >
+    <button mat-flat-button (click)="print()">
+      <i class="fa-solid fa-file-arrow-down"></i>
+      Download
+    </button>
+    <button mat-button goBack>
+      <i class="fa-solid fa-xmark-circle"></i>
+      Cancel
+    </button>
+  </mat-card-content>
+</mat-card>
+<main
+  p-md
+  id="print-content"
+  [ngClass]="{
+    hiddenText: !textsVisibility(),
+    hiddenContributor: !contributorVisibility(),
+    hiddenReferences: !referencesVisibility(),
+  }"
+>
+  @if (bodyHtml()) {
+    <div [innerHTML]="bodyHtml()"></div>
+
+    @if (contentQuery.data()?.relatedGraphics && graphicsVisibility()) {
+      <h1>Graphics</h1>
+      @for (
+        graphic of contentQuery.data()?.relatedGraphics;
+        track graphic.imageKey
+      ) {
+        <span class="h1">{{ graphic.title }}</span>
+        <app-print-graphic
+          [key]="graphic.imageKey"
+          [topicId]="contentQuery.data()!.uptodateId"
+        />
+        <br />
+      }
+    }
+  }
+</main>

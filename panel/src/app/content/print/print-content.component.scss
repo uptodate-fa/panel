@@ -1,0 +1,85 @@
+main {
+  background-color: white;
+}
+
+::ng-deep #print-content {
+  a {
+    color: var(--mat-sys-primary) !important;
+    text-decoration: none;
+  }
+
+  .headerSimpleLeft {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    font-size: 11px;
+  }
+
+  .topicContent {
+    margin: 48px 24px;
+  }
+
+  .topicTitle {
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .authorSectionElem {
+    display: flex;
+    background-color: #f2f8fc;
+    padding: 16px;
+    font-size: 13px;
+    gap: 100px;
+    display: flex;
+    justify-content: space-between;
+
+    & > div {
+      flex: 1;
+    }
+
+    dl {
+      margin: 0;
+    }
+
+    dd {
+      display: inline;
+      margin: 0;
+    }
+  }
+
+  &.hiddenText .topicText {
+    display: none;
+  }
+
+  &.hiddenReferences .references {
+    display: none;
+  }
+
+  &.hiddenContributor .printDisclosures {
+    display: none;
+  }
+
+  .headingEndMark,
+  .topicVersionRevision {
+    display: none;
+  }
+
+  .h1 {
+    padding-top: 24px;
+    border-top: 1px solid #ededed;
+    font-size: 18px;
+    font-weight: 700;
+    display: block;
+  }
+
+  h1 {
+    font-size: 1.2em;
+    color: #00905a;
+  }
+
+  .printGraphics {
+    display: none;
+  }
+}
