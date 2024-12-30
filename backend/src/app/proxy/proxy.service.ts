@@ -118,6 +118,21 @@ export class ProxyService {
     } as Content;
   }
 
+  async printContent(id: string) {
+    const response = await this.request({
+      url: `https://www.uptodate.com/services/app/contents/topic/${id}/print/json`,
+    });
+
+    const data = response?.data?.data;
+    return {
+      bodyHtml: data?.printHtml,
+      uptodateId: data?.topicInfo?.id,
+      outlineHtml: data?.outlineHtml,
+      title: data?.topicInfo?.title,
+      relatedGraphics: data?.topicInfo?.relatedGraphics,
+    } as Content;
+  }
+
   async contentAbstract(
     topic: string,
     range: string,

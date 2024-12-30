@@ -66,6 +66,11 @@ export class ContentsController {
     return this.contentsService.getContent(id, user, !!force);
   }
 
+  @Get('print/:id')
+  print(@Param('id') id: string) {
+    return this.proxy.printContent(id);
+  }
+
   @Get('outline/:id')
   getOutlineById(@Param('id') id: string) {
     return this.contentsService.getOutline(id);
