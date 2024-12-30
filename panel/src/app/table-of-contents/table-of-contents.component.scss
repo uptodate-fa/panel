@@ -12,8 +12,10 @@ mat-toolbar {
 
 main {
   .items-wrapper {
-    &.multi-col {
-      columns: 3;
+    @media screen and (min-width: 960px) {
+      &.multi-col {
+        columns: 3;
+      }
     }
 
     a.item {
