@@ -213,6 +213,14 @@ export class ProxyService {
     } as DrugInteraction;
   }
 
+  async drugInteractionsDetails(id: string) {
+    const response = await this.request({
+      url: `https://www.uptodate.com/services/app/drug/interaction/${id}/json`,
+    });
+
+    return response?.data?.data;
+  }
+
   async tableOfContent(topic: string, sub?: string) {
     const response = await this.request({
       url: `https://www.uptodate.com/services/app/contents/table-of-contents/${sub ? `${topic}/${sub}` : topic}/json`,

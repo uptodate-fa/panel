@@ -11,6 +11,7 @@ import { subscriptionGuard } from './core/guards/subscription.guard';
 import { AbstractsComponent } from './content/abstracts/abstracts.component';
 import { passwordGuard } from './core/guards/password.guard';
 import { PrintContentComponent } from './content/print/print-content.component';
+import { drugInteractionsRoutes } from './drug-interactions/drug-interactions.routes';
 
 export const appRoutes: Route[] = [
   {
@@ -56,7 +57,7 @@ export const appRoutes: Route[] = [
                   { path: 'calculators', component: CalculatorsComponent },
                   {
                     path: 'interactions',
-                    component: DrugInteractionsComponent,
+                    children: drugInteractionsRoutes,
                   },
                 ],
               },

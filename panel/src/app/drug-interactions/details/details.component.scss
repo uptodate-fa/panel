@@ -1,0 +1,6 @@
+mat-toolbar {
+  position: sticky;
+  top: 56px;
+  z-index: 100;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}

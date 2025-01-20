@@ -1,0 +1,13 @@
+<mat-toolbar>
+  <button mat-button goBack>
+    <i class="fa-regular fa-angle-left"></i>
+    back
+  </button>
+</mat-toolbar>
+<main p-md>
+  @if (query.data()) {
+    <div [innerHTML]="query.data()?.interactionHtml | safeHtml"></div>
+  } @else {
+    <mat-spinner [diameter]="32" style="margin: 24px auto" />
+  }
+</main>

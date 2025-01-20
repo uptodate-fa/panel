@@ -14,4 +14,9 @@ export class DrugInteractionsController {
   interactions(@Param('ids') ids: string) {
     return this.proxy.drugInteractions(ids.split(','));
   }
+
+  @Get('interactions/details/:id')
+  interactionDetails(@Param('id') id: string) {
+    return this.proxy.drugInteractionsDetails(id);
+  }
 }
