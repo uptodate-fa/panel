@@ -15,7 +15,7 @@
     <button mat-icon-button goBack>
       <i class="fa-regular fa-angle-left"></i>
     </button>
-    <button mat-stroked-button (click)="drawer.open()" [fxHide.gt-sm]="true">
+    <button mat-stroked-button (click)="sidenav.open()" [fxHide.gt-sm]="true">
       view outline
     </button>
     <h1 [fxHide.lt-md]="true">{{ title() }}</h1>
@@ -43,21 +43,23 @@
       </button>
     }
   </mat-toolbar>
-  <mat-drawer-container>
-    <mat-drawer
+  <mat-sidenav-container>
+    <mat-sidenav
       [opened]="!isSmallScreen"
       [disableClose]="!isSmallScreen"
       [mode]="isSmallScreen ? 'over' : 'side'"
       class="not-printable"
-      #drawer
+      fixedInViewport
+      [fixedTopGap]="56+64"
+      #sidenav
     >
       <nav
         class="nav-body"
         [innerHTML]="outlineHtml() | safeHtml"
         [class.fa]="showTranslation()"
       ></nav>
-    </mat-drawer>
-    <mat-drawer-content>
+    </mat-sidenav>
+    <mat-sidenav-content>
       <article
         fxFlex
         class="content-body printable"
@@ -73,6 +75,6 @@
           ></div>
         }
       </article>
-    </mat-drawer-content>
-  </mat-drawer-container>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 }

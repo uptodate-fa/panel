@@ -5,12 +5,12 @@ mat-toolbar {
   border-bottom: 1px solid var(--mat-sys-outline-variant);
 }
 
-mat-drawer {
+mat-sidenav {
   border-radius: 0 !important;
 }
 
 @media print {
-  mat-drawer-content {
+  mat-sidenav-content {
     margin-left: 0 !important;
   }
 }
