@@ -8,6 +8,7 @@ import {
   Log,
   Payment,
   Subscription,
+  UptodateAccount,
   User,
   UserDevice,
 } from '@uptodate/types';
@@ -20,6 +21,7 @@ import { ContentHistorySchema } from './content-history.schema';
 import { DiscountCouponSchema } from './discount-coupon.schema';
 import { UserDeviceSchema } from './user-device.schema';
 import { ActivationCodeSchema } from './activation-code.schema';
+import { UptodateAccountSchema } from './uptodate-account.schema';
 
 @Module({
   imports: [
@@ -33,6 +35,7 @@ import { ActivationCodeSchema } from './activation-code.schema';
       { name: Payment.name, schema: PaymentSchema },
       { name: ContentHistory.name, schema: ContentHistorySchema },
       { name: DiscountCoupon.name, schema: DiscountCouponSchema },
+      { name: UptodateAccount.name, schema: UptodateAccountSchema },
     ]),
   ],
   exports: [MongooseModule],

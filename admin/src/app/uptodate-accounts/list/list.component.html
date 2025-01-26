@@ -1,0 +1,10 @@
+<main p-md>
+  <h1>اکانت‌های آپتودیت</h1>
+
+  @if (query.data()) {
+    <app-uptodate-account-table [data]="query.data()" />
+  }
+</main>
+<button mat-fab (click)="addNew()">
+  <i class="fa-regular fa-plus"></i>
+</button>

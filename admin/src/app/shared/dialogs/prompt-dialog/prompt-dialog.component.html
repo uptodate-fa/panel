@@ -25,6 +25,8 @@
         @default {
           <input
             matInput
+            [attr.eng]="fields[key].eng"
+            [attr.ltr]="fields[key].ltr"
             [placeholder]="fields[key].placeholder || ''"
             [formControl]="fields[key].control"
             [type]="fields[key].type || 'text'"

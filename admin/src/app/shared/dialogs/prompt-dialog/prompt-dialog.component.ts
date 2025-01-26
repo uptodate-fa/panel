@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
@@ -18,6 +18,8 @@ export type PromptField = {
   control: FormControl;
   hint?: string;
   placeholder?: string;
+  eng?: boolean;
+  ltr?: boolean;
 };
 
 @Component({
@@ -45,7 +47,7 @@ export class PromptDialogComponent {
   readonly title = this.data.title;
   readonly description = this.data.description;
   readonly fields = this.data.fields;
-  readonly keys = Object.keys(this.fields)
+  readonly keys = Object.keys(this.fields);
 
   submit() {
     const dto: any = {};

@@ -1,0 +1,82 @@
+<table mat-table [dataSource]="data() || []">
+  <ng-container matColumnDef="username">
+    <th mat-header-cell *matHeaderCellDef>نام کاربری</th>
+    <td mat-cell *matCellDef="let account">
+      <span eng>
+        {{ account.username }}
+      </span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="password">
+    <th mat-header-cell *matHeaderCellDef>رمز عبور</th>
+    <td mat-cell *matCellDef="let account">
+      <span eng>
+        {{ account.password }}
+      </span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="createdAt">
+    <th mat-header-cell *matHeaderCellDef>تاریخ ایجاد</th>
+    <td mat-cell *matCellDef="let account">
+      {{ account.createdAt | pdate: true }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+    <td mat-cell *matCellDef="let account">
+      @switch (account.status) {
+        @case (UptodateAccountStatus.Active) {
+          <span style="color: #43a047">
+            <i class="fa-regular fa-check-circle"></i>
+            فعال
+          </span>
+        }
+        @case (UptodateAccountStatus.Blocked) {
+          <span style="color: #e53935">
+            <i class="fa-regular fa-xmark-circle"></i>
+            بلاک شده
+          </span>
+        }
+        @case (UptodateAccountStatus.Unknown) {
+          <span style="color: #e53935">
+            <i class="fa-regular fa-xmark-circle"></i>
+            خطای نامشخص
+          </span>
+        }
+        @case (UptodateAccountStatus.Wrong) {
+          <span style="color: #e53935">
+            <i class="fa-regular fa-xmark-circle"></i>
+            اطلاعات ورود اشتباه
+          </span>
+        }
+        @default {
+          متصل نشده
+        }
+      }
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="loginAt">
+    <th mat-header-cell *matHeaderCellDef>آخرین اتصال</th>
+    <td mat-cell *matCellDef="let account">
+      @if (account.loginAt) {
+        {{ account.loginAt | pdate }}
+      }
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let account">
+      <button mat-icon-button (click)="edit(account)">
+        <i class="fa-regular fa-edit fa-sm"></i>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

@@ -24,7 +24,12 @@ export class ContentsService {
     let content: Content = await this.contentModel
       .findOne({ queryStringId: id })
       .exec();
-    if (!content || forceSync) {
+    if (
+      !content ||
+      content.bodyHtml.search('To continue reading this article, you must') >
+        -1 ||
+      forceSync
+    ) {
       let data = await this.proxy.content(id);
 
       if (data) {

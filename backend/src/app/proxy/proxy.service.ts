@@ -247,17 +247,19 @@ export class ProxyService {
     config: AxiosRequestConfig,
     props?: { skipRetry?: boolean; skipLogin?: boolean },
   ) {
+    const client = this.auth.client;
+    if (!client) return this.http.request(config).toPromise();
     try {
-      const response = await this.auth.client.request(config);
+      const response = await client.instance.request(config);
       const needLogin = await this.auth.needLogin(response?.data);
       if (!props?.skipRetry && !props?.skipLogin && needLogin) {
-        await this.auth.login(config.url);
+        await this.auth.login(client, config.url);
         return this.request(config, { skipRetry: true });
       }
       return response;
     } catch (error) {
       if (!props?.skipRetry && error.response?.status === 403) {
-        await this.auth.login(config.url);
+        await this.auth.login(client, config.url);
         return this.request(config, { skipRetry: true });
       }
       throw error;
