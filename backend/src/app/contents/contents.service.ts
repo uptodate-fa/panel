@@ -21,9 +21,12 @@ export class ContentsService {
     user?: User,
     forceSync = false,
   ): Promise<Content> {
+    const start = Date.now();
     let content: Content = await this.contentModel
       .findOne({ queryStringId: id })
       .exec();
+    console.log('content:', id, Date.now() - start, !!content);
+
     if (
       !content ||
       content.bodyHtml.search('To continue reading this article, you must') >
@@ -31,6 +34,7 @@ export class ContentsService {
       forceSync
     ) {
       let data = await this.proxy.content(id);
+      console.log('content uptodate:', id, Date.now() - start);
 
       if (data) {
         if (content) {
