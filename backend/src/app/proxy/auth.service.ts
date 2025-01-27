@@ -54,7 +54,9 @@ export class AuthService {
   }
 
   get client() {
-    return this.clients.find((item) => !item.account.blockedAt);
+    return this.clients.find(
+      (item) => item.account.status === UptodateAccountStatus.Active,
+    );
   }
 
   async needLogin(response?: any) {
