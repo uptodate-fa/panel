@@ -13,6 +13,7 @@ import {
   TableOfContent,
 } from '@uptodate/types';
 import { AxiosRequestConfig } from 'axios';
+import { captureEvent } from '@sentry/node';
 
 @Injectable()
 export class ProxyService {
@@ -249,6 +250,20 @@ export class ProxyService {
   ) {
     const client = this.auth.client;
     if (!client) return this.http.request(config).toPromise();
+
+    try {
+      captureEvent({
+        message: 'uptodate request',
+        level: 'debug',
+        transaction: config.url,
+        tags: {
+          username: client.account.username,
+        },
+      });
+    } catch (error) {
+      // do nothing
+    }
+
     try {
       const response = await client.instance.request(config);
       const needLogin = await this.auth.needLogin(response?.data);

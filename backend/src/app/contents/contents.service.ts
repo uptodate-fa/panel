@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { ProxyService } from '../proxy/proxy.service';
 import * as cheerio from 'cheerio';
 import { OpenaiService } from '../openai/openai.service';
+import { captureEvent } from '@sentry/node';
 
 @Injectable()
 export class ContentsService {
@@ -21,20 +22,32 @@ export class ContentsService {
     user?: User,
     forceSync = false,
   ): Promise<Content> {
-    const start = Date.now();
     let content: Content = await this.contentModel
       .findOne({ queryStringId: id })
       .exec();
-    console.log('content:', id, Date.now() - start, !!content);
 
-    if (
+    const fetchFromUptodate =
       !content ||
       content.bodyHtml.search('To continue reading this article, you must') >
         -1 ||
-      forceSync
-    ) {
+      forceSync;
+
+    try {
+      captureEvent({
+        message: 'get content',
+        level: 'log',
+        transaction: id,
+        tags: {
+          source: fetchFromUptodate ? 'uptodate' : 'db',
+        },
+      });
+      console.log(123)
+    } catch (error) {
+      console.error(error)
+    }
+
+    if (fetchFromUptodate) {
       let data = await this.proxy.content(id);
-      console.log('content uptodate:', id, Date.now() - start);
 
       if (data) {
         if (content) {

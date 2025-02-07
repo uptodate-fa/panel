@@ -73,8 +73,11 @@ export class AuthService {
 
     captureEvent({
       message: 'uptodate login',
-      level: 'debug',
+      level: 'log',
       transaction: onPath,
+      tags: {
+        username: client.account.username,
+      },
     });
 
     try {
