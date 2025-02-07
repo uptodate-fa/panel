@@ -12,6 +12,8 @@ import { GraphicDialogComponent } from './graphic-dialog/graphic-dialog.componen
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Title } from '@angular/platform-browser';
+import { MatTabsModule } from '@angular/material/tabs';
+import { PrintGraphicComponent } from "./print/graphic/graphic.component";
 
 @Component({
   selector: 'app-content',
@@ -23,7 +25,9 @@ import { Title } from '@angular/platform-browser';
     MatToolbarModule,
     MatTooltipModule,
     MatSidenavModule,
-  ],
+    MatTabsModule,
+    PrintGraphicComponent
+],
   templateUrl: './content.component.html',
   styleUrl: './content.component.scss',
 })

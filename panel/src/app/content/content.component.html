@@ -16,14 +16,11 @@
       <i class="fa-regular fa-angle-left"></i>
     </button>
     <button mat-stroked-button (click)="sidenav.open()" [fxHide.gt-sm]="true">
-      view outline
+      outline
     </button>
     <h1 [fxHide.lt-md]="true">{{ title() }}</h1>
     <span fxFlex></span>
-    <button
-      mat-icon-button
-      routerLink="../print/{{ id() }}"
-    >
+    <button mat-icon-button routerLink="../print/{{ id() }}">
       <i class="fa-solid fa-file-arrow-down"></i>
     </button>
     @if (!showTranslation()) {
@@ -35,7 +32,8 @@
             !contentQuery.data()?.translatedBodyHtml
           "
         ></i>
-        AI translation
+        AI
+        <span fxHide [fxShow.gt-sm]="true"> translation </span>
       </button>
     } @else {
       <button mat-stroked-button (click)="showTranslation.set(false)">
@@ -43,6 +41,7 @@
       </button>
     }
   </mat-toolbar>
+
   <mat-sidenav-container>
     <mat-sidenav
       [opened]="!isSmallScreen"
@@ -50,7 +49,7 @@
       [mode]="isSmallScreen ? 'over' : 'side'"
       class="not-printable"
       fixedInViewport
-      [fixedTopGap]="56+64"
+      [fixedTopGap]="56 + 64"
       #sidenav
     >
       <nav
@@ -60,21 +59,40 @@
       ></nav>
     </mat-sidenav>
     <mat-sidenav-content>
-      <article
-        fxFlex
-        class="content-body printable"
-        id="topicContainer"
-        fxFlex
-        [class.fa]="showTranslation()"
-      >
-        @if (contentQuery.data()) {
-          <div
-            id="topicContent"
-            class="utdArticleSection"
-            [innerHTML]="bodyHTML() | safeHtml"
-          ></div>
-        }
-      </article>
+      <mat-tab-group [mat-stretch-tabs]="false">
+        <mat-tab label="Topic">
+          <article
+            fxFlex
+            class="content-body printable"
+            id="topicContainer"
+            fxFlex
+            [class.fa]="showTranslation()"
+          >
+            @if (contentQuery.data()) {
+              <div
+                id="topicContent"
+                class="utdArticleSection"
+                [innerHTML]="bodyHTML() | safeHtml"
+              ></div>
+            }
+          </article>
+        </mat-tab>
+        <mat-tab
+          label="Graphics ({{ contentQuery.data()?.relatedGraphics?.length }})"
+        >
+          @for (
+            graphic of contentQuery.data()?.relatedGraphics;
+            track graphic.imageKey
+          ) {
+            <span class="h1">{{ graphic.title }}</span>
+            <app-print-graphic
+              [key]="graphic.imageKey"
+              [topicId]="contentQuery.data()!.uptodateId"
+            />
+            <br />
+          }
+        </mat-tab>
+      </mat-tab-group>
     </mat-sidenav-content>
   </mat-sidenav-container>
 }
