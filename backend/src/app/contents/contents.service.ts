@@ -95,7 +95,7 @@ export class ContentsService {
 
   async getOutline(id: string): Promise<Content> {
     const existContent = await this.contentModel
-      .findOne({ queryStringId: id })
+      .findOne({ uptodateId: id })
       .exec();
     if (existContent) return existContent;
 

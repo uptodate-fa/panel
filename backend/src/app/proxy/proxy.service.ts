@@ -27,16 +27,19 @@ export class ProxyService {
       {
         url: `https://www.uptodate.com/services/app/contents/search/autocomplete/json?term=${query}&limit=${limit}`,
       },
-      { skipLogin: true },
+      { skipLogin: true, key: 'pre-search' },
     );
 
     return response?.data?.data?.searchTerms;
   }
 
   async search(query: string, sp = 0, limit = 20): Promise<SearchResult> {
-    const response = await this.request({
-      url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}&sp=${sp}`,
-    });
+    const response = await this.request(
+      {
+        url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}&sp=${sp}`,
+      },
+      { key: 'search' },
+    );
     const data = response?.data?.data;
 
     if (data) {
@@ -105,9 +108,12 @@ export class ProxyService {
   }
 
   async content(id: string) {
-    const response = await this.request({
-      url: `https://www.uptodate.com/services/app/contents/topic/${id}/json`,
-    });
+    const response = await this.request(
+      {
+        url: `https://www.uptodate.com/services/app/contents/topic/${id}/json`,
+      },
+      { key: 'content' },
+    );
 
     const data = response?.data?.data;
     return {
@@ -120,9 +126,12 @@ export class ProxyService {
   }
 
   async printContent(id: string) {
-    const response = await this.request({
-      url: `https://www.uptodate.com/services/app/contents/topic/${id}/print/json`,
-    });
+    const response = await this.request(
+      {
+        url: `https://www.uptodate.com/services/app/contents/topic/${id}/print/json`,
+      },
+      { key: 'print-content' },
+    );
 
     const data = response?.data?.data;
     return {
@@ -138,9 +147,12 @@ export class ProxyService {
     topic: string,
     range: string,
   ): Promise<ContentAbstract[]> {
-    const response = await this.request({
-      url: `https://www.uptodate.com/services/app/contents/topic/${topic}/citation/${range}/json`,
-    });
+    const response = await this.request(
+      {
+        url: `https://www.uptodate.com/services/app/contents/topic/${topic}/citation/${range}/json`,
+      },
+      { key: 'content-abstract' },
+    );
 
     const data = response?.data?.data;
     return data.citations.map(
@@ -166,9 +178,12 @@ export class ProxyService {
 
   async graphic(imageKey: string, topicKey?: string) {
     const id = imageKey.split('/')[1];
-    const response = await this.request({
-      url: `https://www.uptodate.com/services/app/contents/graphic/detailed/${id}/en_us/json?imageKey=${imageKey}&id=${id}${topicKey ? '&topicKey=' + topicKey : ''}`,
-    });
+    const response = await this.request(
+      {
+        url: `https://www.uptodate.com/services/app/contents/graphic/detailed/${id}/en_us/json?imageKey=${imageKey}&id=${id}${topicKey ? '&topicKey=' + topicKey : ''}`,
+      },
+      { key: 'graphic' },
+    );
 
     const data = response?.data?.data;
     return {
@@ -180,9 +195,12 @@ export class ProxyService {
   }
 
   async outline(id: string) {
-    const response = await this.request({
-      url: `https://www.uptodate.com/services/app/outline/topic/${id}/en-US/json`,
-    });
+    const response = await this.request(
+      {
+        url: `https://www.uptodate.com/services/app/outline/topic/${id}/en-US/json`,
+      },
+      { key: 'outline' },
+    );
 
     const data = response?.data?.data;
     return {
@@ -193,9 +211,12 @@ export class ProxyService {
   }
 
   async searchDrug(query: string) {
-    const response = await this.request({
-      url: `https://www.uptodate.com/services/app/drug/interaction/search/autocomplete/json?term=${query}&page=1&pageSize=10`,
-    });
+    const response = await this.request(
+      {
+        url: `https://www.uptodate.com/services/app/drug/interaction/search/autocomplete/json?term=${query}&page=1&pageSize=10`,
+      },
+      { key: 'search-drug' },
+    );
 
     const data = response?.data?.data;
     return data.drugs as Drug[];
@@ -203,9 +224,12 @@ export class ProxyService {
 
   async drugInteractions(ids: string[]) {
     const drugsQueryParam = ids.map((id) => `drug=${id}`).join('&');
-    const response = await this.request({
-      url: `https://www.uptodate.com/services/app/drug/interaction/search/json?${drugsQueryParam}`,
-    });
+    const response = await this.request(
+      {
+        url: `https://www.uptodate.com/services/app/drug/interaction/search/json?${drugsQueryParam}`,
+      },
+      { key: 'drug-interactions' },
+    );
 
     const data = response?.data?.data;
     return {
@@ -215,17 +239,23 @@ export class ProxyService {
   }
 
   async drugInteractionsDetails(id: string) {
-    const response = await this.request({
-      url: `https://www.uptodate.com/services/app/drug/interaction/${id}/json`,
-    });
+    const response = await this.request(
+      {
+        url: `https://www.uptodate.com/services/app/drug/interaction/${id}/json`,
+      },
+      { key: 'drug-interactions-details' },
+    );
 
     return response?.data?.data;
   }
 
   async tableOfContent(topic: string, sub?: string) {
-    const response = await this.request({
-      url: `https://www.uptodate.com/services/app/contents/table-of-contents/${sub ? `${topic}/${sub}` : topic}/json`,
-    });
+    const response = await this.request(
+      {
+        url: `https://www.uptodate.com/services/app/contents/table-of-contents/${sub ? `${topic}/${sub}` : topic}/json`,
+      },
+      { key: 'table-of-content' },
+    );
 
     const data = response?.data?.data;
     return {
@@ -246,7 +276,7 @@ export class ProxyService {
 
   private async request(
     config: AxiosRequestConfig,
-    props?: { skipRetry?: boolean; skipLogin?: boolean },
+    props?: { skipRetry?: boolean; skipLogin?: boolean; key?: string },
   ) {
     const client = this.auth.client;
     if (!client) return this.http.request(config).toPromise();
@@ -255,7 +285,7 @@ export class ProxyService {
       captureEvent({
         message: 'uptodate request',
         level: 'debug',
-        transaction: config.url,
+        transaction: props?.key || config.url,
         tags: {
           username: client.account.username,
         },
