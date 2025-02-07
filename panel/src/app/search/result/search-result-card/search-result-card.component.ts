@@ -40,12 +40,18 @@ export class SearchResultCardComponent {
     staleTime: Infinity,
   }));
 
-  setGraphicLinks() {
+  setLinks() {
     setTimeout(() => {
+      // console.log(this.result)
+      document
+        .querySelectorAll<HTMLAnchorElement>('a[href^="#"]')
+        .forEach((element) => {
+          element.href = this.result.url + element.href;
+        });
+
       document
         .querySelectorAll<HTMLAnchorElement>('a.graphic')
         .forEach((element) => {
-          console.log(element);
           const url = element.href;
           const queryString = url?.split('?')[1];
           const params = new URLSearchParams(queryString);
@@ -59,8 +65,8 @@ export class SearchResultCardComponent {
               this.openImageDialog(imageKey, topicKey);
             });
           }
-        }, 1000);
-    });
+        });
+    }, 500);
   }
 
   openImageDialog(key: string, topicId: string): void {
