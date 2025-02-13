@@ -14,6 +14,7 @@ import {
 } from '@uptodate/types';
 import { AxiosRequestConfig } from 'axios';
 import { captureEvent } from '@sentry/node';
+import { UPTODATE_GRAPHICS } from './uptodate-graphics-2018.consts';
 
 @Injectable()
 export class ProxyService {
@@ -178,6 +179,13 @@ export class ProxyService {
 
   async graphic(imageKey: string, topicKey?: string) {
     const id = imageKey.split('/')[1];
+    const exist = UPTODATE_GRAPHICS[id];
+    if (exist) {
+      return {
+        imageKey,
+        
+      }as Graphic
+    };
     const response = await this.request(
       {
         url: `https://www.uptodate.com/services/app/contents/graphic/detailed/${id}/en_us/json?imageKey=${imageKey}&id=${id}${topicKey ? '&topicKey=' + topicKey : ''}`,
