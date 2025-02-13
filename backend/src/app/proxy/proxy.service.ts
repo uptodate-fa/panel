@@ -183,9 +183,10 @@ export class ProxyService {
     if (exist) {
       return {
         imageKey,
-        
-      }as Graphic
-    };
+        title: exist.title,
+        imageHtml: exist.html
+      } as Graphic;
+    }
     const response = await this.request(
       {
         url: `https://www.uptodate.com/services/app/contents/graphic/detailed/${id}/en_us/json?imageKey=${imageKey}&id=${id}${topicKey ? '&topicKey=' + topicKey : ''}`,
