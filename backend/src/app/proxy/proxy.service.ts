@@ -181,12 +181,28 @@ export class ProxyService {
     const id = imageKey.split('/')[1];
     const exist = UPTODATE_GRAPHICS[id];
     if (exist) {
+      captureEvent({
+        message: 'get graphic',
+        level: 'log',
+        transaction: imageKey,
+        tags: {
+          source: 'db',
+        },
+      });
       return {
         imageKey,
         title: exist.title,
-        imageHtml: exist.html
+        imageHtml: exist.html,
       } as Graphic;
     }
+    captureEvent({
+      message: 'get graphic',
+      level: 'log',
+      transaction: imageKey,
+      tags: {
+        source: 'uptodate',
+      },
+    });
     const response = await this.request(
       {
         url: `https://www.uptodate.com/services/app/contents/graphic/detailed/${id}/en_us/json?imageKey=${imageKey}&id=${id}${topicKey ? '&topicKey=' + topicKey : ''}`,
