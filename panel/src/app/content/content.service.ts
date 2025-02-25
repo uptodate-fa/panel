@@ -200,7 +200,7 @@ export class ContentService {
     const allImgs = div.querySelectorAll('img');
     allImgs.forEach((element) => {
       const src = new URL(element.src);
-      if (src) {
+      if (src && src.origin !== 'https://medsmart.shop') {
         element.src = src
           .toString()
           .replace(src.origin, `https://www.uptodate.com`);
