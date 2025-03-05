@@ -1,0 +1,20 @@
+form {
+  display: flex;
+  flex: 1;
+  align-items: center;
+
+  input {
+    outline: none;
+    border: none;
+    border-radius: 24px;
+    height: 36px;
+    padding: 0 16px;
+    line-height: 36px;
+    min-width: 200px;
+  }
+
+  i {
+    margin-inline-start: -36px;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}

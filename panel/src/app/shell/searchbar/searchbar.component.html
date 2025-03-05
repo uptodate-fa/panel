@@ -1,0 +1,34 @@
+<form (ngSubmit)="gotToSearchPage()" #myForm="ngForm">
+  <input
+    type="text"
+    [formControl]="searchControl"
+    [matAutocomplete]="auto"
+    placeholder="search..."
+    (keydown)="searchControlKeyDown($event)"
+  />
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option
+      *ngFor="let option of searchQuery.data()"
+      [value]="option"
+      routerLink="/search/result"
+      [queryParams]="{ query: option }"
+    >
+      {{ option }}
+    </mat-option>
+  </mat-autocomplete>
+
+  @if (!searchQuery.isLoading()) {
+    <i class="fa-regular fa-search fa-sm"></i>
+  } @else {
+    <i class="fa-regular fa-circle-notch fa-sm fa-spin"></i>
+  }
+  <!-- <button
+      mat-fab
+      matSuffix
+      id="search-button"
+      [disabled]="!searchQuery.data() && searchQuery.isLoading()"
+      class="primary-background on-primary-text"
+      (click)="gotToSearchPage()"
+    >
+    </button> -->
+</form>

@@ -10,6 +10,7 @@ import { ProfileDialogComponent } from '../shared/dialogs/profile-dialog/profile
 import { AuthService } from '../auth/auth.service';
 import { SubscriptionFormDialogComponent } from '../shared/dialogs/subscription-form-dialog/subscription-form-dialog.component';
 import { SHARED } from '../shared';
+import { SearchbarComponent } from "./searchbar/searchbar.component";
 
 @Component({
   selector: 'app-shell',
@@ -22,7 +23,8 @@ import { SHARED } from '../shared';
     MatButtonModule,
     MatMenuModule,
     TranslateModule,
-  ],
+    SearchbarComponent
+],
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
 })
