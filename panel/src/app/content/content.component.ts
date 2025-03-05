@@ -1,4 +1,11 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -12,8 +19,8 @@ import { GraphicDialogComponent } from './graphic-dialog/graphic-dialog.componen
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Title } from '@angular/platform-browser';
-import { MatTabsModule } from '@angular/material/tabs';
-import { PrintGraphicComponent } from "./print/graphic/graphic.component";
+import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
+import { PrintGraphicComponent } from './print/graphic/graphic.component';
 
 @Component({
   selector: 'app-content',
@@ -26,8 +33,8 @@ import { PrintGraphicComponent } from "./print/graphic/graphic.component";
     MatTooltipModule,
     MatSidenavModule,
     MatTabsModule,
-    PrintGraphicComponent
-],
+    PrintGraphicComponent,
+  ],
   templateUrl: './content.component.html',
   styleUrl: './content.component.scss',
 })
@@ -41,6 +48,7 @@ export class ContentComponent {
   showTranslation = signal(false);
   contentQuery = this.contentService.getContentQuery(this.id, this.forceUpdate);
   downloadingPdf = signal(false);
+  tabs = viewChild(MatTabGroup);
 
   constructor(
     private route: ActivatedRoute,
@@ -77,19 +85,34 @@ export class ContentComponent {
               const queryString = url?.split('?')[1];
               const params = new URLSearchParams(queryString);
               // const queryObject = Object.fromEntries(params.entries());
-              const imageKey = params.get('imageKey');
+              const imageKey = params.get('imageKey')?.split('~')[0];
               element.removeAttribute('href');
-              if (imageKey) {
+              if (imageKey) { 
                 element.addEventListener('click', (event) =>
                   this.openImageDialog(imageKey),
                 );
               }
             });
+
+          document
+            .querySelectorAll<HTMLAnchorElement>('article a[href].local')
+            .forEach((element) => {
+              element.addEventListener('click', (event) => {
+                const href = element.getAttribute('anchor')?.split?.('#')?.[1];
+                if (href)
+                  document
+                    .getElementById(href)
+                    ?.scrollIntoView({ behavior: 'smooth' });
+              });
+              element.setAttribute('anchor', element.href);
+              element.removeAttribute('href');
+            });
         }, 2000);
         if (anchor) {
+          console.log(anchor)
           setTimeout(() => {
             document
-              .querySelector(location.hash)
+              .querySelector(`#${anchor}`)
               ?.scrollIntoView({ behavior: 'smooth' });
           }, 1500);
         }
@@ -110,6 +133,17 @@ export class ContentComponent {
               element.setAttribute('anchor', element.href);
               element.removeAttribute('href');
             });
+
+          const viewAll = document.querySelector<HTMLAnchorElement>(
+            'a#viewAllGraphicsLink',
+          );
+          const tabs = this.tabs();
+          if (viewAll && tabs) {
+            viewAll.addEventListener('click', (event) => {
+              tabs.selectedIndex = 1;
+            });
+            viewAll.removeAttribute('href');
+          }
         }, 2000);
       }
     });

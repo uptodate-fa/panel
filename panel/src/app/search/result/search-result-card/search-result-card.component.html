@@ -12,7 +12,11 @@
     <p [innerHTML]="result.description"></p>
     @for (link of result.results; track $index) {
       <div>
-        <a mat-button [routerLink]="link.url">
+        <a
+          mat-button
+          [routerLink]="link.url | baseUrl"
+          [queryParams]="link.url | queryParams"
+        >
           {{ link.title }}
         </a>
       </div>
@@ -20,11 +24,19 @@
   </mat-card-content>
   @if (outlineQuery.data()) {
     <div fxLayout="column" fxLayoutAlign="center center" id="actions">
-      <button mat-icon-button [mat-menu-trigger-for]="menu" stopPropagation (onMenuOpen)="setLinks()">
+      <button
+        mat-icon-button
+        [mat-menu-trigger-for]="menu"
+        stopPropagation
+        (onMenuOpen)="setLinks()"
+      >
         <i class="fa-solid fa-list"></i>
       </button>
       <mat-menu #menu="matMenu">
-        <div id="outline-content" [innerHTML]="outlineQuery.data()?.outlineHtml | safeHtml"></div>
+        <div
+          id="outline-content"
+          [innerHTML]="outlineQuery.data()?.outlineHtml | safeHtml"
+        ></div>
       </mat-menu>
     </div>
   }
