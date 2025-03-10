@@ -41,10 +41,7 @@ export class ContentsService {
           source: fetchFromUptodate ? 'uptodate' : 'db',
         },
       });
-      console.log(123)
-    } catch (error) {
-      console.error(error)
-    }
+    } catch (error) {}
 
     if (fetchFromUptodate) {
       let data = await this.proxy.content(id);
@@ -52,9 +49,18 @@ export class ContentsService {
       if (data) {
         if (content) {
           data = await this.contentModel
-            .findByIdAndUpdate(content.id, data, {
-              new: true,
-            })
+            .findByIdAndUpdate(
+              content.id,
+              {
+                ...data,
+                translatedAt: null,
+                translatedBodyHtml: null,
+                translatedOutlineHtml: null,
+              },
+              {
+                new: true,
+              },
+            )
             .exec();
         } else {
           const newContent = new this.contentModel({
@@ -88,6 +94,31 @@ export class ContentsService {
           },
           (er) => {},
         );
+    }
+
+    if (
+      content &&
+      content.translatedAt &&
+      content.translatedBodyHtml &&
+      content.translatedBodyHtml.length * 2 < content.bodyHtml.length
+    ) {
+      this.contentModel
+        .findByIdAndUpdate(
+          content.id,
+          {
+            translatedAt: null,
+            translatedBodyHtml: null,
+            translatedOutlineHtml: null,
+          },
+          {
+            new: true,
+          },
+        )
+        .exec();
+
+      content.translatedBodyHtml = null;
+      content.translatedOutlineHtml = null;
+      content.translatedAt = null;
     }
 
     return content;
