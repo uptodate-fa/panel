@@ -43,7 +43,11 @@ export class AuthService {
     }
     this.handleGoftino();
     this.userLoadedResolver();
-    if (user.phone) clarity('set', 'userId', user?.phone);
+    try {
+      if (user.phone) clarity('set', 'userId', user?.phone);
+    } catch (error) {
+      //  do nothing
+    }
   }
 
   async preLogin(mobilePhone: string) {

@@ -49,7 +49,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
       if (conflictDevice)
         throw new HttpException(
-          `Session already active on another device (${UAParser(conflictDevice.userAgent).device.toString()}).`,
+          `Session already active on another device (${UAParser(conflictDevice.userAgent).device.model} ${UAParser(conflictDevice.userAgent).device.vendor}).`,
           HttpStatusCode.TooEarly,
           {
             description: ``,

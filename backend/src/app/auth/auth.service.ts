@@ -47,8 +47,11 @@ export class AuthService {
     const loginDevices = devices.filter((device) => !device.isExpired);
     const existLoginDevice = loginDevices.find(
       (device) =>
-        UAParser(device.userAgent).device.toString() === ua.device.toString() &&
-        UAParser(device.userAgent).cpu.toString() === ua.cpu.toString(),
+        UAParser(device.userAgent).device.model === ua.device.model &&
+        UAParser(device.userAgent).device.vendor === ua.device.vendor &&
+        UAParser(device.userAgent).cpu.architecture === ua.cpu.architecture &&
+        UAParser(device.userAgent).engine.name === ua.engine.name &&
+        UAParser(device.userAgent).browser.name === ua.browser.name,
     );
 
     if (existLoginDevice) {

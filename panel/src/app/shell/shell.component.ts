@@ -10,7 +10,8 @@ import { ProfileDialogComponent } from '../shared/dialogs/profile-dialog/profile
 import { AuthService } from '../auth/auth.service';
 import { SubscriptionFormDialogComponent } from '../shared/dialogs/subscription-form-dialog/subscription-form-dialog.component';
 import { SHARED } from '../shared';
-import { SearchbarComponent } from "./searchbar/searchbar.component";
+import { SearchbarComponent } from './searchbar/searchbar.component';
+import { DialogService } from '../core/services/dialog.service';
 
 @Component({
   selector: 'app-shell',
@@ -23,21 +24,24 @@ import { SearchbarComponent } from "./searchbar/searchbar.component";
     MatButtonModule,
     MatMenuModule,
     TranslateModule,
-    SearchbarComponent
-],
+    SearchbarComponent,
+  ],
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
 })
 export class ShellComponent {
   private dialog = inject(MatDialog);
+  private dialogService = inject(DialogService);
   auth = inject(AuthService);
   remainDays = computed(() => {
     const sub = this.auth.user?.subscription;
     if (sub) {
-      return Math.floor((new Date(sub.expiredAt).valueOf() - Date.now()) / 3600000 / 24);
+      return Math.floor(
+        (new Date(sub.expiredAt).valueOf() - Date.now()) / 3600000 / 24,
+      );
     }
     return -1;
-  })
+  });
 
   openProfile() {
     this.dialog.open(ProfileDialogComponent);
@@ -45,5 +49,16 @@ export class ShellComponent {
 
   openSubscriptionForm() {
     this.dialog.open(SubscriptionFormDialogComponent);
+  }
+
+  async logout() {
+    const ok = await this.dialogService.alert(
+      'Logout Confirmation',
+      'Are you sure you want to logout?',
+    );
+    if (ok) {
+      this.auth.clearToken();
+      location.reload();
+    }
   }
 }

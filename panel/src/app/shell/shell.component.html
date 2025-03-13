@@ -45,9 +45,7 @@
         </button>
       }
       <mat-divider />
-      <button mat-menu-item [matMenuTriggerFor]="contentsMenu">
-        Contents
-      </button>
+      <button mat-menu-item [matMenuTriggerFor]="contentsMenu">Contents</button>
       <a mat-menu-item routerLink="/calculators"> Calculators </a>
       <a mat-menu-item routerLink="/interactions"> Drug Interactions </a>
       <a mat-menu-item> UpToDate Pathways </a>
@@ -75,19 +73,21 @@
             Subscription: {{ remainDays() }} days remaining
           </button>
         }
-        <button mat-stroked-button (click)="openProfile()">
+        <button mat-stroked-button [matMenuTriggerFor]="profileMenu">
           <i class="fa-solid fa-user"></i>
           Dr.
           {{ auth.user?.firstName }}
           {{ auth.user?.lastName }}
         </button>
+
+        <mat-menu #profileMenu="matMenu">
+          <button mat-menu-item (click)="openProfile()">Edit profile</button>
+          <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
       }
     </div>
   </mat-toolbar-row>
-  <mat-toolbar-row
-    id="secondary-toolbar"
-    [fxHide.lt-md]="true"
-  >
+  <mat-toolbar-row id="secondary-toolbar" [fxHide.lt-md]="true">
     <button mat-flat-button [matMenuTriggerFor]="contentsMenu">
       Contents
       <i class="fa-regular fa-angle-down"></i>
