@@ -31,7 +31,7 @@ export class UsersController {
 
   @Post('changePassword')
   changePassword(@Body() dto: { id: string; password: string }) {
-    return this.userDeviceModel
+    return this.userModel
       .findByIdAndUpdate(dto.id, { password: dto.password })
       .exec();
   }

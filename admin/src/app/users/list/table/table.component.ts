@@ -153,29 +153,29 @@ export class UserTableComponent {
   }
 
   resetPassword(user: User) {
-    if (user.subscription) {
-      const fields: PromptFields = {
-        password: {
-          label: 'رمز جدید',
-          type: 'text',
-          control: new FormControl(user.password, Validators.required),
+    const fields: PromptFields = {
+      password: {
+        label: 'رمز جدید',
+        type: 'text',
+        control: new FormControl(user.password, Validators.required),
+        eng: true,
+        ltr: true,
+      },
+    };
+    this.dialog
+      .open(PromptDialogComponent, {
+        data: {
+          title: 'تغییر رمز ' + user.firstName,
+          fields,
         },
-      };
-      this.dialog
-        .open(PromptDialogComponent, {
-          data: {
-            title: 'تغییر رمز ' + user.firstName,
-            fields,
-          },
-        })
-        .afterClosed()
-        .subscribe((dto) => {
-          this.passwordMutation.mutate({
-            id: user._id,
-            password: dto.password,
-          });
+      })
+      .afterClosed()
+      .subscribe((dto) => {
+        this.passwordMutation.mutate({
+          id: user._id,
+          password: dto.password,
         });
-    }
+      });
   }
 
   viewDevices(user: User) {

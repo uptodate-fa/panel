@@ -32,10 +32,9 @@
       <span eng ltr copyClipboard>
         {{ user.password }}
       </span>
-      <i
-        class="fa-regular fa-rotate fa-xs reset-password"
-        (click)="resetPassword(user)"
-      ></i>
+      <button mat-icon-button (click)="resetPassword(user)" class="reset-password">
+        <i class="fa-regular fa-rotate fa-xs"></i>
+      </button>
     </td>
   </ng-container>
 
