@@ -60,7 +60,9 @@
     }
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button type="button" (click)="haveCodeClick()">I have activation code</button>
+    <button mat-button type="button" (click)="haveCodeClick()">
+      I have activation code
+    </button>
     @if (!data?.force) {
       <button mat-button mat-dialog-close type="button">cancel</button>
     }

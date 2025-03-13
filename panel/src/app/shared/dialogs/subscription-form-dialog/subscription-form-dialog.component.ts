@@ -156,7 +156,10 @@ export class SubscriptionFormDialogComponent {
   haveCodeClick() {
     this.dialogRef.close();
     this.dialog.open(ActivationCodeSubscriptionDialogComponent, {
-      disableClose: true,
+      disableClose: this.data?.force,
+      data: {
+        force: this.data?.force,
+      },
     });
   }
 }

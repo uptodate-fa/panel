@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+  MAT_DIALOG_DATA,
   MatDialog,
   MatDialogModule,
   MatDialogRef,
@@ -34,6 +35,9 @@ import { SubscriptionFormDialogComponent } from '../subscription-form-dialog/sub
 })
 export class ActivationCodeSubscriptionDialogComponent {
   readonly dialog = inject(MatDialog);
+  readonly data? = inject<{
+    force?: boolean;
+  }>(MAT_DIALOG_DATA);
   readonly dialogRef = inject(
     MatDialogRef<ActivationCodeSubscriptionDialogComponent>,
   );
@@ -78,7 +82,7 @@ export class ActivationCodeSubscriptionDialogComponent {
   noCodeClick() {
     this.dialogRef.close();
     this.dialog.open(SubscriptionFormDialogComponent, {
-      data: { force: true },
+      data: { force: this.data?.force },
       disableClose: true,
     });
   }
