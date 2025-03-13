@@ -49,6 +49,8 @@
       <a mat-menu-item routerLink="/calculators"> Calculators </a>
       <a mat-menu-item routerLink="/interactions"> Drug Interactions </a>
       <a mat-menu-item> UpToDate Pathways </a>
+      <mat-divider />
+      <button mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
     <div fxLayout="row" fxLayoutGap="8px" [fxHide.lt-md]="true">
       @if (auth.isProfileComplete) {
