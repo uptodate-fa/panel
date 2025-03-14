@@ -12,6 +12,7 @@ import { SubscriptionFormDialogComponent } from '../shared/dialogs/subscription-
 import { SHARED } from '../shared';
 import { SearchbarComponent } from './searchbar/searchbar.component';
 import { DialogService } from '../core/services/dialog.service';
+import { PwaService } from '../core/services/pwa.service';
 
 @Component({
   selector: 'app-shell',
@@ -32,6 +33,7 @@ import { DialogService } from '../core/services/dialog.service';
 export class ShellComponent {
   private dialog = inject(MatDialog);
   private dialogService = inject(DialogService);
+  readonly pwa = inject(PwaService);
   auth = inject(AuthService);
   remainDays = computed(() => {
     const sub = this.auth.user?.subscription;

@@ -1,7 +1,7 @@
 import {
   ApplicationConfig,
-  importProvidersFrom,
   provideZoneChangeDetection,
+  isDevMode,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
@@ -19,7 +19,7 @@ import {
   provideTanStackQuery,
   QueryClient,
 } from '@tanstack/angular-query-experimental';
-import { MatNativeDateModule } from '@angular/material/core';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -39,5 +39,9 @@ export const appConfig: ApplicationConfig = {
     provideTranslation(),
     apiInterceptorProvider(),
     provideJalaliDatePickerProvider(),
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
 };

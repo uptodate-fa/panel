@@ -23,6 +23,7 @@
     "@angular/platform-browser": "19.2.2",
     "@angular/platform-browser-dynamic": "19.2.2",
     "@angular/router": "19.2.2",
+    "@angular/service-worker": "19.2.2",
     "@material/material-color-utilities": "^0.3.0",
     "@nestjs/axios": "^3.0.2",
     "@nestjs/common": "^10.0.2",

@@ -50,9 +50,18 @@
       <a mat-menu-item routerLink="/interactions"> Drug Interactions </a>
       <a mat-menu-item> UpToDate Pathways </a>
       <mat-divider />
+      @if (!pwa.isStandalone && pwa.deferredPrompt) {
+        <button mat-menu-item (click)="pwa.install()">Download Pwa App</button>
+      }
       <button mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
     <div fxLayout="row" fxLayoutGap="8px" [fxHide.lt-md]="true">
+      @if (!pwa.isStandalone && pwa.deferredPrompt) {
+        <button mat-flat-button (click)="pwa.install()">
+          <i class="fa-solid fa-download"></i>
+          Download Pwa App
+        </button>
+      }
       @if (auth.isProfileComplete) {
         @if (!auth.user?.subscription) {
           <button
