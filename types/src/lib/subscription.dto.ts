@@ -11,11 +11,11 @@ export class SubscriptionDto {
 
   static price(dto?: SubscriptionDto, coupon?: DiscountCoupon) {
     let price = -1;
-    if (dto?.days === HALF_YEAR_DAYS && dto?.maxDevice === 1) price = 2590000;
+    if (dto?.days === HALF_YEAR_DAYS && dto?.maxDevice === 1) price = 3750000;
     else if (dto?.days === HALF_YEAR_DAYS && dto?.maxDevice === 2)
-      price = 2890000;
-    else if (dto?.days === YEARLY_DAYS && dto?.maxDevice === 1) price = 4290000;
-    else if (dto?.days === YEARLY_DAYS && dto?.maxDevice === 2) price = 4890000;
+      price = 4190000;
+    else if (dto?.days === YEARLY_DAYS && dto?.maxDevice === 1) price = 6250000;
+    else if (dto?.days === YEARLY_DAYS && dto?.maxDevice === 2) price = 7190000;
 
     if (price > -1 && coupon) {
       price = (price * (100 - coupon.percentageValue)) / 100;
