@@ -14,11 +14,11 @@
     />
   </mat-form-field>
 </mat-dialog-content>
-<mat-dialog-actions>
+<mat-dialog-actions fxLayout.lt-sm="column">
   <button mat-button [disabled]="mutation.isPending()" (click)="noCodeClick()">
     I have no code
   </button>
-  @if (!data?.force) {
+  @if (!data?.force && auth.isActiveSubscription()) {
     <button mat-button mat-dialog-close type="button">cancel</button>
   }
   <button
@@ -29,4 +29,10 @@
   >
     Activate Subscription
   </button>
+
+  @if (!auth.isActiveSubscription()) {
+    <button mat-button mat-dialog-close type="button" (click)="auth.logout()">
+      Logout
+    </button>
+  }
 </mat-dialog-actions>

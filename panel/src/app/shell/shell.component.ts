@@ -59,8 +59,7 @@ export class ShellComponent {
       'Are you sure you want to logout?',
     );
     if (ok) {
-      this.auth.clearToken();
-      location.reload();
+      this.auth.logout();
     }
   }
 }

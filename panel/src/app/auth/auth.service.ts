@@ -4,6 +4,7 @@ import { User, UserRole } from '@uptodate/types';
 import { PersianNumberService } from '@uptodate/utils';
 import { lastValueFrom } from 'rxjs';
 const JWT_KEY = 'jwtToken';
+const HASH_KEY = 'userHash';
 declare const Goftino: any;
 declare const clarity: any;
 
@@ -62,13 +63,22 @@ export class AuthService {
     await this.client.get(`/api/auth/sendToken/${sanitizePhone}`).toPromise();
   }
 
-  async login(mobilePhone: string, token: string) {
+  async login(mobilePhone: string, token: string, saveLogin?: boolean) {
     const sanitizePhone = PersianNumberService.toEnglish(mobilePhone);
     const sanitizeToken = PersianNumberService.toEnglish(token);
     const jwtToken = await this.client
-      .get(`/api/auth/login/${sanitizePhone}/${sanitizeToken}`, {
-        responseType: 'text',
-      })
+      .post(
+        `/api/auth/loginOtp`,
+        {
+          phone: sanitizePhone,
+          otp: sanitizeToken,
+          hash: this.hash,
+          saveLogin,
+        },
+        {
+          responseType: 'text',
+        },
+      )
       .toPromise();
 
     if (jwtToken) this.setToken(jwtToken);
@@ -76,14 +86,26 @@ export class AuthService {
     return this.user;
   }
 
-  async loginWithPassword(mobilePhone: string, password: string) {
+  async logout() {
+    await this.client.get(`/api/auth/logout/${this.hash}`).toPromise();
+    this.clearToken();
+    location.reload();
+  }
+
+  async loginWithPassword(
+    mobilePhone: string,
+    password: string,
+    saveLogin?: boolean,
+  ) {
     const sanitizePhone = PersianNumberService.toEnglish(mobilePhone);
     const jwtToken = await this.client
       .post(
         `/api/auth/login`,
         {
-          username: sanitizePhone,
+          phone: sanitizePhone,
           password,
+          hash: this.hash,
+          saveLogin,
         },
         {
           responseType: 'text',
@@ -128,5 +150,32 @@ export class AuthService {
 
   async complete(): Promise<void> {
     return this.userLoaded; // Wait for the user to be loaded
+  }
+
+  private generateUUID(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+      /[xy]/g,
+      function (c) {
+        const r = (Math.random() * 16) | 0;
+        const v = c === 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      },
+    );
+  }
+
+  get hash(): string {
+    let hash =
+      sessionStorage.getItem(HASH_KEY) || localStorage.getItem(HASH_KEY);
+    if (!hash) {
+      hash = this.generateUUID();
+      sessionStorage.setItem(HASH_KEY, hash);
+      localStorage.setItem(HASH_KEY, hash);
+    }
+    return hash;
+  }
+
+  isActiveSubscription() {
+    if (!this.user?.subscription) return false;
+    return new Date(this.user.subscription.expiredAt).valueOf() > Date.now();
   }
 }

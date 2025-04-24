@@ -28,13 +28,29 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: User) {
+    const last30Days = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const last20Minutes = new Date(Date.now() - 20 * 60 * 1000);
+
     if (payload.role === UserRole.User) {
       const devices = await this.userDeviceModel
-        .find({ user: payload.id, isExpired: false })
+        .find({
+          user: payload.id,
+          isExpired: false,
+          hash: { $ne: null },
+          $or: [
+            { saveLogin: true, updatedAt: { $gte: last30Days } },
+            { saveLogin: false, updatedAt: { $gte: last20Minutes } },
+          ],
+        })
+        .sort({
+          loginAt: 'desc',
+        })
         .exec();
+
       const currentDevice = devices.find(
-        (device) => device.token === payload._jwt,
+        (device) => device.hash === payload.hash,
       );
+
       if (!currentDevice) {
         throw new UnauthorizedException('Token has been invalidated');
       }
@@ -62,7 +78,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       return payload;
     } else if (payload.role === UserRole.Admin) {
       const user = await this.userModel.findById(payload.id).exec();
-      if (user.role !== UserRole.Admin || user?._jwt !== payload._jwt) {
+      if (user.role !== UserRole.Admin || user?.hash !== payload.hash) {
         throw new UnauthorizedException('Token has been invalidated');
       }
       return payload;

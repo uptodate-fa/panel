@@ -59,11 +59,11 @@
       <b> Your Price is {{ price() | number }} Rials </b>
     }
   </mat-dialog-content>
-  <mat-dialog-actions>
+  <mat-dialog-actions fxLayout.lt-sm="column">
     <button mat-button type="button" (click)="haveCodeClick()">
       I have activation code
     </button>
-    @if (!data?.force) {
+    @if (!data?.force && auth.isActiveSubscription()) {
       <button mat-button mat-dialog-close type="button">cancel</button>
     }
     <button mat-flat-button type="submit" [disabled]="mutation.isPending()">
@@ -72,5 +72,10 @@
         {{ price() | number }} Rials
       }
     </button>
+    @if (!auth.isActiveSubscription()) {
+      <button mat-button mat-dialog-close type="button" (click)="auth.logout()">
+        Logout
+      </button>
+    }
   </mat-dialog-actions>
 </form>

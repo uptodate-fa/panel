@@ -19,6 +19,10 @@
         }
       </mat-form-field>
 
+      <mat-checkbox [(ngModel)]="saveLogin" name="saveLogin">
+        Remember me (save login for 30 days)
+      </mat-checkbox>
+
       @if (time()) {
       <button type="submit" [disabled]="loading()" mat-flat-button>
         Sign in

@@ -23,7 +23,7 @@ export class User {
   exp?: number;
   subscription?: Subscription;
   createdAt: Date;
-  _jwt: number;
+  hash: string;
 }
 
 export class UserToken {
@@ -37,8 +37,10 @@ export class UserDevice {
   id: string;
   _id: string;
   userAgent: string;
+  hash: string;
   user: User;
   token: number;
+  saveLogin?: boolean;
   isExpired?: boolean;
   connectionAt?: Date;
   createdAt: Date;

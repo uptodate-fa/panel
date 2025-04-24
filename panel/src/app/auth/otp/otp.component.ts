@@ -43,6 +43,7 @@ export class OtpComponent implements OnDestroy {
   error = signal(false);
   interval?: any;
   otpFormControl = new FormControl();
+  saveLogin = false;
 
   constructor(
     private auth: AuthService,
@@ -69,7 +70,7 @@ export class OtpComponent implements OnDestroy {
     this.loading.set(true);
     const token = PersianNumberService.toEnglish(this.otpFormControl.value);
     try {
-      await this.auth.login(this.phone, token);
+      await this.auth.login(this.phone, token, this.saveLogin);
       this.router.navigate(['/'], { replaceUrl: true });
     } catch (error: any) {
       this.error.set(true);

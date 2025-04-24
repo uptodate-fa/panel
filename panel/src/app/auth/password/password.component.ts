@@ -10,6 +10,10 @@ import { AuthService } from '../auth.service';
 import { PersianNumberService } from '@uptodate/utils';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogComponent } from '../../shared/dialogs/alert-dialog/alert-dialog.component';
+import { HttpStatusCode } from '@angular/common/http';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-password',
@@ -22,6 +26,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     FormsModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatCheckboxModule,
   ],
   templateUrl: './password.component.html',
   styleUrl: './password.component.scss',
@@ -29,12 +34,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class PasswordComponent {
   loading = signal(false);
   phone: string;
+  saveLogin = false;
 
   constructor(
     private auth: AuthService,
     private router: Router,
     private snack: MatSnackBar,
     private route: ActivatedRoute,
+    private dialog: MatDialog,
   ) {
     const phone = this.router.getCurrentNavigation()?.extras?.state?.['phone'];
 
@@ -51,10 +58,21 @@ export class PasswordComponent {
     password = PersianNumberService.toEnglish(password);
     this.loading.set(true);
     try {
-      await this.auth.loginWithPassword(this.phone, password);
+      await this.auth.loginWithPassword(this.phone, password, this.saveLogin);
       this.router.navigate(['/'], { replaceUrl: true });
-    } catch (error) {
-      this.snack.open('password is incorrect', '', { duration: 3000 });
+    } catch (error: any) {
+      if (error.status === HttpStatusCode.TooManyRequests) {
+        this.dialog.open(AlertDialogComponent, {
+          data: {
+            title: 'Login Error',
+            description:
+              'You have reached the maximum number of devices allowed for login. To access your account on a new device, please contact support for assistance.',
+            hideCancel: true,
+          },
+        });
+      } else if (error.status === HttpStatusCode.Forbidden) {
+        this.snack.open('password is incorrect', '', { duration: 3000 });
+      }
       this.loading.set(false);
     }
     ev.preventDefault();

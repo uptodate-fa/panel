@@ -26,61 +26,65 @@ export class AuthService {
     });
   }
 
-  private async login(user: User, userAgent: string) {
-    const ua = UAParser(userAgent);
+  private async login(
+    user: User,
+    userAgent: string,
+    hash: string,
+    saveLogin?: boolean,
+  ) {
     const expireTokenIn = '365d';
-    const newJwt = Date.now();
     const dbUser = await this.userModel
       .findById(user.id)
       .populate('subscription')
       .exec();
 
-    const devices = await this.userDeviceModel
+    const last30Days = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const last20Minutes = new Date(Date.now() - 20 * 60 * 1000);
+
+    const loginDevices = await this.userDeviceModel
       .find({
         user: user.id,
+        isExpired: false,
+        hash: { $ne: null },
+        $or: [
+          { saveLogin: true, updatedAt: { $gte: last30Days } },
+          { saveLogin: false, updatedAt: { $gte: last20Minutes } },
+        ],
       })
       .sort({
         loginAt: 'desc',
       })
       .exec();
 
-    const loginDevices = devices.filter((device) => !device.isExpired);
     const existLoginDevice = loginDevices.find(
-      (device) =>
-        UAParser(device.userAgent).device.model === ua.device.model &&
-        UAParser(device.userAgent).device.vendor === ua.device.vendor &&
-        UAParser(device.userAgent).cpu.architecture === ua.cpu.architecture &&
-        UAParser(device.userAgent).engine.name === ua.engine.name &&
-        UAParser(device.userAgent).browser.name === ua.browser.name,
+      (device) => device.hash === hash,
     );
 
     if (existLoginDevice) {
       this.userDeviceModel
         .findByIdAndUpdate(existLoginDevice.id, {
-          isExpired: true,
+          updatedAt: new Date(),
         })
         .exec();
-    }
-
-    if (
-      !existLoginDevice &&
-      loginDevices.length >= dbUser.subscription?.maxActiveDevices
+    } else if (
+      loginDevices.length >= (dbUser.subscription?.maxActiveDevices || 1)
     ) {
       throw new HttpException('maximum device', HttpStatus.TOO_MANY_REQUESTS);
+    } else {
+      const newDevice = new this.userDeviceModel({
+        user: user.id,
+        userAgent,
+        hash,
+        saveLogin: !!saveLogin,
+      });
+      await newDevice.save();
     }
-
-    const newDevice = new this.userDeviceModel({
-      token: newJwt,
-      user: user.id,
-      userAgent,
-    });
-    await newDevice.save();
 
     const payload: User = {
       id: user.id,
       role: user.role,
       phone: user.phone,
-      _jwt: newJwt,
+      hash,
     } as User;
 
     const token = this.jwtService.sign(payload, {
@@ -151,16 +155,18 @@ export class AuthService {
     phone: string,
     token: string,
     userAgent: string,
+    hash: string,
+    saveLogin?: boolean,
   ): Promise<string> {
     if (this.checkToken(phone, token)) {
       this.mobilePhoneTokens.delete(phone);
       const user = await this.userModel.findOne({ phone }).exec();
       if (user) {
-        return this.login(user, userAgent);
+        return this.login(user, userAgent, hash, saveLogin);
       } else {
         const createdData = new this.userModel({ phone });
         await createdData.save();
-        return this.login(createdData, userAgent);
+        return this.login(createdData, userAgent, hash, saveLogin);
       }
     } else {
       throw new HttpException('code is not valid', HttpStatus.FORBIDDEN);
@@ -171,10 +177,12 @@ export class AuthService {
     phone: string,
     password: string,
     userAgent: string,
+    hash: string,
+    saveLogin?: boolean,
   ): Promise<string> {
     const user = await this.userModel.findOne({ phone }).exec();
     if (user && password === user.password) {
-      return this.login(user, userAgent);
+      return this.login(user, userAgent, hash, saveLogin);
     } else {
       throw new HttpException('password is not valid', HttpStatus.FORBIDDEN);
     }
@@ -184,19 +192,19 @@ export class AuthService {
     const user = await this.userModel.findOne({ username, password }).exec();
     if (user && user.role === UserRole.Admin) {
       const expireTokenIn = '3d';
-      const newJwt = Date.now();
+      const newJwt = Date.now().toString();
       const payload: User = {
         id: user.id,
         role: user.role,
         phone: user.phone,
-        _jwt: newJwt,
+        hash: newJwt,
       } as User;
       const token = this.jwtService.sign(payload, {
         secret: process.env.JWT_ACCESS_SECRET,
         expiresIn: expireTokenIn,
       });
 
-      user._jwt = newJwt;
+      user.hash = newJwt;
       await user.save();
 
       return token;
@@ -205,6 +213,26 @@ export class AuthService {
         'username or password incorrect',
         HttpStatus.FORBIDDEN,
       );
+    }
+  }
+
+  async logout(user: User, hash: string): Promise<void> {
+    const last30Days = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const last20Minutes = new Date(Date.now() - 20 * 60 * 1000);
+    const device = await this.userDeviceModel
+      .findOne({
+        user: user.id,
+        isExpired: false,
+        hash,
+        $or: [
+          { saveLogin: true, updatedAt: { $gte: last30Days } },
+          { saveLogin: false, updatedAt: { $gte: last20Minutes } },
+        ],
+      })
+      .exec();
+    if (device) {
+      device.isExpired = true;
+      await device.save();
     }
   }
 

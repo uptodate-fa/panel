@@ -17,6 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { injectMutation } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
 import { SubscriptionFormDialogComponent } from '../subscription-form-dialog/subscription-form-dialog.component';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-activation-code-subscription-dialog',
@@ -43,6 +44,7 @@ export class ActivationCodeSubscriptionDialogComponent {
   );
   public http = inject(HttpClient);
   public snack = inject(MatSnackBar);
+  public auth = inject(AuthService);
   codeControl = new FormControl('');
 
   mutation = injectMutation(() => ({

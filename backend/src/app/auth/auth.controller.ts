@@ -80,27 +80,46 @@ export class AuthController {
   }
 
   @Public()
-  @Get('login/:mobile/:token')
-  async loginWithToken(@Param() params, @Req() request: Request) {
+  @Post('loginOtp')
+  async loginWithToken(
+    @Body()
+    dto: {
+      phone: string;
+      otp: string;
+      hash: string;
+      saveLogin?: boolean;
+    },
+    @Req() request: Request,
+  ) {
     const userAgent = request.headers['user-agent'];
     return this.auth.loginWithToken(
-      PersianNumberService.toEnglish(params.mobile),
-      PersianNumberService.toEnglish(params.token),
+      PersianNumberService.toEnglish(dto.phone),
+      PersianNumberService.toEnglish(dto.otp),
       userAgent,
+      dto.hash,
+      dto.saveLogin,
     );
   }
 
   @Public()
   @Post('login')
   async loginWithPassword(
-    @Body() dto: { username: string; password: string },
+    @Body()
+    dto: {
+      phone: string;
+      password: string;
+      hash: string;
+      saveLogin?: boolean;
+    },
     @Req() request: Request,
   ) {
     const userAgent = request.headers['user-agent'];
     return this.auth.loginWithPassword(
-      PersianNumberService.toEnglish(dto.username),
+      PersianNumberService.toEnglish(dto.phone),
       dto.password,
       userAgent,
+      dto.hash,
+      dto.saveLogin,
     );
   }
 
@@ -108,5 +127,10 @@ export class AuthController {
   @Post('login-admin')
   async loginAdmin(@Body() body) {
     return this.auth.loginAdmin(body.username, body.password);
+  }
+
+  @Get('logout/:hash')
+  async logout(@Param() params, @LoginUser() user: User) {
+    return this.auth.logout(user, params.hash);
   }
 }

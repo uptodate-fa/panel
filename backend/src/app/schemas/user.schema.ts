@@ -14,7 +14,6 @@ export const UserSchema = new mongoose.Schema<User>(
     phone: { type: String, required: false, unique: true },
     role: { type: String, enum: UserRole, default: UserRole.User },
     subscription: { type: Schema.Types.ObjectId, ref: 'Subscription' },
-    _jwt: { type: Number, required: false },
   },
   {
     timestamps: true,
