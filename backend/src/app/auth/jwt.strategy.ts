@@ -78,7 +78,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       return payload;
     } else if (payload.role === UserRole.Admin) {
       const user = await this.userModel.findById(payload.id).exec();
-      if (user.role !== UserRole.Admin || user?.hash !== payload.hash) {
+      if (user.role !== UserRole.Admin) {
         throw new UnauthorizedException('Token has been invalidated');
       }
       return payload;
