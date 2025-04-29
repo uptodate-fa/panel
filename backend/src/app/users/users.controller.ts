@@ -35,4 +35,11 @@ export class UsersController {
       .findByIdAndUpdate(dto.id, { password: dto.password })
       .exec();
   }
+
+  @Get('devices/:deviceId/logout')
+  logoutDevice(@Param('deviceId') deviceId: string) {
+    return this.userDeviceModel
+      .findByIdAndUpdate(deviceId, { isExpired: true })
+      .exec();
+  }
 }

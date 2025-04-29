@@ -1,6 +1,6 @@
 @if (query.data()) {
   <mat-list>
-    @for (item of query.data(); track $index; let last = $last) {
+    @for (item of query.data(); track item.id) {
       <mat-list-item>
         @if (item._uap.getDevice().type === 'mobile') {
           <i matListItemIcon class="fa-solid fa-mobile"></i>
@@ -18,10 +18,16 @@
           آخرین اتصال: {{ item.updatedAt | pdate: true }}
         </span>
         @if (item.isExpired) {
-          <span matListItemMeta>logout</span>
+          <span matListItemMeta>expired</span>
+        } @else {
+          <div matListItemMeta>
+            <button mat-stroked-button matListItemMeta (click)="logoutDevice(item._id)" style="margin: 0;">
+              Logout
+            </button>
+          </div>
         }
       </mat-list-item>
-      @if (!last) {
+      @if (!$last) {
         <mat-divider inset />
       }
     }

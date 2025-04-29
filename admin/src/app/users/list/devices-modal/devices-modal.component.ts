@@ -10,11 +10,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
   injectMutation,
   injectQuery,
+  QueryClient,
 } from '@tanstack/angular-query-experimental';
 import { lastValueFrom, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Subscription, UserDevice } from '@uptodate/types';
 import { UAParser } from 'ua-parser-js';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-user-devices-modal',
@@ -25,12 +27,14 @@ import { UAParser } from 'ua-parser-js';
     MatBottomSheetModule,
     MatListModule,
     MatProgressSpinnerModule,
+    MatButtonModule,
   ],
   templateUrl: './devices-modal.component.html',
   styleUrl: './devices-modal.component.scss',
 })
 export class UserDevicesModalComponent {
   private readonly http = inject(HttpClient);
+  private readonly queryClient = inject(QueryClient);
   readonly data = inject<{
     userId: string;
   }>(MAT_BOTTOM_SHEET_DATA);
@@ -52,4 +56,20 @@ export class UserDevicesModalComponent {
       ),
     enabled: !!this.data?.userId,
   }));
+
+  logoutMutation = injectMutation(() => ({
+    mutationFn: (deviceId: string) =>
+      lastValueFrom(
+        this.http.get(`/api/users/devices/${deviceId}/logout`, {}),
+      ),
+    onSuccess: () => {
+      this.queryClient.invalidateQueries({
+        queryKey: ['usersDevices', this.data?.userId],
+      });
+    },
+  }));
+
+  logoutDevice(deviceId: string) {
+    this.logoutMutation.mutate(deviceId);
+  }
 }
