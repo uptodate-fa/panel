@@ -158,7 +158,12 @@ export class SubscriptionController {
         .findOne({
           token: data.Authority,
         })
-        .populate('user.subscription')
+        .populate({
+          path: 'user',
+          populate: {
+            path: 'subscription',
+          },
+        })
         .exec();
 
       const body = {
