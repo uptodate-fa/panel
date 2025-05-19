@@ -177,6 +177,7 @@ export class SubscriptionController {
   }
 
   async saveSubscription(dto: SubscriptionDto, user: User) {
+    console.log(user, user.subscription);
     if (user.subscription) {
       const expiredAt = new Date(user.subscription.expiredAt);
       expiredAt.setDate(expiredAt.getDate() + dto.days);
