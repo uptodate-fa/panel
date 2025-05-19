@@ -182,10 +182,12 @@ export class SubscriptionController {
   }
 
   async saveSubscription(dto: SubscriptionDto, user: User) {
-    console.log(user, user.subscription);
     if (user.subscription) {
+      console.log(user.subscription.expiredAt);
       const expiredAt = new Date(user.subscription.expiredAt);
+      console.log(expiredAt)
       expiredAt.setDate(expiredAt.getDate() + dto.days);
+      console.log(expiredAt)
       return this.subscriptionModel
         .findByIdAndUpdate(user.subscription.id, {
           maxActiveDevices: dto.maxDevice,
