@@ -1,0 +1,134 @@
+.popover-examples {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.example-section {
+  margin-bottom: 40px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  h3 {
+    margin-bottom: 15px;
+    color: #374151;
+  }
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 5px;
+  transition: all 0.2s;
+
+  &.btn-primary {
+    background-color: #3b82f6;
+    color: white;
+
+    &:hover {
+      background-color: #2563eb;
+    }
+  }
+
+  &.btn-secondary {
+    background-color: #6b7280;
+    color: white;
+
+    &:hover {
+      background-color: #4b5563;
+    }
+  }
+
+  &.btn-info {
+    background-color: #06b6d4;
+    color: white;
+
+    &:hover {
+      background-color: #0891b2;
+    }
+  }
+
+  &.btn-warning {
+    background-color: #f59e0b;
+    color: white;
+
+    &:hover {
+      background-color: #d97706;
+    }
+  }
+
+  &.btn-outline {
+    background-color: transparent;
+    color: #374151;
+    border: 1px solid #d1d5db;
+
+    &:hover {
+      background-color: #f9fafb;
+    }
+  }
+
+  &.btn-sm {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+
+.position-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.popover-content-example {
+  h4 {
+    margin: 0 0 10px 0;
+    color: #374151;
+    font-size: 16px;
+  }
+
+  p {
+    margin: 0 0 15px 0;
+    color: #6b7280;
+    line-height: 1.5;
+  }
+}
+
+.items-container {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  padding: 0;
+  margin-inline: auto;
+  margin-top: 2rem;
+  .item {
+    transition: font-weight 0s linear 0s, box-shadow .25s linear .25s, color .25s linear .25s;
+    box-shadow: 0 1px #bfbfbf;
+    position: relative;
+
+    &:hover {
+      box-shadow: 0 3px #409bd2;
+    }
+    &__link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      padding-block: 0.5rem;
+      box-sizing: border-box;
+      color: #005b92;
+      background: transparent;
+      transition: all .25s linear .25s;
+
+      &:hover {
+        background: linear-gradient(90deg, rgba(166, 209, 234, 0.6) 0.62%, #e6f2f9);
+        color: #033c5f;
+        font-weight: 500;
+      }
+    }
+  }
+}

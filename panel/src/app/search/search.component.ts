@@ -1,4 +1,4 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SHARED } from '../shared';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,8 +8,10 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { injectQuery } from '@tanstack/angular-query-experimental';
-import { HistoryCardComponent } from './history-card/history-card.component';
 import { Router } from '@angular/router';
+import { SearchContentComponent } from './search-content/search-content.component';
+import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
+import { HistoryCardComponent } from './history-card/history-card.component';
 
 @Component({
   selector: 'app-search',
@@ -21,7 +23,10 @@ import { Router } from '@angular/router';
     MatInputModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    HistoryCardComponent,
+    SearchContentComponent,
+    MatMenu,
+    MatMenuTrigger,
+    HistoryCardComponent
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
@@ -59,7 +64,6 @@ export class SearchComponent {
   gotToSearchPage() {
     const term = this.searchTerm();
     if (term?.length > 1) {
-      console.log(this.searchTerm());
       this.router.navigateByUrl(`/search/result?query=${term}`);
     }
   }

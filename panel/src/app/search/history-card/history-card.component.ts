@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SHARED } from '../../shared';
 import { MatCardModule } from '@angular/material/card';
@@ -13,7 +13,6 @@ import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ContentHistory } from '@uptodate/types';
 
-const HIDE_HISTORY_CARD_KEY = 'hideHistoryCard';
 
 @Component({
   selector: 'app-history-card',
@@ -25,9 +24,6 @@ const HIDE_HISTORY_CARD_KEY = 'hideHistoryCard';
 export class HistoryCardComponent {
   private queryClient = inject(QueryClient);
   private http = inject(HttpClient);
-  visibility = signal(
-    localStorage.getItem(HIDE_HISTORY_CARD_KEY) ? false : true,
-  );
 
   historyQuery = injectQuery(() => ({
     queryKey: ['history'],
@@ -35,14 +31,6 @@ export class HistoryCardComponent {
       lastValueFrom(this.http.get<ContentHistory[]>(`/api/contents/history`)),
     refetchOnWindowFocus: false,
   }));
-
-  toggleVisibility() {
-    this.visibility.update((v) => {
-      if (v) localStorage.setItem(HIDE_HISTORY_CARD_KEY, 'true');
-      else localStorage.removeItem(HIDE_HISTORY_CARD_KEY);
-      return !v;
-    });
-  }
 
   removeMutation = injectMutation(() => ({
     mutationFn: (contentId: string) =>
@@ -55,4 +43,27 @@ export class HistoryCardComponent {
       });
     },
   }));
+
+  categorizeByDate(data?: ContentHistory[]) {
+    return (data ?? []).reduce((acc: Record<string, ContentHistory[]> , item) => {
+      const date = new Date(item.updatedAt).toISOString().split('T')[0]; // "2025-06-02"
+
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(item);
+      return acc;
+    }, {});
+  }
+
+  formatedDate(inDate: string) {
+    const date = new Date(inDate);
+    const year = date.getFullYear();
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = date.toLocaleString('en-US', { month: 'long' }); // "June"
+
+    return `${month} ${day},${year}`;
+  }
+
+  protected readonly Object = Object;
 }

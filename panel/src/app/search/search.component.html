@@ -1,41 +1,54 @@
-<div class="container">
-  <img id="logo" src="icons/typo-logo.svg" />
-  <mat-form-field appearance="outline" id="search-field">
-    <mat-label>{{ 'search.label' | translate }}</mat-label>
+<div>
+  <div class="bg-up-to-date">
+    <img id="logo" src="icons/typo-logo.svg" />
 
-    <input
-      type="text"
-      matInput
-      [formControl]="searchControl"
-      [matAutocomplete]="auto"
-      (keydown)="searchControlKeyDown($event)"
-    />
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option
-        *ngFor="let option of searchQuery.data()"
-        [value]="option"
-        routerLink="result"
-        [queryParams]="{ query: option }"
-      >
-        {{ option }}
-      </mat-option>
-    </mat-autocomplete>
+    <div class="search__container">
+      <div class="search__box">
+        <input
+          [placeholder]="'search.label' | translate "
+          id="search-field"
+          matInput
+          [formControl]="searchControl"
+          [matAutocomplete]="auto"
+          (keydown)="searchControlKeyDown($event)"/>
 
-    <button
-      mat-fab
-      matSuffix
-      id="search-button"
-      [disabled]="!searchQuery.data() && searchQuery.isLoading()"
-      class="primary-background on-primary-text"
-      (click)="gotToSearchPage()"
-    >
-      @if (!searchQuery.isLoading()) {
-        <i class="fa-regular fa-search fa-lg"></i>
-      } @else {
-        <i class="fa-regular fa-circle-notch fa-lg fa-spin"></i>
-      }
-    </button>
-  </mat-form-field>
+        <mat-autocomplete #auto="matAutocomplete">
+          @for (option of searchQuery.data(); track option) {
+            <mat-option
+              [value]="option"
+              routerLink="result"
+              [queryParams]="{ query: option }"
+            >
+              {{ option }}
+            </mat-option>
+          }
+        </mat-autocomplete>
+        <button
+          mat-fab
+          id="search-button"
+          [disabled]="!searchQuery.data() && searchQuery.isLoading()"
+          (click)="gotToSearchPage()"
+        >
+          @if (!searchQuery.isLoading()) {
+            <i class="fa-regular fa-search fa-lg"></i>
+          } @else {
+            <i class="fa-regular fa-circle-notch fa-lg fa-spin"></i>
+          }
+        </button>
+      </div>
+      <ul id="search-tab">
+        <li [matMenuTriggerFor]="historyMenu" style="cursor: pointer;">
+          History
+        </li>
+        <li>
+          Most Viewed
+        </li>
+        <li>
+          Bookmarks
+        </li>
+      </ul>
+    </div>
+  </div>
 
   <p id="description" class="tertiary">
     <b>UpToDate content is protected by copyright</b> and owned and/or licensed
@@ -46,5 +59,11 @@
     solutions, algorithms, machine learning, and/or large language models.
   </p>
 
-  <app-history-card />
+  <mat-menu #historyMenu="matMenu" >
+    <div (click)="$event.stopPropagation()" style="width: 400px">
+      <app-history-card></app-history-card>
+    </div>
+  </mat-menu>
+
+  <app-search-content></app-search-content>
 </div>

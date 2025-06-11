@@ -9,20 +9,136 @@
 }
 
 #logo {
-  width: 256px;
+  width: calc(100% - 4rem);
+  filter: brightness(0) saturate(100%) invert(100%) sepia(4%) saturate(15%) hue-rotate(152deg) brightness(106%) contrast(100%);
 }
 
+@media only screen and (min-width: 576px) {
+  #logo {
+    width: 256px;
+  }
+}
+
+.search {
+  &__container {
+    display: flex;
+    max-width: 720px;
+    width: 100%;flex-direction: column;
+  }
+  &__box {
+    display: flex;
+    line-height: 20px;
+    height: 58px;
+  }
+}
 #search-field {
+  padding-inline: 0.7rem;
+  font-size: 0.875rem !important;
   width: 100%;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  background: #fff;
+  flex: 18;
+  line-height: inherit;
 }
-
+@media only screen and (min-width: 768px) {
+  #search-field {
+    font-size: 1.15rem !important;
+    padding-inline-start: 2.3rem;
+    padding-inline-end: 2.8rem;
+  }
+}
 #search-button {
   box-shadow: none;
   height: 54px;
   width: 54px;
   border-radius: 4px;
+  min-width: 50px;
 }
 
 #description {
   font-size: 12px;
+  background-color: #003d62;
+  color: white;
+  margin: 0;
+  padding: 0.5rem ;
+}
+@media only screen and (min-width: 567px) {
+  #description {
+    padding: 1rem 10rem;
+  }
+}
+
+.bg-up-to-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 1rem;
+  background-image: url("images/blue-gradient-background-BMaatfy9.svg");
+}
+@media only screen and (min-width: 576px) {
+  .bg-up-to-date {
+    gap: 2rem;
+  }
+}
+
+
+/* Input background and border-radius */
+#search-field .mat-form-field-flex {
+  background-color: #fff;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  overflow: hidden;
+}
+
+/* Input itself (matInput) */
+#search-field input.mat-input-element {
+  padding-left: 16px;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  background-color: transparent; /* already handled in parent */
+}
+
+/* Button radius adjustment */
+#search-button {
+  margin-right: 4px; /* optional spacing from edge */
+
+
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+  height: inherit;
+  font-size: 1.15rem !important;
+  flex: 1.5;
+  line-height: inherit;
+  --mat-sys-primary-container: #757575;
+  --mat-sys-level4: #353535;color: white;
+}
+
+#search-tab {
+  gap: 0.3rem;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  font-size: 0.75rem;
+  margin: auto;
+  color: white;
+  margin-block-start: 0.3rem;
+  li:not(:last-child) {
+    &::after {
+      content: '|';
+    }
+  }
+}
+@media only screen and (min-width: 576px) {
+  #search-tab {
+    font-size: 0.85rem;
+    justify-content: flex-end;
+    margin-block-start: 0.5rem;
+    margin-block-end: 0;
+    gap: 0.5rem;
+    margin-inline-end: 3.5rem;
+  }
 }
