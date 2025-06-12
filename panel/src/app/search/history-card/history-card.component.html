@@ -1,41 +1,26 @@
-<mat-card>
-  <mat-card-content>
-    <button
-      mat-icon-button
-      class="collapse-button"
-      (click)="toggleVisibility()"
-    >
-      <i
-        class="fa-regular fa-sm fa-angle-{{ visibility() ? 'up' : 'down' }}"
-      ></i>
-    </button>
-    <mat-tab-group
-      mat-stretch-tabs="false"
-      mat-align-tabs="start"
-      class="tertiary-tabs"
-    >
-      <mat-tab label="history">
-        @if (historyQuery.data() && visibility()) {
-          <mat-nav-list id="history-list">
-            @for (history of historyQuery.data(); track $index) {
-              <a
-                mat-list-item
-                routerLink="/contents/{{ history.content.queryStringId }}"
-              >
-                {{ history.content.title }}
-                <button
-                  matListItemMeta
-                  mat-icon-button
-                  stopPropagation
-                  (click)="removeMutation.mutate(history.content._id)"
-                >
-                  <i class="fa-regular fa-xmark fa-lg"></i>
-                </button>
-              </a>
-            }
-          </mat-nav-list>
+<div style="padding: 0.5rem;max-height: 20rem;overflow: auto">
+  @if (categorizeByDate(historyQuery.data())) {
+    @for (date of Object.keys(categorizeByDate(historyQuery.data())); track date) {
+      <strong>{{formatedDate(date)}}</strong>
+      <span style="box-shadow:0 2px #003d62; width: 100%;display: block;height: 2px; "></span>
+      <mat-nav-list id="history-list">
+        @for (history of categorizeByDate(historyQuery.data())[date]; track $index) {
+          <a
+            mat-list-item
+            routerLink="/contents/{{ history.content.queryStringId }}"
+          >
+            {{ history.content.title }}
+            <button
+              matListItemMeta
+              mat-icon-button
+              stopPropagation
+              (click)="removeMutation.mutate(history.content._id)"
+            >
+              <i class="fa-regular fa-xmark fa-lg"></i>
+            </button>
+          </a>
         }
-      </mat-tab>
-    </mat-tab-group>
-  </mat-card-content>
-</mat-card>
+      </mat-nav-list>
+    }
+  }
+</div>

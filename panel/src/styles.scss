@@ -51,3 +51,10 @@ mat-card {
     display: none !important;
   }
 }
+
+//I'm not sure it's working on Mozilla FireFox or not, Because I dont have FireFox
+@media only screen and (min-width: 768px) {
+  .mat-mdc-menu-panel:has(app-history-card) {
+    max-width: unset !important;
+  }
+}
