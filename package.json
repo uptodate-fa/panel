@@ -8,7 +8,9 @@
     "dev:panel": "nx run panel:serve",
     "build:panel": "nx run panel:build --skip-nx-cache --verbose --no-cloud",
     "dev:backend": "nx run backend:serve",
-    "build:backend": "nx run backend:build --skip-nx-cache --verbose --no-cloud"
+    "build:backend": "nx run backend:build --skip-nx-cache --verbose --no-cloud",
+    "dev:proxy": "nx run proxy:serve",
+    "build:proxy": "nx run proxy:build --skip-nx-cache --verbose --no-cloud"
   },
   "private": true,
   "dependencies": {
