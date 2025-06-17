@@ -239,7 +239,7 @@ export class AuthService {
   async lookup(mobilePhone: string, kavenagarTemplate: string, token: string) {
     return this.http
       .get<void>(
-        `https://sinamed-proxy.darkube.app/api/kavenegar/lookup/${kavenagarTemplate}/${mobilePhone}/${token}`,
+        `https://sinamed-proxy-api-utils.darkube.app/kavenegar/lookup/${kavenagarTemplate}/${mobilePhone}/${token}`,
       )
       .toPromise();
   }
