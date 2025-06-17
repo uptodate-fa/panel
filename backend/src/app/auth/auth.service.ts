@@ -236,26 +236,11 @@ export class AuthService {
     }
   }
 
-  async lookup(
-    mobilePhone: string,
-    kavenagarTemplate: string,
-    token: string,
-  ): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      kavenegarApi.VerifyLookup(
-        {
-          receptor: mobilePhone,
-          token,
-          template: kavenagarTemplate,
-        },
-        async (response, status) => {
-          if (status == 200) {
-            resolve(true);
-          } else {
-            reject(response);
-          }
-        },
-      );
-    });
+  async lookup(mobilePhone: string, kavenagarTemplate: string, token: string) {
+    return this.http
+      .get<void>(
+        `https://sinamed-proxy.darkube.app/api/kavenegar/lookup/${kavenagarTemplate}/${mobilePhone}/${token}`,
+      )
+      .toPromise();
   }
 }
