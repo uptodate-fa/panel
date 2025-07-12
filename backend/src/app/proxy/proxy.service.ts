@@ -35,15 +35,18 @@ export class ProxyService {
   }
 
   async search(query: string, sp = 0, limit = 20): Promise<SearchResult> {
+    const url = `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}&sp=${sp}`;
+    console.log('search url', url);
     const response = await this.request(
       {
-        url: `https://www.uptodate.com/services/app/contents/search/2/json?search=${query}&max=${limit}&sp=${sp}`,
+        url,
       },
       { key: 'search', skipLogin: true },
     );
     const data = response?.data?.data;
 
     if (data) {
+      console.log('search result success');
       const contents = data.searchResults
         .filter((item) => item.type === 'medical')
         .map(

@@ -114,7 +114,6 @@ export class UserTableComponent {
         })
         .afterClosed()
         .subscribe((dto) => {
-          console.log(dto);
           this.subscriptionMutation.mutate({
             _id: user.subscription!._id,
             maxActiveDevices: dto.maxDevice,
