@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://uptodate-api.darkube.app',
+  apiUrl: 'http://api.sinameddata.com',
 };
