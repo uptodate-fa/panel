@@ -96,6 +96,7 @@ export class SubscriptionController {
 
   @Post('payment')
   async payment(@Body() dto: SubscriptionDto, @LoginUser() user: User) {
+    console.log('body', dto);
     let coupon: DiscountCoupon;
 
     if (dto.discountCouponId) {
