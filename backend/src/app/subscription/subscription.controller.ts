@@ -185,9 +185,14 @@ export class SubscriptionController {
     if (user.subscription) {
       console.log(user.subscription.expiredAt);
       const expiredAt = new Date(user.subscription.expiredAt);
-      console.log(expiredAt, dto, expiredAt.getDate())
+      console.log({
+        expiredAt,
+        dto,
+        days: dto.days,
+        date: expiredAt.getDate(),
+      });
       expiredAt.setDate(expiredAt.getDate() + dto.days);
-      console.log(expiredAt)
+      console.log(expiredAt);
       return this.subscriptionModel
         .findByIdAndUpdate(user.subscription.id, {
           maxActiveDevices: dto.maxDevice,
