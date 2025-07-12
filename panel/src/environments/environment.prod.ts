@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://api.sinameddata.com',
+  apiUrl: 'https://api.sinameddata.com',
 };
