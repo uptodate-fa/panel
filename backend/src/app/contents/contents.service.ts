@@ -137,7 +137,7 @@ export class ContentsService {
   async translate(id: string) {
     const content = await this.getContent(id);
     if (content) {
-      if (content.translatedBodyHtml) return content;
+      if (content.translatedBodyHtml && content.translatedBodyHtml.length / content.bodyHtml.length > 0.4) return content;
       if (content.translatedAt) {
         const diff = Date.now() - new Date(content.translatedAt).valueOf();
         if (diff / 60000 < 15) return content;

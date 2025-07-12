@@ -197,7 +197,7 @@ export class ContentComponent {
   translate() {
     const data = this.contentQuery.data();
     if (data) {
-      if (data.translatedBodyHtml) this.showTranslation.set(true);
+      if (data.translatedBodyHtml && data.translatedBodyHtml.length / data.bodyHtml.length > 0.4) this.showTranslation.set(true);
       else this.contentService.translateMutation.mutate(data);
     }
   }
