@@ -307,7 +307,8 @@ export class ProxyService {
     props?: { skipRetry?: boolean; skipLogin?: boolean; key?: string },
   ) {
     const client = this.auth.client;
-    if (!client) return this.http.request(config).toPromise();
+    if (!client || props?.skipLogin)
+      return this.http.request(config).toPromise();
 
     try {
       captureEvent({
