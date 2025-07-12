@@ -185,7 +185,7 @@ export class SubscriptionController {
     if (user.subscription) {
       console.log(user.subscription.expiredAt);
       const expiredAt = new Date(user.subscription.expiredAt);
-      console.log(expiredAt)
+      console.log(expiredAt, dto, expiredAt.getDate())
       expiredAt.setDate(expiredAt.getDate() + dto.days);
       console.log(expiredAt)
       return this.subscriptionModel
