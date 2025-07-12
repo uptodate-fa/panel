@@ -165,6 +165,7 @@ export class ContentsService {
         const outline = await this.openai.getResponse(content.outlineHtml);
         content.translatedOutlineHtml = outline;
       } catch (error) {
+        console.error('translate error', error);
         await this.contentModel
           .updateOne({ queryStringId: id }, { translatedAt: null })
           .exec();
