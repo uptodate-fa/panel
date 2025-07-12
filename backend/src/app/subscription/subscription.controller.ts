@@ -182,9 +182,14 @@ export class SubscriptionController {
     }
   }
 
-  async saveSubscription(dto: SubscriptionDto, user: User) {
+  async saveSubscription(data: any, user: User) {
+    const dto: SubscriptionDto = {
+      days: data.get('days') || data.days,
+      maxDevice: data.get('maxDevice') || data.maxDevice,
+      activationCode: data.get('activationCode') || data.activationCode,
+    };
+
     if (user.subscription) {
-      console.log(user.subscription.expiredAt);
       const expiredAt = new Date(user.subscription.expiredAt);
       console.log({
         expiredAt,
@@ -193,7 +198,6 @@ export class SubscriptionController {
         date: expiredAt.getDate(),
       });
       expiredAt.setDate(expiredAt.getDate() + dto.days);
-      console.log(expiredAt);
       return this.subscriptionModel
         .findByIdAndUpdate(user.subscription.id, {
           maxActiveDevices: dto.maxDevice,
