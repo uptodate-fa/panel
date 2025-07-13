@@ -184,9 +184,9 @@ export class SubscriptionController {
 
   async saveSubscription(data: any, user: User) {
     const dto: SubscriptionDto = {
-      days: data.get('days') || data.days,
-      maxDevice: data.get('maxDevice') || data.maxDevice,
-      activationCode: data.get('activationCode') || data.activationCode,
+      days: data.days || data.get('days'),
+      maxDevice: data.maxDevice || data.get('maxDevice'),
+      activationCode: data.activationCode || data.get('activationCode'),
     };
 
     if (user.subscription) {
