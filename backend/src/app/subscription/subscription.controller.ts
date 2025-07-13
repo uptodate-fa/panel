@@ -10,6 +10,7 @@ import {
   Put,
   Query,
   Response,
+  Req,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {
@@ -95,8 +96,8 @@ export class SubscriptionController {
   }
 
   @Post('payment')
-  async payment(@Body() dto: SubscriptionDto, @LoginUser() user: User) {
-    console.log('body', dto);
+  async payment(@Body() dto: SubscriptionDto, @LoginUser() user: User, @Req() request: Request) {
+    const origin = request.headers['origin'];
     let coupon: DiscountCoupon;
 
     if (dto.discountCouponId) {
@@ -136,6 +137,7 @@ export class SubscriptionController {
         user: user.id,
         data: dto,
         maxActiveDevices: dto.maxDevice,
+        origin,
       });
       // token.invoice = <Invoice>{
       //     id: dto.invoiceId
@@ -177,7 +179,12 @@ export class SubscriptionController {
       ).data.data;
 
       if (confirmResponse.code == 100 || confirmResponse.code == 101) {
-        this.saveSubscription(payment.data, payment.user);
+        await this.saveSubscription(payment.data, payment.user);
+        if (payment.origin) {
+          res.redirect(payment.origin);
+        } else {
+          res.redirect(process.env.PANEL_URL);
+        }
       }
     }
   }

@@ -10,6 +10,7 @@ export const PaymentSchema = new mongoose.Schema<Payment>(
     success: { type: Boolean, default: false },
     data: { type: Map },
     user: { type: Types.ObjectId, ref: 'User', required: true },
+    origin: { type: String, default: '' },
   },
   {
     timestamps: true,

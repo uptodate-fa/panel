@@ -8,6 +8,7 @@ export class Payment {
   data?: any;
   user: User;
   success: boolean;
+  origin?: string;
   errorText?: string;
   createdAt: Date;
 }
