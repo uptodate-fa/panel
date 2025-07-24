@@ -27,7 +27,7 @@ export class ContentsService {
   ): Promise<Content> {
     const localContent = topicId
       ? await this.topicAssetsService.getTopicById(Number(topicId))
-      : await this.topicAssetsService.getTopicByTitle(id);
+      : null;
     console.log('localContent', id, localContent?.topicInfo_id);
     let content: Content = await this.contentModel
       .findOne({ queryStringId: id })
@@ -47,7 +47,7 @@ export class ContentsService {
     }
 
     const fetchFromUptodate =
-      (!localContent &&
+      (!topicId &&
         (!content ||
           content.bodyHtml.search(
             'To continue reading this article, you must',
@@ -151,9 +151,9 @@ export class ContentsService {
       content.translatedAt = null;
     }
 
-    if (localContent && content) {
-      content.bodyHtml = localContent.bodyHtml;
-      content.outlineHtml = localContent.outlineHtml;
+    if (content && topicId) {
+      content.bodyHtml = localContent?.bodyHtml;
+      content.outlineHtml = localContent?.outlineHtml;
     }
 
     return content;
