@@ -145,6 +145,11 @@ export class ContentService {
       'https://www.uptodate.com/external-redirect',
     );
 
+    div.innerHTML = div.innerHTML.replace(
+      /graphic_asset\//g,
+      'https://uptodate-io.darkube.app/graphics/',
+    );
+
     const allInnerDivs = div.querySelectorAll('div');
     allInnerDivs.forEach((element) => {
       if (element.id) {
@@ -175,6 +180,12 @@ export class ContentService {
       elem.target = '_blank';
     });
 
+    const allGraphics = div.querySelectorAll<HTMLAnchorElement>(
+      'a[href*="https://uptodate-io.darkube.app"]',
+    );
+    allGraphics.forEach((elem) => {
+      elem.target = '_blank';
+    });
     // const allPictures = div.querySelectorAll('p:has(a[data-inline-graphics])');
     // allPictures.forEach((element) => {
     //   console.log(element);

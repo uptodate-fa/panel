@@ -235,6 +235,11 @@ export class ContentComponent {
     const meta = action.meta;
     const id = data.id;
 
+    if (data.type === 'external') {
+      const url = data.url;
+      window.open(url || data.url, '_blank');
+      return;
+    }
     if (id) {
       this.router.navigate(['/contents', id], {
         queryParams: {
