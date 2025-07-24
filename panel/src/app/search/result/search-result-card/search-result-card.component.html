@@ -1,5 +1,6 @@
 <mat-card
   [routerLink]="result.url"
+  [queryParams]="{ topicId: result.id }"
   (mouseenter)="isMouseOver.set(true)"
   (mouseleave)="isMouseOver.set(false)"
 >

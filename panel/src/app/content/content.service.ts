@@ -22,13 +22,20 @@ export class ContentService {
   private readonly dialog = inject(MatDialog);
   private readonly queryClient = inject(QueryClient);
 
-  getContentQuery = (id: Signal<string>, forceUpdate?: Signal<boolean>) =>
+  getContentQuery = (
+    id: Signal<string>,
+    topicId?: Signal<string>,
+    forceUpdate?: Signal<boolean>,
+  ) =>
     injectQuery(() => ({
-      queryKey: ['content', id(), forceUpdate?.()],
+      queryKey: ['content', id(), topicId?.(), forceUpdate?.()],
       queryFn: () =>
         lastValueFrom(
           this.http.get<Content>(`/api/contents/${id()}`, {
-            params: forceUpdate?.() ? { force: '1' } : {},
+            params: {
+              force: forceUpdate?.() ? '1' : '',
+              topicId: topicId?.() || '',
+            },
           }),
         ),
       enabled: !!id(),
@@ -168,21 +175,33 @@ export class ContentService {
       elem.target = '_blank';
     });
 
-    const allPictures = div.querySelectorAll('p:has(a[data-inline-graphics])');
-    allPictures.forEach((element) => {
-      const imageRef = element
-        .querySelector(`a[data-inline-graphics]`)
-        ?.getAttribute('data-inline-graphics');
-      if (imageRef) {
-        const graphic = graphics?.find((g) => g.imageKey.search(imageRef) > -1);
-        if (graphic) {
-          const graphicDiv = document.createElement('div');
-          graphicDiv.innerHTML = `<div class="utd-inline-graphic__container"><a class="utd-thumbnail__container thumbnail-border thumbnail-large utd-inline-graphic__thumbnail" graphic-key="${graphic.imageKey}"><img src="https://www.uptodate.com/services/app/contents/graphic/view/${graphic.imageKey}/largethumbnail.png"/><span>${graphic.title}</span></a></div>`;
-          // graphicDiv.innerHTML = `<div class="utd-inline-graphic__container"><a class="utd-thumbnail__container thumbnail-border thumbnail-large utd-inline-graphic__thumbnail" href="https://www.uptodate.com/contents/image?imageKey=${graphic.imageKey}&amp;topicKey=PC%2F5367&amp;source=inline_graphic"><img src="https://www.uptodate.com/services/app/contents/graphic/view/${graphic.imageKey}/largethumbnail.png"/><span>${graphic.title}</span></a></div>`;
-          element.prepend(graphicDiv);
-        }
-      }
-    });
+    // const allPictures = div.querySelectorAll('p:has(a[data-inline-graphics])');
+    // allPictures.forEach((element) => {
+    //   console.log(element);
+    //   const href = element
+    //     .querySelector(`a[data-inline-graphics]`)
+    //     ?.getAttribute('href');
+
+    //   console.log(href);
+
+    //   if (href) {
+    //     const [path, type] = href.split('.');
+    //     const name = href.split('/').pop();
+    //     console.log(name, type);
+    //     const graphicDiv = document.createElement('div');
+    //     graphicDiv.innerHTML = `<div class="utd-inline-graphic__container"><a class="utd-thumbnail__container thumbnail-border thumbnail-large utd-inline-graphic__thumbnail" href="https://www.uptodate.com/contents/image?imageKey=${graphic.imageKey}&amp;topicKey=PC%2F5367&amp;source=inline_graphic"><span>${graphic.title}</span></a></div>`;
+    //     element.prepend(graphicDiv);
+    //   }
+    //   // if (assetSrc) {
+    //   // const graphic = graphics?.find((g) => g.imageKey.search(assetSrc) > -1);
+    //   // if (graphic) {
+    //   //   const graphicDiv = document.createElement('div');
+    //   //   graphicDiv.innerHTML = `<div class="utd-inline-graphic__container"><a class="utd-thumbnail__container thumbnail-border thumbnail-large utd-inline-graphic__thumbnail" graphic-key="${graphic.imageKey}"><img src="https://www.uptodate.com/services/app/contents/graphic/view/${graphic.imageKey}/largethumbnail.png"/><span>${graphic.title}</span></a></div>`;
+    //   //   // graphicDiv.innerHTML = `<div class="utd-inline-graphic__container"><a class="utd-thumbnail__container thumbnail-border thumbnail-large utd-inline-graphic__thumbnail" href="https://www.uptodate.com/contents/image?imageKey=${graphic.imageKey}&amp;topicKey=PC%2F5367&amp;source=inline_graphic"><img src="https://www.uptodate.com/services/app/contents/graphic/view/${graphic.imageKey}/largethumbnail.png"/><span>${graphic.title}</span></a></div>`;
+    //   //   element.prepend(graphicDiv);
+    //   // }
+    //   // }
+    // });
 
     return div;
   }
