@@ -15,7 +15,7 @@
           <div class="items-wrapper">
             @for (item of section.items; track $index) {
               <div>
-                <a mat-button href="{{ item.url }}">
+                <a mat-button routerLink="{{ item.url }}">
                   {{ item.name }}
                 </a>
               </div>
@@ -29,7 +29,7 @@
       @for (item of items(); track $index) {
         <div>
 
-          <a mat-button href="{{ item.url }}">{{ item.name }}</a>
+          <a mat-button routerLink="{{ item.url }}">{{ item.name }}</a>
           <br />
           <br />
         </div>
