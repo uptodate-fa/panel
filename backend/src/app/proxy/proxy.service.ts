@@ -294,12 +294,14 @@ export class ProxyService {
       items: data.items?.map((d) => ({
         name: d.name,
         url: d.url,
+        type: d.type,
       })),
       sections: data.sections?.map((section) => ({
         name: section.name,
         items: section.items?.map((d) => ({
           name: d.name,
           url: d.url,
+          type: d.type,
         })),
       })),
     } as TableOfContent;
