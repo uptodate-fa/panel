@@ -57,16 +57,6 @@ export class ContentsController {
     return this.proxy.graphic(imageKey, topicId);
   }
 
-  @Get(':id')
-  getById(
-    @Param('id') id: string,
-    @Query('force') force: string,
-    @Query('topicId') topicId: string,
-    @LoginUser() user: User,
-  ) {
-    return this.contentsService.getContent(id, user, topicId, !!force);
-  }
-
   @Get('print/:id')
   print(@Param('id') id: string) {
     return this.proxy.printContent(id);
@@ -103,5 +93,15 @@ export class ContentsController {
     @Param('sub') sub: string,
   ) {
     return this.proxy.tableOfContent(topic, sub);
+  }
+
+  @Get(':id')
+  getById(
+    @Param('id') id: string,
+    @Query('force') force: string,
+    @Query('topicId') topicId: string,
+    @LoginUser() user: User,
+  ) {
+    return this.contentsService.getContent(id, user, topicId, !!force);
   }
 }
