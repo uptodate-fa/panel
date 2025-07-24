@@ -38,6 +38,10 @@ export const appRoutes: Route[] = [
                   { path: 'search', children: searchRoutes },
                   { path: '', redirectTo: 'search', pathMatch: 'full' },
                   {
+                    path: 'contents/table-of-contents',
+                    component: TableOfContentsComponent,
+                  },
+                  {
                     path: 'contents/table-of-contents/:topic',
                     component: TableOfContentsComponent,
                   },
