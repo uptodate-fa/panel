@@ -6,6 +6,7 @@ import { ProxyService } from '../proxy/proxy.service';
 import * as cheerio from 'cheerio';
 import { OpenaiService } from '../openai/openai.service';
 import { captureEvent } from '@sentry/node';
+import { TopicAssetsSqliteService } from '../core/topic-assets-sqlite.service';
 
 @Injectable()
 export class ContentsService {
@@ -15,21 +16,42 @@ export class ContentsService {
     @InjectModel(Content.name) private contentModel: Model<Content>,
     @InjectModel(ContentHistory.name)
     private contentHistoryModel: Model<ContentHistory>,
+    private topicAssetsService: TopicAssetsSqliteService,
   ) {}
 
   async getContent(
     id: string,
     user?: User,
+    topicId?: string,
     forceSync = false,
   ): Promise<Content> {
+    const localContent = topicId
+      ? await this.topicAssetsService.getTopicById(Number(topicId))
+      : await this.topicAssetsService.getTopicByTitle(id);
+    console.log('localContent', id, localContent?.topicInfo_id);
     let content: Content = await this.contentModel
       .findOne({ queryStringId: id })
       .exec();
 
+    if (localContent && !content) {
+      const newContent = new this.contentModel({
+        queryStringId: id,
+        uptodateId: localContent.topicInfo_id || id,
+        title: localContent.topicInfo_title,
+        bodyHtml: localContent.bodyHtml,
+        outlineHtml: localContent.outlineHtml,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      content = await newContent.save();
+    }
+
     const fetchFromUptodate =
-      !content ||
-      content.bodyHtml.search('To continue reading this article, you must') >
-        -1 ||
+      (!localContent &&
+        (!content ||
+          content.bodyHtml.search(
+            'To continue reading this article, you must',
+          ) > -1)) ||
       forceSync;
 
     try {
@@ -38,10 +60,16 @@ export class ContentsService {
         level: 'log',
         transaction: id,
         tags: {
-          source: fetchFromUptodate ? 'uptodate' : 'db',
+          source: fetchFromUptodate
+            ? 'uptodate'
+            : localContent
+              ? 'sqlite'
+              : 'db',
         },
       });
-    } catch (error) {}
+    } catch (error) {
+      console.error('Sentry capture error:', error);
+    }
 
     if (fetchFromUptodate) {
       let data = await this.proxy.content(id);
@@ -92,7 +120,9 @@ export class ContentsService {
               newContentHistory.save();
             }
           },
-          (er) => {},
+          (er) => {
+            console.error('Content history error:', er);
+          },
         );
     }
 
@@ -121,6 +151,11 @@ export class ContentsService {
       content.translatedAt = null;
     }
 
+    if (localContent && content) {
+      content.bodyHtml = localContent.bodyHtml;
+      content.outlineHtml = localContent.outlineHtml;
+    }
+
     return content;
   }
 
@@ -137,7 +172,11 @@ export class ContentsService {
   async translate(id: string) {
     const content = await this.getContent(id);
     if (content) {
-      if (content.translatedBodyHtml && content.translatedBodyHtml.length / content.bodyHtml.length > 0.4) return content;
+      if (
+        content.translatedBodyHtml &&
+        content.translatedBodyHtml.length / content.bodyHtml.length > 0.4
+      )
+        return content;
       if (content.translatedAt) {
         const diff = Date.now() - new Date(content.translatedAt).valueOf();
         if (diff / 60000 < 15) return content;
@@ -156,9 +195,13 @@ export class ContentsService {
       try {
         let i = 0;
         for (const batch of batches) {
-          const translated = await this.openai.getResponse(batch);
-          $(translated).appendTo('#topicText');
-          i++;
+          try {
+            const translated = await this.openai.getResponse(batch);
+            $(translated).appendTo('#topicText');
+            i++;
+          } catch (error) {
+            return null;
+          }
         }
         content.translatedBodyHtml = $.html();
 

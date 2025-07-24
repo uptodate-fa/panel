@@ -61,9 +61,10 @@ export class ContentsController {
   getById(
     @Param('id') id: string,
     @Query('force') force: string,
+    @Query('topicId') topicId: string,
     @LoginUser() user: User,
   ) {
-    return this.contentsService.getContent(id, user, !!force);
+    return this.contentsService.getContent(id, user, topicId, !!force);
   }
 
   @Get('print/:id')
@@ -84,6 +85,11 @@ export class ContentsController {
   @Get('translate/:id')
   async getByIdTranslated(@Param('id') id: string) {
     return this.contentsService.translate(id);
+  }
+
+  @Get('tableOfContent')
+  async getTableOfContentRoot() {
+    return this.proxy.tableOfContent();
   }
 
   @Get('tableOfContent/:topic')

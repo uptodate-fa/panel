@@ -277,10 +277,13 @@ export class ProxyService {
     return response?.data?.data;
   }
 
-  async tableOfContent(topic: string, sub?: string) {
+  async tableOfContent(topic?: string, sub?: string) {
+    let category = '';
+    if (topic) category += `/${topic}`;
+    if (sub) category = `/${sub}`;
     const response = await this.request(
       {
-        url: `https://www.uptodate.com/services/app/contents/table-of-contents/${sub ? `${topic}/${sub}` : topic}/json`,
+        url: `https://www.uptodate.com/services/app/contents/table-of-contents${category}/json`,
       },
       { key: 'table-of-content' },
     );

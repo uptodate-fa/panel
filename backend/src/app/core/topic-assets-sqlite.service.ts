@@ -4,10 +4,13 @@ import * as sqlite3 from 'sqlite3';
 @Injectable()
 export class TopicAssetsSqliteService {
   private db: sqlite3.Database;
-  private dbPath = 'topic_assets.sqlite';
+  private dbPath = process.env.LOCAL_DB_PATH;
 
   constructor() {
-    this.initializeDatabase();
+    console.log('dbPath', this.dbPath);
+    if (this.dbPath) {
+      this.initializeDatabase();
+    }
   }
 
   private async initializeDatabase() {
@@ -21,6 +24,7 @@ export class TopicAssetsSqliteService {
   }
 
   private async query(sql: string, params: any[] = []): Promise<any> {
+    if (!this.db) return null;
     return new Promise((resolve, reject) => {
       this.db.all(sql, params, (err, row) => {
         if (err) {
@@ -33,6 +37,7 @@ export class TopicAssetsSqliteService {
   }
 
   private async get(sql: string, params: any[] = []): Promise<any> {
+    if (!this.db) return null;
     return new Promise((resolve, reject) => {
       this.db.get(sql, params, (err, row) => {
         if (err) {
@@ -45,6 +50,7 @@ export class TopicAssetsSqliteService {
   }
 
   async getTopicById(id: number): Promise<any> {
+    if (!this.db) return null;
     return await this.get(
       'SELECT * FROM topic_summary WHERE topicInfo_id = ?',
       [id],
@@ -52,6 +58,7 @@ export class TopicAssetsSqliteService {
   }
 
   async getTopicByTitle(title: string): Promise<any> {
+    if (!this.db) return null;
     return this.get(
       'SELECT * FROM topic_summary WHERE topicInfo_title LIKE ?',
       [title.replace(/-/g, ' ')],
@@ -59,6 +66,7 @@ export class TopicAssetsSqliteService {
   }
 
   async preSearch(query: string): Promise<any> {
+    if (!this.db) return null;
     const result = await this.query(
       'SELECT topicInfo_title FROM topic_summary WHERE topicInfo_title LIKE ?',
       [`%${query}%`],
