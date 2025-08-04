@@ -49,7 +49,7 @@ export class GraphicDialogComponent {
       ),
     enabled: !!this.key(),
     staleTime: Infinity,
-    select: (data) => {
+    select: (data: string) => {
       return data.replace(
         /src="/g,
         'src="https://uptodate-io.darkube.app/graphics/',
