@@ -295,6 +295,7 @@ export class ProxyService {
         name: d.name,
         url: d.url,
         type: d.type,
+        topicId: d.topicId,
       })),
       sections: data.sections?.map((section) => ({
         name: section.name,
@@ -302,6 +303,7 @@ export class ProxyService {
           name: d.name,
           url: d.url,
           type: d.type,
+          topicId: d.topicId,
         })),
       })),
     } as TableOfContent;

@@ -1,13 +1,27 @@
-<div style="padding: 0.5rem;max-height: 20rem;overflow: auto">
+<div style="padding: 0.5rem; max-height: 20rem; overflow: auto">
   @if (categorizeByDate(historyQuery.data())) {
-    @for (date of Object.keys(categorizeByDate(historyQuery.data())); track date) {
-      <strong>{{formatedDate(date)}}</strong>
-      <span style="box-shadow:0 2px #003d62; width: 100%;display: block;height: 2px; "></span>
+    @for (
+      date of Object.keys(categorizeByDate(historyQuery.data()));
+      track date
+    ) {
+      <strong>{{ formatedDate(date) }}</strong>
+      <span
+        style="
+          box-shadow: 0 2px #003d62;
+          width: 100%;
+          display: block;
+          height: 2px;
+        "
+      ></span>
       <mat-nav-list id="history-list">
-        @for (history of categorizeByDate(historyQuery.data())[date]; track $index) {
+        @for (
+          history of categorizeByDate(historyQuery.data())[date];
+          track $index
+        ) {
           <a
             mat-list-item
             routerLink="/contents/{{ history.content.queryStringId }}"
+            [queryParams]="{ topicId: history.content.id }"
           >
             {{ history.content.title }}
             <button

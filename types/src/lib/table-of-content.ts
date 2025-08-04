@@ -4,6 +4,7 @@ export class TableOfContent {
     name: string;
     url: string;
     type: string;
+    topicId?: string;
   }[];
   type?: string;
   sections?: TableOfContent[];
