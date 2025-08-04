@@ -110,7 +110,11 @@
       <a mat-menu-item routerLink="/contents/table-of-contents/whats-new">
         What's New
       </a>
-      <a mat-menu-item routerLink="/contents/practice-changing-updates?topicId=16722">
+      <a
+        mat-menu-item
+        routerLink="/contents/practice-changing-updates"
+        [queryParams]="{ topicId: '16722' }"
+      >
         Practice Changing UpDates
       </a>
       <a

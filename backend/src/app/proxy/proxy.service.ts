@@ -299,6 +299,7 @@ export class ProxyService {
       })),
       sections: data.sections?.map((section) => ({
         name: section.name,
+        topicId: section.topicId,
         items: section.items?.map((d) => ({
           name: d.name,
           url: d.url,
