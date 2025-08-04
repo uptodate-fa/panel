@@ -92,6 +92,7 @@ export class ContentComponent {
                 });
               }
             });
+
           // document.querySelectorAll('[graphic-key]').forEach((element) => {
           //   const graphicKey = element.getAttribute('graphic-key');
           //   if (graphicKey) {
@@ -141,34 +142,37 @@ export class ContentComponent {
         }
       }
 
-      if (this.outlineHtml()) {
-        setTimeout(() => {
-          document
-            .querySelectorAll<HTMLAnchorElement>('#outlineSections a[href]')
-            .forEach((element) => {
-              element.addEventListener('click', (event) => {
-                const href = element.getAttribute('anchor')?.split?.('#')?.[1];
-                if (href)
-                  document
-                    .getElementById(href)
-                    ?.scrollIntoView({ behavior: 'smooth' });
-              });
-              element.setAttribute('anchor', element.href);
-              element.removeAttribute('href');
+      setTimeout(() => {
+        document
+          .querySelectorAll<HTMLAnchorElement>('#outlineSections a[href]')
+          .forEach((element) => {
+            element.addEventListener('click', (event) => {
+              const href = element.getAttribute('anchor')?.split?.('#')?.[1];
+              if (href)
+                document
+                  .getElementById(href)
+                  ?.scrollIntoView({ behavior: 'smooth' });
             });
+            element.setAttribute('anchor', element.href);
+            element.removeAttribute('href');
+          });
 
-          const viewAll = document.querySelector<HTMLAnchorElement>(
-            'a#viewAllGraphicsLink',
-          );
-          const tabs = this.tabs();
-          if (viewAll && tabs) {
-            viewAll.addEventListener('click', (event) => {
-              tabs.selectedIndex = 1;
+        const graphicLinks =
+          document.querySelectorAll<HTMLAnchorElement>('a[graphic-key]');
+
+        if (graphicLinks.length > 0) {
+          graphicLinks.forEach((element) => {
+            element.addEventListener('click', (event) => {
+              const graphicKey = element.getAttribute('graphic-key');
+              if (graphicKey) {
+                this.openImageDialog(graphicKey);
+              }
+              event?.stopPropagation();
+              event?.preventDefault();
             });
-            viewAll.removeAttribute('href');
-          }
-        }, 2000);
-      }
+          });
+        }
+      }, 1000);
     });
 
     effect(() => {

@@ -11,6 +11,7 @@ import {
 import { Content, ContentAbstract, Graphic } from '@uptodate/types';
 import { lastValueFrom } from 'rxjs';
 import { AlertDialogComponent } from '../shared/dialogs/alert-dialog/alert-dialog.component';
+import { GraphicDialogComponent } from './graphic-dialog/graphic-dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -145,11 +146,6 @@ export class ContentService {
       'https://www.uptodate.com/external-redirect',
     );
 
-    div.innerHTML = div.innerHTML.replace(
-      /graphic_asset\//g,
-      'https://uptodate-io.darkube.app/graphics/',
-    );
-
     const allInnerDivs = div.querySelectorAll('div');
     allInnerDivs.forEach((element) => {
       if (element.id) {
@@ -180,11 +176,16 @@ export class ContentService {
       elem.target = '_blank';
     });
 
-    const allGraphics = div.querySelectorAll<HTMLAnchorElement>(
-      'a[href*="https://uptodate-io.darkube.app"]',
+    const allGraphicLinks = div.querySelectorAll<HTMLAnchorElement>(
+      'a[href*="graphic_asset/"]',
     );
-    allGraphics.forEach((elem) => {
-      elem.target = '_blank';
+    allGraphicLinks.forEach((elem) => {
+      const href = elem.href;
+      const graphicKey = href.split('/').pop();
+      if (graphicKey) {
+        elem.removeAttribute('href');
+        elem.setAttribute('graphic-key', graphicKey);
+      }
     });
     // const allPictures = div.querySelectorAll('p:has(a[data-inline-graphics])');
     // allPictures.forEach((element) => {
@@ -220,6 +221,17 @@ export class ContentService {
   getOutlineHtml(htmlString: string) {
     const div = document.createElement('div');
     div.innerHTML = htmlString;
+    const allGraphicLinks = div.querySelectorAll<HTMLAnchorElement>(
+      'a[href*="graphic_asset/"]',
+    );
+    allGraphicLinks.forEach((elem) => {
+      const href = elem.href;
+      const graphicKey = href.split('/').pop();
+      if (graphicKey) {
+        elem.removeAttribute('href');
+        elem.setAttribute('graphic-key', graphicKey);
+      }
+    });
     return div;
   }
 

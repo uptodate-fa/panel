@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 import { SearchContentComponent } from './search-content/search-content.component';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { HistoryCardComponent } from './history-card/history-card.component';
+import { SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-search',
@@ -26,7 +28,7 @@ import { HistoryCardComponent } from './history-card/history-card.component';
     SearchContentComponent,
     MatMenu,
     MatMenuTrigger,
-    HistoryCardComponent
+    HistoryCardComponent,
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
@@ -44,14 +46,25 @@ export class SearchComponent {
     staleTime: Infinity,
   }));
 
+  htmlContent: SafeHtml = '';
+
   constructor(
     private http: HttpClient,
     private router: Router,
+    private sanitizer: DomSanitizer,
   ) {
     this.searchControl.valueChanges
       .pipe(debounceTime(400))
       .subscribe(async (query) => {
         this.searchTerm.set(query);
+      });
+
+    this.http
+      .get('https://uptodate-io.darkube.app/graphics/88701.html', {
+        responseType: 'text',
+      })
+      .subscribe((response) => {
+        this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(response);
       });
   }
 

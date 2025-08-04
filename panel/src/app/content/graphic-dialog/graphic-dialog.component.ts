@@ -1,14 +1,14 @@
-import { Component, computed, inject, Signal, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SHARED } from '../../shared';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { ContentService } from '../content.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Graphic } from '@uptodate/types';
+import { lastValueFrom } from 'rxjs';
+import { injectQuery } from '@tanstack/angular-query-experimental';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-graphic-dialog',
@@ -26,8 +26,7 @@ import { Graphic } from '@uptodate/types';
   styleUrl: './graphic-dialog.component.scss',
 })
 export class GraphicDialogComponent {
-  private breakpointObserver = inject(BreakpointObserver);
-  private readonly contentService = inject(ContentService);
+  private readonly http = inject(HttpClient);
   private readonly data = inject<{ key: string; topicId: string }>(
     MAT_DIALOG_DATA,
   );
@@ -37,32 +36,24 @@ export class GraphicDialogComponent {
   private mdScreenSignal = signal(false);
   isMdScreen = computed(() => this.mdScreenSignal());
 
-  contentQuery = this.contentService.getContentGraphicQuery(
-    this.key,
-    this.data.topicId,
-  );
-
-  innerHtml = computed(() => {
-    const htmlString = this.contentQuery.data()?.imageHtml;
-    if (htmlString)
-      return this.contentService.getGraphicHtml(htmlString).innerHTML;
-    return
-  });
-
-  graphics = computed(() => {
-    const data = this.contentQuery.data();
-    return data?.relatedGraphics;
-  });
-
-  constructor() {
-    this.breakpointObserver
-      .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium])
-      .subscribe((result) => {
-        this.mdScreenSignal.set(result.matches); // true if screen is md or larger
-      });
-  }
-
-  relatedGraphicClick(graphic: Graphic) {
-    this.key.set(graphic.imageKey);
-  }
+  contentQuery = injectQuery(() => ({
+    queryKey: ['graphic', this.key()],
+    queryFn: () =>
+      lastValueFrom(
+        this.http.get(
+          `https://uptodate-io.darkube.app/graphics/${this.key()}`,
+          {
+            responseType: 'text',
+          },
+        ),
+      ),
+    enabled: !!this.key(),
+    staleTime: Infinity,
+    select: (data) => {
+      return data.replace(
+        /src="/g,
+        'src="https://uptodate-io.darkube.app/graphics/',
+      );
+    },
+  }));
 }
