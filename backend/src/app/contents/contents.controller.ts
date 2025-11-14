@@ -5,6 +5,7 @@ import { LoginUser } from '../auth/user.decorator';
 import { ContentHistory, User } from '@uptodate/types';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { Public } from '../auth/public.decorator';
 
 @Controller('contents')
 export class ContentsController {
@@ -39,11 +40,13 @@ export class ContentsController {
       .exec();
   }
 
+  @Public()
   @Get('presearch/:query')
   preSearch(@Param('query') query: string) {
     return this.proxy.preSearch(query);
   }
 
+  @Public()
   @Get('search/:query')
   search(@Param('query') query: string, @Query('sp') sp?: string) {
     return this.proxy.search(query, sp ? Number(sp) : 0);
@@ -67,6 +70,7 @@ export class ContentsController {
     return this.contentsService.getOutline(id);
   }
 
+  @Public()
   @Get('abstract/:id/:range')
   getContentAbstracts(@Param('id') id: string, @Param('range') range: string) {
     return this.proxy.contentAbstract(id, range);
