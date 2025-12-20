@@ -1,0 +1,131 @@
+<div class="drug-interaction-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-content">
+      <h2>Item(s)</h2>
+      
+      <!-- Search Box -->
+      <div class="search-box">
+        <input
+          type="text"
+          [value]="searchQuery()"
+          (input)="onSearchInput($any($event.target).value)"
+          (keyup.enter)="onSearch()"
+          placeholder="Enter Item Name"
+          class="search-input"
+        />
+        <button (click)="onSearch()" class="add-button">Add</button>
+      </div>
+
+      <!-- Search Results -->
+      @if (isLoading()) {
+        <div class="loading">Loading...</div>
+      } @else if (hasSearched() && searchQuery().trim() && searchResults().length === 0) {
+        <div class="no-results">No results found for "{{ searchQuery() }}"</div>
+      } @else if (searchResults().length > 0) {
+        <ul class="search-results">
+          @for (item of searchResults(); track item.item_id) {
+            <li (click)="selectItem(item)" class="search-result-item">
+              {{ item.name }}
+            </li>
+          }
+        </ul>
+      }
+
+      <!-- Selected Items -->
+      @if (selectedItems().length > 0) {
+        <div class="selected-items">
+          @for (item of selectedItems(); track item.item_id) {
+            <div class="selected-item">
+              <span class="remove-icon" (click)="removeItem(item.item_id)">×</span>
+              <span class="item-name">{{ item.name }}</span>
+            </div>
+          }
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button (click)="clearAll()" class="clear-button">Clear</button>
+          <button (click)="analyze()" class="analyze-button" [disabled]="isAnalyzing()">
+            @if (isAnalyzing()) {
+              Analyzing...
+            } @else {
+              Analyze
+            }
+          </button>
+        </div>
+      }
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="content">
+    <!-- Risk Ratings Table - Always visible at top -->
+    <div class="risk-ratings-container">
+      <h3 class="risk-ratings-title">Risk Ratings</h3>
+      <div class="risk-ratings-grid">
+        <div class="risk-rating-item">
+          <div class="risk-box" style="background-color: #d32f2f;">
+            <span class="risk-letter">X</span>
+          </div>
+          <span class="risk-description">Avoid combination</span>
+        </div>
+        <div class="risk-rating-item">
+          <div class="risk-box" style="background-color: #f57c00;">
+            <span class="risk-letter">D</span>
+          </div>
+          <span class="risk-description">Consider therapy modification</span>
+        </div>
+        <div class="risk-rating-item">
+          <div class="risk-box" style="background-color: #fbc02d;">
+            <span class="risk-letter">C</span>
+          </div>
+          <span class="risk-description">Monitor therapy</span>
+        </div>
+        <div class="risk-rating-item">
+          <div class="risk-box" style="background-color: #388e3c;">
+            <span class="risk-letter">B</span>
+          </div>
+          <span class="risk-description">No action needed</span>
+        </div>
+        <div class="risk-rating-item">
+          <div class="risk-box" style="background-color: #1976d2;">
+            <span class="risk-letter">A</span>
+          </div>
+          <span class="risk-description">No known interaction</span>
+        </div>
+      </div>
+    </div>
+
+    @if (showResults()) {
+      <div class="results-container">
+        <div class="results-header">
+          <h2>Feedback</h2>
+          <div class="results-count">{{ interactions().length }} Results</div>
+        </div>
+        <p class="results-instruction">View interaction detail by clicking on link(s) below.</p>
+        
+        <ul class="interactions-list">
+          @for (interaction of interactions(); track interaction.monograph_id) {
+            <li class="interaction-item">
+              <span
+                class="risk-badge"
+                [style.background-color]="getRiskColor(interaction.risk)"
+              >
+                {{ getRiskLetter(interaction.risk) }}
+              </span>
+              <span class="interaction-text">
+                {{ interaction.text1 }} <strong>{{ interaction.text2 }}</strong>
+              </span>
+            </li>
+          }
+        </ul>
+      </div>
+    } @else {
+      <div class="empty-content">
+        <p>Select items and click Analyze to view interactions.</p>
+      </div>
+    }
+  </main>
+</div>
+
