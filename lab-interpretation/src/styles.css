@@ -1,0 +1,275 @@
+/* Lab Interpretation Styles */
+
+/* Base Styles */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  line-height: 1.6;
+  direction: ltr;
+  text-align: left;
+  color: #333;
+  background-color: #fff;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em 0;
+}
+
+/* Figures */
+.figure {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 1em;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.ttl {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Topic Title */
+#topicTitle {
+  font-size: 1.8em;
+  font-weight: 600;
+  margin-bottom: 1em;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5em;
+}
+
+/* Author Section */
+.authorSectionElem {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+  margin-bottom: 2em;
+  padding: 1em;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.authorsElementsLeft,
+.authorsElementsRight {
+  flex: 1;
+  min-width: 250px;
+}
+
+#topicContributors dt {
+  font-weight: 600;
+  margin-top: 0.5em;
+  color: #555;
+}
+
+#topicContributors dd {
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+}
+
+#topicContributors a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+#topicContributors a:hover {
+  text-decoration: underline;
+}
+
+.disclosureLink {
+  margin-top: 1em;
+}
+
+.disclosureLink a {
+  color: #3498db;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.disclosureLink a:hover {
+  text-decoration: underline;
+}
+
+/* Review Process */
+#reviewProcess {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 1em;
+}
+
+#reviewProcess a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+#reviewProcess a:hover {
+  text-decoration: underline;
+}
+
+/* Literature Review Date */
+#literatureReviewDate {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.litReviewSingleLine {
+  margin-bottom: 0.5em;
+}
+
+.emphasis {
+  font-weight: 600;
+  color: #555;
+}
+
+/* Topic Text */
+#topicText {
+  margin-top: 2em;
+}
+
+/* Headings */
+.h1 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  color: #2c3e50;
+  border-left: 4px solid #3498db;
+  padding-left: 0.5em;
+}
+
+.h2 {
+  font-size: 1.3em;
+  font-weight: 600;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  color: #34495e;
+}
+
+.h3 {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  color: #34495e;
+}
+
+.headingAnchor {
+  margin-top: 2em;
+}
+
+.headingEndMark {
+  color: #999;
+}
+
+/* Paragraphs */
+p {
+  margin-bottom: 1em;
+  text-align: justify;
+}
+
+/* Links */
+a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a.medical,
+a.narrative,
+a.graphic,
+a.calc {
+  color: #2980b9;
+  border-bottom: 1px dotted #3498db;
+}
+
+a.medical:hover,
+a.narrative:hover,
+a.graphic:hover,
+a.calc:hover {
+  border-bottom: 1px solid #3498db;
+}
+
+/* Bullet Lists */
+.bulletIndent1 {
+  margin-left: 1.5em;
+  margin-bottom: 0.5em;
+  list-style: none;
+}
+
+.bulletIndent2 {
+  margin-left: 2.5em;
+  margin-bottom: 0.5em;
+  list-style: none;
+}
+
+.glyph {
+  color: #3498db;
+  margin-right: 0.5em;
+}
+
+/* Strong/Bold Text */
+strong {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Topic Agreement */
+#topicAgreement {
+  margin-top: 3em;
+  padding-top: 1em;
+  border-top: 1px solid #ddd;
+  font-size: 0.9em;
+  color: #666;
+  text-align: center;
+}
+
+#topicAgreement a {
+  color: #3498db;
+}
+
+/* Topic Version */
+#topicVersionRevision {
+  margin-top: 1em;
+  font-size: 0.85em;
+  color: #999;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  #topicTitle {
+    font-size: 1.5em;
+  }
+
+  .authorSectionElem {
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .h1 {
+    font-size: 1.3em;
+  }
+
+  .h2 {
+    font-size: 1.2em;
+  }
+
+  .h3 {
+    font-size: 1.1em;
+  }
+}
+
