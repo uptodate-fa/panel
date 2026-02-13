@@ -12,6 +12,7 @@ import { AbstractsComponent } from './content/abstracts/abstracts.component';
 import { passwordGuard } from './core/guards/password.guard';
 import { PrintContentComponent } from './content/print/print-content.component';
 import { drugInteractionsRoutes } from './drug-interactions/drug-interactions.routes';
+import { labInterpretationRoutes } from './lab-interpretation/lab-interpretation.routes';
 
 export const appRoutes: Route[] = [
   {
@@ -62,6 +63,10 @@ export const appRoutes: Route[] = [
                   {
                     path: 'interactions',
                     children: drugInteractionsRoutes,
+                  },
+                  {
+                    path: 'lab-interpretation',
+                    children: labInterpretationRoutes,
                   },
                 ],
               },

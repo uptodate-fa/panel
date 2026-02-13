@@ -48,6 +48,7 @@
       <button mat-menu-item [matMenuTriggerFor]="contentsMenu">Contents</button>
       <a mat-menu-item routerLink="/calculators"> Calculators </a>
       <a mat-menu-item routerLink="/interactions"> Drug Interactions </a>
+      <a mat-menu-item routerLink="/lab-interpretation"> Lab Interpretation </a>
       <a mat-menu-item> UpToDate Pathways </a>
       <mat-divider />
       @if (!pwa.isStandalone && pwa.deferredPrompt) {
@@ -105,6 +106,7 @@
     </button>
     <a mat-flat-button routerLink="/calculators"> Calculators </a>
     <a mat-flat-button routerLink="/interactions"> Drug Interactions </a>
+    <a mat-flat-button routerLink="/lab-interpretation"> Lab Interpretation </a>
     <a mat-flat-button> UpToDate Pathways </a>
     <mat-menu #contentsMenu="matMenu">
       <a mat-menu-item routerLink="/contents/table-of-contents/whats-new">
