@@ -244,6 +244,20 @@ export class ContentComponent {
       window.open(url || data.url, '_blank');
       return;
     }
+    if (data.type === 'abstract') {
+      this.router.navigate(
+        [
+          `/contents/${this.title()?.replace(/ /g, '-').replace(/:/g, '').toLowerCase()}/abstract`,
+          action.data.map((x: any) => x.number).join(','),
+        ],
+        {
+          queryParams: {
+            topicId: data.id,
+          },
+        }
+      );
+      return;
+    }
     if (id) {
       this.router.navigate(['/contents', id], {
         queryParams: {
