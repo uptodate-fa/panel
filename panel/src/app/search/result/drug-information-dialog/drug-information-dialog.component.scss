@@ -1,0 +1,167 @@
+mat-dialog-content {
+  max-height: 82vh;
+  min-width: min(1320px, 98vw);
+  padding-top: 8px;
+}
+
+.reader-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.section-nav {
+  position: sticky;
+  top: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 10px;
+  max-height: 72vh;
+  overflow: auto;
+}
+
+.mobile-nav {
+  position: static;
+  max-height: none;
+}
+
+.section-nav h4 {
+  margin: 4px 0 10px;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.section-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.section-nav-list button {
+  text-align: left;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: #374151;
+  cursor: pointer;
+}
+
+.section-nav-list button:hover {
+  background: #eef2ff;
+}
+
+.mobile-content-header {
+  margin-bottom: 10px;
+}
+
+.back-button {
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.back-button:hover {
+  background: #f9fafb;
+}
+
+.html-block {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 20px;
+  background: #fff;
+  line-height: 1.65;
+  color: #1f2937;
+  font-size: 15px;
+}
+
+.source-text {
+  margin: 0;
+  color: #6b7280;
+  font-size: 12px;
+  padding-bottom: 10px;
+}
+
+.json-preview {
+  white-space: pre-wrap;
+  font-size: 12px;
+  margin-top: 12px;
+}
+
+:host ::ng-deep .html-block h1,
+:host ::ng-deep .html-block h2,
+:host ::ng-deep .html-block h3,
+:host ::ng-deep .html-block h4 {
+  margin: 24px 0 10px;
+  line-height: 1.35;
+}
+
+:host ::ng-deep .html-block .drugH1 {
+  display: block;
+  margin: 26px 0 8px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.35;
+  color: #111827;
+}
+
+:host ::ng-deep .html-block p {
+  margin: 8px 0;
+}
+
+:host ::ng-deep .html-block ul,
+:host ::ng-deep .html-block ol {
+  margin: 8px 0 8px 20px;
+}
+
+:host ::ng-deep .html-block li {
+  margin: 4px 0;
+}
+
+:host ::ng-deep .html-block table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 13px;
+}
+
+:host ::ng-deep .html-block th,
+:host ::ng-deep .html-block td {
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+  vertical-align: top;
+}
+
+:host ::ng-deep .html-block th {
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  mat-dialog-content {
+    min-width: auto;
+    max-height: 80vh;
+    padding-top: 4px;
+  }
+
+  .reader-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .section-nav {
+    position: static;
+    max-height: none;
+  }
+}

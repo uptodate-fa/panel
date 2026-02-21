@@ -15,6 +15,7 @@ import { SubscriptionModule } from './subscription/subscription.module';
 import { UsersModule } from './users/users.module';
 import { ActivationCodesModule } from './activation-codes/activation-codes.module';
 import { UptodateAccountsModule } from './uptodate-accounts/uptodate-accounts.module';
+import { DrugInformationModule } from './drug-information/drug-information.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { UptodateAccountsModule } from './uptodate-accounts/uptodate-accounts.mo
     UsersModule,
     ActivationCodesModule,
     UptodateAccountsModule,
+    DrugInformationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

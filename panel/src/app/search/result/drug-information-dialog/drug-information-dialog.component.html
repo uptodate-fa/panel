@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>{{ data.drug.name }}</h2>
+
+<mat-dialog-content>
+  @if (data.drug.url) {
+    <p class="source-text">Source: {{ data.drug.url }}</p>
+  }
+
+  @if (bodyHtml) {
+    @if (isMobile() && sections.length) {
+      @if (mobileView() === 'outline') {
+        <aside class="section-nav mobile-nav">
+          <h4>Outline</h4>
+          <div class="section-nav-list">
+            @for (section of sections; track section.id) {
+              <button type="button" (click)="scrollToSection(section.id)">
+                {{ section.title }}
+              </button>
+            }
+          </div>
+        </aside>
+      } @else {
+        <div class="mobile-content-header">
+          <button type="button" class="back-button" (click)="goToOutline()">
+            <i class="fa-regular fa-arrow-left"></i>
+            Back to Outline
+          </button>
+        </div>
+        <div class="html-block" [innerHTML]="bodyHtml | safeHtml"></div>
+      }
+    } @else {
+      <div class="reader-layout">
+        @if (sections.length) {
+          <aside class="section-nav">
+            <h4>Sections</h4>
+            <div class="section-nav-list">
+              @for (section of sections; track section.id) {
+                <button type="button" (click)="scrollToSection(section.id)">
+                  {{ section.title }}
+                </button>
+              }
+            </div>
+          </aside>
+        }
+
+        <div class="html-block" [innerHTML]="bodyHtml | safeHtml"></div>
+      </div>
+    }
+  } @else if (data.drug.content) {
+    <pre class="json-preview">{{ data.drug.content | json }}</pre>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close type="button">Close</button>
+</mat-dialog-actions>

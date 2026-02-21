@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-toolbar class="primary-background on-primary-text" fxLayout="row" fxLayoutGap="8px">
+    <i class="fa-regular fa-capsules"></i>
+    <h5>Drug Information</h5>
+  </mat-toolbar>
+
+  <mat-card-content>
+    @if (!drugs?.length) {
+      <p class="muted">No drug information found for this query.</p>
+    } @else {
+      <p class="muted">Click a drug to open details.</p>
+      <div class="drug-list">
+        @for (drug of drugs; track drug.id) {
+          <button type="button" class="drug-item" (click)="openDrug(drug)">
+            {{ drug.name }}
+          </button>
+        }
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

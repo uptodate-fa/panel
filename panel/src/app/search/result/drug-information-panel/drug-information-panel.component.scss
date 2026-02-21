@@ -1,0 +1,23 @@
+.muted {
+  color: #5f6368;
+}
+
+.drug-list {
+  max-height: 560px;
+  overflow: auto;
+  margin-top: 12px;
+}
+
+.drug-item {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.drug-item:hover {
+  background: #f2f6ff;
+}

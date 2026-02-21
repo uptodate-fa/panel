@@ -37,6 +37,11 @@
           @if (resultQuery.data()?.drugPanel) {
             <app-drug-panel [drugPanel]="resultQuery.data()!.drugPanel!" />
           }
+          @if (drugInformationQuery.data()?.length) {
+            <div class="drug-information-panel-wrapper">
+              <app-drug-information-panel [drugs]="drugInformationQuery.data()!" />
+            </div>
+          }
         </div>
       </div>
       <!-- <div fxLayout="row" fxLayoutGap="24px">

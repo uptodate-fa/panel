@@ -11,6 +11,8 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { SearchResultCardComponent } from './search-result-card/search-result-card.component';
 import { DrugPanelComponent } from "./drug-panel/drug-panel.component";
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { DrugInformationPanelComponent } from './drug-information-panel/drug-information-panel.component';
+import { DrugInformationResult } from './drug-information-panel/drug-information.types';
 
 @Component({
   selector: 'app-result',
@@ -22,8 +24,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     SHARED,
     SearchResultCardComponent,
     DrugPanelComponent,
+    DrugInformationPanelComponent,
     MatSidenavModule,
-],
+  ],
   templateUrl: './result.component.html',
   styleUrl: './result.component.scss',
 })
@@ -38,6 +41,18 @@ export class ResultComponent {
         this.http.get<SearchResult>(`/api/contents/search/${this.query()}`, {
           params: { sp: this.selectedTab() },
         }),
+      ),
+    enabled: !!this.query(),
+    staleTime: Infinity,
+  }));
+
+  drugInformationQuery = injectQuery(() => ({
+    queryKey: ['drug-information-search', this.query()],
+    queryFn: () =>
+      lastValueFrom(
+        this.http.get<DrugInformationResult[]>(
+          `/api/drug-information/search/${encodeURIComponent(this.query())}`,
+        ),
       ),
     enabled: !!this.query(),
     staleTime: Infinity,
